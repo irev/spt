@@ -1,0 +1,69 @@
+/*!
+ * Meedun (http://blog.simeedun.com)
+ * Created 2019.
+ !*/
+input[readonly].meedun-input  {
+     color: #939192;
+    background: #ffffff!important;
+    cursor: default;
+    display: block;
+    background: #333;
+    transition: .3s ease;
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #ffb752;
+    /* width: 100%; */
+    /* padding-top: 36.66667px; */
+    /*border: none;*/
+    /*border-radius: 0;*/
+    /*color: #478fca;*/
+    /* font-size: 36.66667px; */
+    /* border-bottom: 1px #000; */
+    
+}
+
+input:valid ~ label {
+  top: 0;
+  font: 700 22px Roboto;
+  color: rgba(255, 255, 255, 0.5);
+}
+input:focus {
+  outline: none;
+}
+input:focus ~ label {
+  top: 0;
+  font: 700 22px Roboto;
+  color: #2196f3;
+}
+input:focus ~ .bar:before {
+  transform: translateX(0);
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #333 inset;
+  -webkit-text-fill-color: white !important;
+}
+input:-moz-read-only
+	{
+  -webkit-box-shadow: 0 0 0px 1000px #333 inset;
+  -webkit-text-fill-color: white !important;
+	}
+input:read-only {
+  background-color: yellow;
+}
+.meedun-bar {
+ 	background: rgb(71, 143, 202) !important;
+    /* content: ''; */
+    width: 550px;
+    height: 1px;
+    transition: .3s ease;
+    position: relative;
+    margin-top: 28px;
+}
+.meedun-bar:before {
+	/*content: '';*/
+    position: absolute;
+    width: 63%;
+    height: 20%;
+    background: #2196f3;
+    transform: translateX(-100%);
+}
