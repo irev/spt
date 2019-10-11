@@ -13,6 +13,12 @@
 										</h1>										
 										<hr />
 										<center style="font-size: 12px;"><i class="fas fa-laptop-code fa-10x"></i></center>
+										<img src="<?= base_url("asset/theme/assets/images/avatars/meedun_mudirman.jpg") ?>" style="width: 300px;
+											    display: grid;
+											    border: 1px #000000;
+											    float: right;
+											    border-radius: 34px;
+											    margin-right: 90px;">
 										<h3 class="lighter smaller">
 											Tapi kami sedang 
 											<i class="ace-icon fa fa-wrench icon-animated-wrench fa-4x bigger-125"></i>
