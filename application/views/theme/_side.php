@@ -188,6 +188,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</li>
 						</ul>
 					</li>
+					<li class="">
+								<a href="<?= base_url('spt/laporan_sppd') ?>">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Daftar Nominatif
+								</a>
+								<b class="arrow"></b>
+					</li>
 					<!--li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
