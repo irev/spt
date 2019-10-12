@@ -154,6 +154,7 @@ table.noborder tr td{
              height:331mm;
              -webkit-print-color-adjust: exact;
              text-align: justify;
+             size: potret;
         }
         .page {
 		    margin: 5mm;
@@ -269,7 +270,7 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 		<td><b class="sign-name">(HENNY FERNIZA, ST, MT )</b>Nip. 19811022 200604 2 007<br></td>
 		<td><br><br>Nama terang : Drs. H. RAF'AN, MM<br>Alamat terang : Simpang Empat</td>
 	</tr>
-	<tr><td>Lunas tgl………………………………<b>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
+	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
 	<tr><td><br>
 			<b class="sign-name">(HENNY FERNIZA, ST, MT )</b>
 			Nip. 19811022 200604 2 007<br>
@@ -347,7 +348,7 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 		<td><b class="sign-name">(HENNY FERNIZA, ST, MT )</b>Nip. 19811022 200604 2 007<br></td>
 		<td><br><br>Nama terang : Drs. H. RAF'AN, MM<br>Alamat terang : Simpang Empat</td>
 	</tr>
-	<tr><td>Lunas tgl………………………………<b>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
+	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
 	<tr><td><br>
 			<b class="sign-name">(HENNY FERNIZA, ST, MT )</b>
 			Nip. 19811022 200604 2 007<br>

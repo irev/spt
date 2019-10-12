@@ -72,6 +72,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="<?= base_url() ?>asset/theme/assets/js/dataTables.select.min.js"></script>	
 		<script src="<?= base_url() ?>asset/theme/assets/js/jquery.gritter.min.js"></script>
 		<!-- page specific plugin scripts -->
+			<script src="<?= base_url() ?>asset/theme/assets/js/jquery-ui.custom.min.js"></script>
+			<script src="<?= base_url() ?>asset/theme/assets/js/ace-elements.min.js"></script>
 		<script src="<?= base_url() ?>asset/theme/assets/js/wizard.min.js"></script>
 		<script src="<?= base_url() ?>asset/theme/assets/js/jquery.validate.min.js"></script>
 		<script src="<?= base_url() ?>asset/theme/assets/js/jquery-additional-methods.min.js"></script>

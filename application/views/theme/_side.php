@@ -725,7 +725,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="nav-search noprint" id="nav-search">
 							<form class="form-search" action="<?= base_url('cari') ?>">
 								<span class="input-icon">
-									<input type="text" name="q" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<input type="text" name="q" placeholder="Enter Nomor SPT" class="nav-search-input" id="nav-search-input" autocomplete="off" />
 									<i class="ace-icon fa fa-search nav-search-icon"></i>
 								</span>
 							</form>

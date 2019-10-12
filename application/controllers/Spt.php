@@ -171,6 +171,7 @@ class Spt extends CI_Controller {
 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
 		 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
+		 $this->breadcrumbs->push('Detail SPT', '/spt/dalam/deteil-spt-sppd');
 		// unshift crumb
 		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
 		$data['TOKEN'] = $TOKEN;
@@ -181,7 +182,11 @@ class Spt extends CI_Controller {
 			$data['tujuan']       = $this->m_tujuan->tujuan();
 			$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
-	 	if($TOKEN==='add'){
+		if($TOKEN==='detail-spt-sppd'){
+				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
+				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
+		}elseif($TOKEN==='add'){
 	 		$this->breadcrumbs->push('ADD', '/add');
 				//FORM ADD / TAMBAH 
 				$validation = $this->form_validation;
@@ -233,6 +238,9 @@ class Spt extends CI_Controller {
 				$this->template->load_js('template','spt/dalam/spt', $data);
 		}	
 	 }
+
+
+
 /*
 	function transportasi($TOKEN=null, $ID=null){
 			$data['TOKEN'] = $TOKEN;
@@ -312,12 +320,8 @@ class Spt extends CI_Controller {
 			$data['ID'] = $IDSPTDLAM;
 			$this->template->load('template','spt/menu_print',$data);
 	}
-	function print_kwitansi($IDSPTDLAM=null){
-			$data['ID'] = $IDSPTDLAM;
-			$this->template->load('template','spt/_kwitansi.html',$data);
-			$this->template->load('template','spt/kwitansi_bbm',$data);
-	}
 
+	
 
 	 function print_dalam($IDSPTDLAM){
 	 	// add breadcrumbs
@@ -335,6 +339,7 @@ class Spt extends CI_Controller {
 
 	 function print_kwitansi($ID){
 		 // add breadcrumbs
+	 	$data['ID'] = $ID;
 		 $this->breadcrumbs->push('SPT', '/spt');
 		 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
 		 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$ID);
@@ -342,9 +347,12 @@ class Spt extends CI_Controller {
 		 $this->breadcrumbs->push($nospt, '#');
 		// unshift crumb
 		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
-		$data['ID'] = $ID;
+		
 		//$this->template->load_js('template','spt/luar/spt', $data);
-		$this->template->load('template','dev', $data);
+		//$this->template->load('template','dev', $data);
+		//$this->template->load('template','spt/dalam/kwitansi',$data);
+		//$this->template->load('template','spt/dalam/kwitansi_bbm',$data);
+		$this->load->view('spt/dalam/kwitansi_bbm',$data);
 	}
 
 	 function laporan_sppd($IDSPTDLAM=null){
