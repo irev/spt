@@ -428,5 +428,22 @@ class Spt extends CI_Controller {
 		$this->template->load('template','dev', $data);
 	}
 
+	 function dev($IDSPTDLAM=null){
+		 	
+		 	if($IDSPTDLAM){
+		 	 // add breadcrumbs
+			 $this->breadcrumbs->push('SPT', '/spt');
+			 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
+			 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$IDSPTDLAM);
+			 $this->breadcrumbs->push('Print', 'spt/prints/'.$IDSPTDLAM);
+			 $this->breadcrumbs->push($nospt, '#');
+			// unshift crumb
+			// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
+			$data['ID'] = $IDSPTDLAM;
+			//$this->template->load_js('template','spt/luar/spt', $data);
+			$this->template->load('template','dev', $data);
+			}
+			$this->template->load('template','dev');
+		 }
 
 }

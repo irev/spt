@@ -228,6 +228,7 @@ function textAreaAdjust(o) {
             Yang bertanda tangan dibawah ini:
             <table class="table-konten" border="1">
                 <tbody>
+                   
                     <tr>
                         <td colspan="5" style="text-align: center;"><h4>MEMERINTAHKAN</h4></td>
                     </tr>

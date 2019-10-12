@@ -87,7 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 																			<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 																				<li>
-																					<a class="blue" href="<?= base_url('spt/print_dalam') ?>/<?= $trans['id_spt'] ?>" title="Rincian">
+																					<a class="blue" href="<?= base_url('spt/dalam/detail-spt-sppd') ?>/<?= $trans['id_spt'] ?>" title="Rincian">
 																						<i class="ace-icon fa fa-search-plus bigger-130"></i>
 																					</a>
 																				</li>	

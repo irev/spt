@@ -230,76 +230,91 @@ function textAreaAdjust(o) {
             <table class="table-konten" border="1">
                 <tbody>
                     <tr>
-                        <td colspan="5" style="text-align: center;"><h4>MEMERINTAHKAN</h4></td>
+                        <td colspan="2">&nbsp;NAMA</td>
+                        <td>:</td>
+                        <td><?= $spt_dalam->ttd_nama ?></td>
                     </tr>
                     <tr>
-                        <td colspan="5"><h4>KEPADA</h4></td>
+                        <td colspan="2">&nbsp;JABATAN</td>
+                        <td>:</td>
+                        <td><?= $spt_dalam->ttd_jabatan ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;DENGAN DASAR</td>
+                        <td>:</td>
+                        <td>&nbsp;<?= $spt_dalam->beban ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: center;"><h3>MEMERINTAHKAN</h3></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"><h3>&nbsp;KEPADA</h3></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">1.</td>
-                        <td>Nama </td>
+                        <td>&nbsp;Nama </td>
                         <td >:</td>
-                        <td colspan="3"><?= $spt_dalam->nama  ?></td>
+                        <td colspan="3">&nbsp;<?= $spt_dalam->nama  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">2.</td>
-                        <td>Nip</td>
+                        <td>&nbsp;Nip</td>
                         <td >:</td>
-                        <td><?= $spt_dalam->nip  ?></td>
+                        <td>&nbsp;<?= $spt_dalam->nip  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">3.</td>
-                        <td >Pangkat / Golongan</td>
+                        <td >&nbsp;Pangkat / Golongan</td>
                         <td >:</td>
-                        <td><?= $spt_dalam->golongan  ?></td>
+                        <td>&nbsp;<?= $spt_dalam->golongan  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">4.</td>
-                        <td>Jabatan</td>
+                        <td>&nbsp;Jabatan</td>
                         <td >:</td>
-                        <td><?= $spt_dalam->jabatan  ?></td>
+                        <td>&nbsp;<?= $spt_dalam->jabatan  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">5.</td>
-                        <td>Maksud Melaksanakan Tugas</td>
+                        <td>&nbsp;Maksud Melaksanakan Tugas</td>
                         <td >:</td>
-                        <td><?= $spt_dalam->maksud  ?> </td>
+                        <td>&nbsp;<?= $spt_dalam->maksud  ?> </td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">6.</td>
-                        <td>TRANSPORTASI</td>
+                        <td>&nbsp;TRANSPORTASI</td>
                         <td >:</td>
-                        <td><?= $spt_dalam->transportasi  ?></td>
+                        <td>&nbsp;<?= $spt_dalam->transportasi  ?></td>
                     </tr>
                     
                     <tr>
                         <td class="noborder-r nomor-center">7.</td>
-                        <td >TUJUAN </td>
+                        <td >&nbsp;TUJUAN </td>
                         <td >:</td>
-                        <td><?= $spt_dalam->tujuan  ?></td>
+                        <td>&nbsp;<?= $spt_dalam->tujuan  ?></td>
 
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">8.</td>
-                        <td >Berangkat Tanggal</td>
+                        <td >&nbsp;Berangkat Tanggal</td>
                         <td >:</td>
-                        <td> <?= LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat)  ?></td>
+                        <td>&nbsp;<?= LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat)  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">9.</td>
-                        <td >Kembali Tanggal</td>
+                        <td >&nbsp;Kembali Tanggal</td>
                         <td >:</td>
-                        <td> <?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)  ?></td>
+                        <td> &nbsp;<?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">10.</td>
-                        <td >SUMBER DANA</td>
+                        <td >&nbsp;SUMBER DANA</td>
                         <td >:</td>
-                        <td>Anggaran Belanja Langsung Tahun <?= $spt_dalam->sumber_dana  ?></td>
+                        <td>&nbsp;Anggaran Belanja Langsung Tahun <?= $spt_dalam->sumber_dana  ?></td>
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">11.</td>
-                        <td colspan="3">Pengikut </td>
+                        <td colspan="3">&nbsp;Pengikut </td>
                     </tr>   
             </table>
             <!--PENGIKUT-->

@@ -195,6 +195,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</a>
 								<b class="arrow"></b>
 					</li>
+					<li class="">
+								<a href="<?= base_url('spt/dev') ?>">
+									<i class="menu-icon fa fa-calendar"></i>
+									KALENDER
+								</a>
+								<b class="arrow"></b>
+					</li>
 					<!--li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
