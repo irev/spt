@@ -312,7 +312,11 @@ class Spt extends CI_Controller {
 			$data['ID'] = $IDSPTDLAM;
 			$this->template->load('template','spt/menu_print',$data);
 	}
-
+	function print_kwitansi($IDSPTDLAM=null){
+			$data['ID'] = $IDSPTDLAM;
+			$this->template->load('template','spt/_kwitansi.html',$data);
+			$this->template->load('template','spt/kwitansi_bbm',$data);
+	}
 
 
 	 function print_dalam($IDSPTDLAM){

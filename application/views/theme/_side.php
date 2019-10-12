@@ -189,7 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</ul>
 					</li>
 					<li class="">
-								<a href="<?= base_url('spt/laporan_sppd') ?>">
+								<a href="<?= base_url('spt/print_kwitansi') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Daftar Nominatif
 								</a>
