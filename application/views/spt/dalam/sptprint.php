@@ -153,6 +153,7 @@ if(!$spt_dalam){
            
              width:252.5mm;
              height:331mm;
+             background: none;
         }
         .page {
             margin: 0;
@@ -196,7 +197,7 @@ function textAreaAdjust(o) {
 }
 </script>
 
-<body>
+<body onload="print()">
 <div class="book">
         <div class="page">
         <div class="subpage"><!--HEADER SURAT-->

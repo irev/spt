@@ -138,24 +138,32 @@ table.noborder tr td{
     display: grid !important;
 }
   @page {
-        size: f4;
+        size: legal potret !important;
         margin: 0;
         font: 12.5pt "Time New Roman, Tahoma";
         text-align: justify;
     }
   @media print {
-        html, body:before {
+  	 @page {
+  	 	 size: legal potret !important;
+  	 	 font: 12.5pt "Time New Roman, Tahoma";
+             width:252.5mm;
+             height:331mm;
+             -webkit-print-color-adjust: exact;
+             text-align: justify;
+  	 }
+        /*html, body:before {
            /*
             width: 210mm;
             height: 297mm; 
-            */ 
+           
              font: 12.5pt "Time New Roman, Tahoma";
              width:252.5mm;
              height:331mm;
              -webkit-print-color-adjust: exact;
              text-align: justify;
-             size: potret;
-        }
+             size: legal potret !important;
+        } */ 
         .page {
 		    margin: 5mm;
 		    border: 1px dotted !important;
@@ -165,7 +173,8 @@ table.noborder tr td{
 		    box-shadow: initial;
 		    background: initial;
 		    padding: 5mm;
-		    width:252.5mm;        
+		    width:252.5mm; 
+		    size: potret !important;       
         }
 		table {
 		  border-collapse: collapse;

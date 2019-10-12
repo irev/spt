@@ -335,8 +335,20 @@ class Spt extends CI_Controller {
 	 $data['spt_dalam_pengikut'] = $this->m_dalam->spt_pengikut($IDSPTDLAM);
 	 	$this->template->load_js('template','spt/dalam/sptprint', $data);
 	 }
+	 function cetak_spt_dalam($IDSPTDLAM){
+	 	 	// add breadcrumbs
+		 $this->breadcrumbs->push('SPT', '/spt');
+		 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
+		 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$IDSPTDLAM);
+		 $this->breadcrumbs->push('Print', 'spt/prints/'.$IDSPTDLAM);
+		 $this->breadcrumbs->push($nospt, '#');
 
+	 $data['spt_dalam'] = $this->m_dalam->spt_dalam($IDSPTDLAM);
+	 $data['spt_dalam_pengikut'] = $this->m_dalam->spt_pengikut($IDSPTDLAM);
+	 	$this->load->view('spt/dalam/sptprint', $data);
+	 }
 
+/////// CETAK KWITANSI BBM
 	 function print_kwitansi($ID){
 		 // add breadcrumbs
 	 	$data['ID'] = $ID;
@@ -353,6 +365,24 @@ class Spt extends CI_Controller {
 		//$this->template->load('template','spt/dalam/kwitansi',$data);
 		//$this->template->load('template','spt/dalam/kwitansi_bbm',$data);
 		$this->load->view('spt/dalam/kwitansi_bbm',$data);
+	}
+/////// CETAK KWITANSI nominatif	
+	function PrintKwitansiNominatif($ID){
+		 // add breadcrumbs
+	 	$data['ID'] = $ID;
+		 $this->breadcrumbs->push('SPT', '/spt');
+		 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
+		 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$ID);
+		 $this->breadcrumbs->push('Print', 'spt/prints/'.$ID);
+		 $this->breadcrumbs->push($nospt, '#');
+		// unshift crumb
+		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
+		
+		//$this->template->load_js('template','spt/luar/spt', $data);
+		//$this->template->load('template','dev', $data);
+		//$this->template->load('template','spt/dalam/kwitansi',$data);
+		//$this->template->load('template','spt/dalam/kwitansi_bbm',$data);
+		$this->load->view('spt/dalam/kwitansi',$data);
 	}
 
 	 function laporan_sppd($IDSPTDLAM=null){

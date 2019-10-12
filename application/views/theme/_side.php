@@ -194,14 +194,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<ul class="submenu">
 							<li class="">
-								<a href="<?= base_url('spt/laporan_sppd') ?>">
+								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									
 								</a>
 								<b class="arrow"></b>
 							</li>
 							<li class="">
-								<a href="<?= base_url('/master/jabatan/') ?>">
+								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									SPPD
 								</a>
@@ -209,7 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<b class="arrow"></b>
 							</li>
 							<li class="">
-								<a href="<?= base_url('spt/laporan_sppd') ?>">
+								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Laporan
 								</a>
@@ -217,7 +217,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<b class="arrow"></b>
 							</li>
 							<li class="">
-								<a href="<?= base_url('spt/laporan_sppd') ?>">
+								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Dokumentasi
 								</a>
