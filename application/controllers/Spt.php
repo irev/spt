@@ -183,7 +183,7 @@ class Spt extends CI_Controller {
 			$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
-				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
+				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
 					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
 		}elseif($TOKEN==='add'){
@@ -239,6 +239,11 @@ class Spt extends CI_Controller {
 		}	
 	 }
 
+
+function cek_db($ID=null){
+	$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+	echo $this->db->last_query();
+}
 
 
 /*

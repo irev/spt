@@ -21,6 +21,7 @@ class M_dalam extends CI_Model {
 	public $maksud;
 	public $transportasi;
 	public $tujuan;
+	public $wilayah;
 	public $tgl_berangkat;
 	public $tgl_kembali;
 	public $sumber_dana;
@@ -43,7 +44,7 @@ class M_dalam extends CI_Model {
 	/////////////////
 	// TABEL PENGIKUT
 	// //////////////
-	private $_table_pengikut = "spt_pengikut";
+	//private $_table_pengikut = "spt_pengikut";
 
 
 	public function cekDuplikatEntry($FIELD="", $VALUE="") {
@@ -77,11 +78,30 @@ class M_dalam extends CI_Model {
 
 ////// PEGAWAI YANG IKUT DALAM PERJALANAN DINAS
 		function spt_pengikut($ID_SPT){
+
+			$this->db->select(
+				"spt_pengikut.*, 
+				m_pegawai.*, 
+				m_pegawai.nama as nama_pegawai, 
+				spt_data.*,
+				spt_data.nama as nm_diperintah,
+				spt_data.nip as nip_diperintah,
+				spt_data.pangkat as pangkat_diperintah,
+				spt_data.golongan as golongan_diperintah,
+				m_golongan.*, 
+				m_eselon.*,
+				m_tujuan.kec as kec,
+				m_tujuan.kab as kab,
+				m_tujuan.prov as prov,
+				"
+			);
 			$this->db->where("spt_id", $ID_SPT);
 			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg");
+			$this->db->join("spt_data","spt_data.id_spt=spt_pengikut.spt_id");
 			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id");
 			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id");
-			$query=$this->db->get($this->_table_pengikut); //TABEL PENGIKUT
+			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id");
+			$query=$this->db->get("spt_pengikut"); //TABEL PENGIKUT
 			return $query->result_array();//TABEL PENGIKUT
 		}
 
@@ -100,7 +120,10 @@ class M_dalam extends CI_Model {
 				$this->jabatan          =$post['jabatan'];
 				$this->maksud           =$post['maksud'];
 				$this->transportasi     =$post['transpor'];
+
+				$this->tujuan_id        =$post['pilih_tujuan'];
 				$this->tujuan           =$post['tujuan'];
+				$this->$wilayah			=$post['wilayah'];
 				$this->tgl_berangkat    =$post['berangkat'];
 				$this->tgl_kembali      =$post['kembali'];
 				$this->sumber_dana      =$post['tahun'];
@@ -118,6 +141,8 @@ class M_dalam extends CI_Model {
 				$this->ttd_sppd_nip     =$post['ttd_sppd_nip'];
 				$this->ttd_sppd_gol     =$post['ttd_sppd_golongan'];
 				$this->ttd_sppd_jabatan =$post['ttd_sppd_jabatan'];
+				$this->perjalanan 		="dalam";
+				$this->tahun 			=date("Y");
 				///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
 				$this->anggaran         =$post['pasal_anggaran'];
@@ -148,7 +173,10 @@ class M_dalam extends CI_Model {
 				$this->jabatan          =$post['jabatan'];
 				$this->maksud           =$post['maksud'];
 				$this->transportasi     =$post['transpor'];
+
+				$this->tujuan_id        =$post['pilih_tujuan'];
 				$this->tujuan           =$post['tujuan'];
+				$this->wilayah			=$post['wilayah'];
 				$this->tgl_berangkat    =$post['berangkat'];
 				$this->tgl_kembali      =$post['kembali'];
 				$this->sumber_dana      =$post['tahun'];
@@ -166,6 +194,8 @@ class M_dalam extends CI_Model {
 				$this->ttd_sppd_nip     =$post['ttd_sppd_nip'];
 				$this->ttd_sppd_gol     =$post['ttd_sppd_golongan'];
 				$this->ttd_sppd_jabatan =$post['ttd_sppd_jabatan'];
+				$this->perjalanan 		="dalam";
+				$this->tahun 			=date("Y");
 			///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
 				$this->anggaran         =$post['pasal_anggaran'];
@@ -183,7 +213,7 @@ class M_dalam extends CI_Model {
 
 
 	////// query pengikut
-    	public $_tabel_pengikut = 'spt_pengikut';
+    	//public $_tabel_pengikut = 'spt_pengikut';
     	public $tahun;
     	public function query_simpan_pengikut(){
     		$post = $this->input->post();
@@ -194,12 +224,12 @@ class M_dalam extends CI_Model {
 						'tahun'       => $post["tahun"],
     		      ];
 				//$this->db->trans_start();
-				$this->db->insert($this->_tabel_pengikut, $data);
+				$this->db->insert("spt_pengikut", $data);
 				$result  = ($this->db->affected_rows() != 1) ? false : true;
 				return $result;
     	}
     	public function deletePengikut($id){
-    		return $this->db->delete($this->_tabel_pengikut, array("id_peng" => $id));
+    		return $this->db->delete("spt_pengikut", array("id_peng" => $id));
     	}	
 
 
