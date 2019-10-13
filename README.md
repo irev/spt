@@ -1,4 +1,4 @@
-# spt
+# SPD (Surat Perintah Dinas) 
 spt 
 # Ukuran Kertas F4 dalam satuan mm, cm, inci
 Ukuran Kertas	F4 
