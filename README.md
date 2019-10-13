@@ -1,5 +1,5 @@
 # SPD (Surat Perintah Dinas) 
-spt 
+Sistem Informasri SPD
 # Ukuran Kertas F4 dalam satuan mm, cm, inci
 Ukuran Kertas	F4 
 - dlm satuan mm 210 x 330	
