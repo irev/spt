@@ -13,4 +13,8 @@ Ukuran Kertas	F4
 - Database 
 -- Versi Server: 10.1.30-MariaDB - mariadb.org binary distribution
 -- Versi protokol: 10 UTF-8 Unicode (utf8)
+# Contribution
+- Febri Yetti as project idea
+- Mudirman, SE as system analyst 
+
 		
