@@ -93,7 +93,29 @@ class M_dalam extends CI_Model {
 				m_tujuan.kec as kec,
 				m_tujuan.kab as kab,
 				m_tujuan.prov as prov,
+				m_kegiatan.rekening,
+				m_kegiatan.kegiatan,
+				m_kegiatan.pptk,
+				m_kegiatan.bendahara,
+				m_kegiatan.kpa,
+				(SELECT jabatan FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.kpa) as jabkpa,
+				(SELECT nama FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.kpa) as kpa,
+				(SELECT nip FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.kpa) as nipkpa,
+				
+
+				(SELECT jabatan FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.pptk) as jabpptk,
+				(SELECT nama FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.pptk) as pptk,
+				(SELECT nip FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.pptk) as nippptk,
+				
+
+				(SELECT jabatan FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.bendahara) as jabbendahara,
+				(SELECT nama FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.bendahara) as bendahara,
+				(SELECT nip FROM `m_pegawai` WHERE `id_peg` = m_kegiatan.bendahara) as nipbendahara
+				
 				"
+				//k.nama as k_nama, k.nip as k_nip, k.jabatan as k_jabatan,
+				//p.nama as p_nama, p.nip as p_nip, p.jabatan as p_jabatan,
+				//b.nama as b_nama, b.nip as b_nip, b.jabatan as b_jabatan
 			);
 			$this->db->where("spt_id", $ID_SPT);
 			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg");
@@ -101,6 +123,10 @@ class M_dalam extends CI_Model {
 			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id");
 			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id");
 			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id");
+			$this->db->join("m_kegiatan","m_kegiatan.id_kegiatan=spt_data.kegiatan_id");
+			//$this->db->join("m_kegiatan as k","k.kpa=m_pegawai.id_peg");
+			//$this->db->join("m_kegiatan as p","p.pptk=m_pegawai.id_peg");
+			//$this->db->join("m_kegiatan as b","b.bendahara=m_pegawai.id_peg");
 			$query=$this->db->get("spt_pengikut"); //TABEL PENGIKUT
 			return $query->result_array();//TABEL PENGIKUT
 		}

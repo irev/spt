@@ -380,6 +380,7 @@ function cek_db($ID=null){
 		 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$ID);
 		 $this->breadcrumbs->push('Print', 'spt/prints/'.$ID);
 		 $this->breadcrumbs->push($nospt, '#');
+		$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
 		// unshift crumb
 		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
 		
@@ -478,7 +479,15 @@ function cek_db($ID=null){
 			//$this->template->load_js('template','spt/luar/spt', $data);
 			$this->template->load('template','dev', $data);
 			}
-			$this->template->load('template','dev');
+			$this->template->load('template_load','dev');
 		 }
+
+function readme(){
+	$this->template->load('template_load','readme');
+	//$contents = file_get_contents('README.md');
+	//echo $this->parsedown->text($contents);
+}
+
+
 
 }
