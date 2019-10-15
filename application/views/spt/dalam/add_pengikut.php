@@ -46,10 +46,10 @@ $this->session->flashdata('msg')
 												?>		
 														 <tr>
 														 <td><?= $no ?></td>
-														 <td><?= $peng['nama'] ?></td>
-														 <td><?= $peng['nip'] ?></td>
-														 <td><?= $peng['pangkat'] ?></td>
-														 <td><?= $peng['jabatan'] ?></td>
+														 <td><?= $peng['nama_pengikut'] ?></td>
+														 <td><?= $peng['nip_pengikut'] ?></td>
+														 <td><?= $peng['gol_pengikut'] ?></td>
+														 <td><?= $peng['jabatan_pengikut'] ?></td>
 														
 														 <td><a class="btn btn-xs btn-danger" onclick="deleteConfirm('<?= site_url('spt/delete_spt_dalam_pengikut/'.$peng['id_peng'].'/'.$peng['spt_id'].'?p=2') ?>')" ><i class="fa fa-minus"></i></a></td>
 														 </tr>

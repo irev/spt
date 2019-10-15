@@ -18,16 +18,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
 <div class="col-xs-12">
 <h3 class="header smaller lighter blue">SPT Dalam Daerah <a class="btn btn-xs btn-primary" href="<?= base_url('spt/dalam/add') ?>">+ SPT DALAM</a></h3>	
-<?= $this->session->flashdata('msg') ?>
+<!--?= $this->session->flashdata('msg') ?-->
 
-<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+<div class="table-responsive">
+<table id="dynamic-table" class="table table-striped table-bordered table-hover ">
 												<thead>
 													<tr>
 														<th class="center">No</th>
 														
 														<th>Nomor</th>
 														<th>Tanggal</th>
-														<th>Perintah Dari</th>
+														<th class="hidden-480">Perintah Dari</th>
 														<th width="20%">Maksud Melaksanakan Tugas</th>
 														<th>Kepada (MEMERINTAHKAN)</th>
 														<th class="hidden-480">Tujuan</th>
@@ -47,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																<td class="center"><?= $no ?></td>
 																<td class="hidden-480"><?= $trans['no_spt'] ?></td>
 																<td><?= LONGE_DATE_INDONESIA($trans['ttd_tgl']) ?></td>
-																<td><?= '<b>'.$trans['ttd_nama'].'</b><br>'.$trans['ttd_jabatan'].'<br>'.$trans['ttd_nip'] ?></td>
+																<td class="hidden-480"><?= '<b>'.$trans['ttd_nama'].'</b><br>'.$trans['ttd_jabatan'].'<br>'.$trans['ttd_nip'] ?></td>
 																<td><?= $trans['maksud'] ?></td>
 																<td><?= '<b>'.$trans['nama'].'</b><br>'.$trans['jabatan'].'<br>'.$trans['nip'] ?></td>
 																<td class="hidden-480"><?= $trans['tujuan'] ?></td>
@@ -125,6 +126,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													
 												</tbody>
 											</table>
+</div>											
 
 </div>
 </div>

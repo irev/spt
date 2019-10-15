@@ -20,6 +20,7 @@
 														<th>Nama</th>
 														<th>Nip</th>
 														<th>Pangkat / Golongan </th>
+														<th>Eselon </th>
 														<th class="hidden-480">Jabatan</th>
 
 														<th>
@@ -39,6 +40,7 @@
 																<td><?= $peg['nama'] ?></td>
 																<td><?= $peg['nip'] ?></td>
 																<td><?= $peg['golongan'] ?></td>
+																<td><?= $peg['eselon'] ?></td>
 																<td><?= $peg['jabatan'] ?></td>
 																<td class="center"><?= $peg['tahun'] ?></td>
 																<!--td><?= $peg['tahun'] ?></td-->

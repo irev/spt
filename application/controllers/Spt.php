@@ -178,13 +178,16 @@ class Spt extends CI_Controller {
 		$data['ID'] = $ID;
 			$data['spt_dalam']    = $this->m_dalam->spt_dalam();
 			$data['pegawai']      = $this->m_master->pegawai();
+			$data['anggaran']     = $this->m_master->anggaran();
 			$data['transportasi'] = $this->m_transport->trasnsportasi();
 			$data['tujuan']       = $this->m_tujuan->tujuan();
+
 			$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				//echo $this->db->last_query();
 					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
 		}elseif($TOKEN==='add'){
 	 		$this->breadcrumbs->push('ADD', '/add');
@@ -202,7 +205,7 @@ class Spt extends CI_Controller {
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
 							}
 						}else{
-							$this->session->set_flashdata('msg', $this->MSG('danger', 'Error', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
 						}
 					}
 	        	//$data['transportasi'] = $this->m_dalam->jabatan($ID);
@@ -233,10 +236,12 @@ class Spt extends CI_Controller {
 		}elseif($TOKEN==='pengikut'){
 			$this->breadcrumbs->push('Pengikut', 'spt/dalam/edit/'.$ID.'?p=2');
 			$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+			//echo $this->db->last_query();
 			$this->template->load_js('template','spt/dalam/add_pengikut', $data);
 		}else{
 				$this->template->load_js('template','spt/dalam/spt', $data);
-		}	
+		}
+		//echo $this->db->last_query();	
 	 }
 
 

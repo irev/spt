@@ -18,11 +18,11 @@ class M_master extends CI_Model {
 
 	function pegawai($ID_PEGAWAI=null){
 			//$ID_CLIENT = $this->session->userdata('idclient');
-			$this->db->order_by("id_peg","ASC");
-			if($ID_PEGAWAI!=null){
+				$this->db->order_by("id_peg","ASC");
 				$this->db->select("m_pegawai.*, CONCAT( m_golongan.pangkat,' ',m_golongan.golongan) as pangkat_golongan, wil1 as dalam_wil1_rp,wil2 as dalam_wil2_rp,wil3 as dalam_wil3_rp, m_eselon.eselon as eselon, m_eselon.rp_oh as luar_rp", false);
 				$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id");
 				$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id");
+			if($ID_PEGAWAI!=null){
 				//$this->db->select("m_pegawai.*, m_eselon.eselon,m_eselon.rp_oh");
 				$this->db->where("m_pegawai.id_peg",$ID_PEGAWAI);
 			}
@@ -39,6 +39,8 @@ class M_master extends CI_Model {
         return $this->db->get_where($this->_table_pegawai, ["id_peg" => $id])->row();
     }
 
+
+///////////////////////////// GOLONGAN 
 		function golongan($ID_GOLONGAN = null){
 			//$ID_CLIENT = $this->session->userdata('idclient');
 			$this->db->order_by("id_gol","ASC");
@@ -52,6 +54,7 @@ class M_master extends CI_Model {
 				return $query->result_array();
 			}
 		}
+
 		function golonganAjax(){
 			foreach ($this->m_master->golongan($ID) as $element) {
 			    $result[$element['grup']][] = $element;
@@ -71,6 +74,19 @@ class M_master extends CI_Model {
 			}else{
 				return $query->result_array();
 			}
+		}
+		function eselon($ID_ESELON = null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_eselon","ASC");
+			if($ID_ESELON != null){
+				$this->db->where("id_eselon", $ID_ESELON);
+			}
+			$query=$this->db->get("m_eselon");
+			if($ID_ESELON != null){
+				return $query->row();
+			}else{
+				return $query->result_array();
+			}
 		}		
 
 		function query_simpanpegawai(){
@@ -78,9 +94,9 @@ class M_master extends CI_Model {
 					$this->nama        = $post["nama"];
 					$this->nip         = $post["nip"];
 					$this->jabatan     = $post["jabatan"];
-					$this->golongan    = $post["golongan"];
-					$this->golongan_id = 0;
-					$this->eselon_id   = 0;
+					$this->golongan    = $post["nm_gol"];
+					$this->golongan_id = $post["golongan"];
+					$this->eselon_id   = $post["eselon"];
 					$this->tahun       = $post["tahun"];
 				//$this->db->trans_start();
 				$this->db->insert($this->_tablepegawai, $this);
@@ -92,13 +108,15 @@ class M_master extends CI_Model {
 		}
 
 		function query_updatepegawai(){
-					$post 		    = $this->input->post();
-					$this->id_peg   = $post["id_peg"];
-					$this->nama     = $post["nama"];
-					$this->nip      = $post["nip"];
-					$this->jabatan  = $post["jabatan"];
-					$this->golongan = $post["golongan"];
-					$this->tahun    = $post["tahun"];
+					$post              = $this->input->post();
+					$this->id_peg      = $post["id_peg"];
+					$this->nama        = $post["nama"];
+					$this->nip         = $post["nip"];
+					$this->jabatan     = $post["jabatan"];
+					$this->golongan    = $post["nm_gol"];
+					$this->golongan_id = $post["golongan"];
+					$this->eselon_id   = $post["eselon"];
+					$this->tahun       = $post["tahun"];
 		        $this->db->update($this->_tablepegawai, $this, array('id_peg' => $post['id_peg']));
 				//CEK KONDISI
 				$result  = ($this->db->affected_rows() >= 1) ? true : false;
@@ -110,7 +128,25 @@ class M_master extends CI_Model {
     	}
 
 
-    	
+    	function anggaran($ID_ANGGARAN = null, $key=null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_anggaran","ASC");
+			if($ID_ANGGARAN != null){
+				$this->db->where("id_anggaran", $ID_ANGGARAN);
+			}
+			$query=$this->db->get("m_anggaran");
+			if($ID_ANGGARAN != null && $key != null){
+				return $query->row($key);
+			}
+			elseif($ID_ANGGARAN != null){
+				return $query->row();
+			}
+			else{
+				return $query->result_array();
+			}
+		}	
+
+
 }
 
 	

@@ -82,7 +82,12 @@ class M_dalam extends CI_Model {
 			$this->db->select(
 				"spt_pengikut.*, 
 				m_pegawai.*, 
-				m_pegawai.nama as nama_pegawai, 
+				`m_pegawai`.`nama` as `nama_pengikut`, 
+				`m_pegawai`.`nip` as `nip_pengikut`,
+				`m_pegawai`.`jabatan` as `jabatan_pengikut`,
+				`m_pegawai`.`golongan` as `gol_pengikut`,
+				`m_pegawai`.`eselon_id` as `eselon_pengikut`,
+
 				spt_data.*,
 				spt_data.nama as nm_diperintah,
 				spt_data.nip as nip_diperintah,
@@ -118,12 +123,12 @@ class M_dalam extends CI_Model {
 				//b.nama as b_nama, b.nip as b_nip, b.jabatan as b_jabatan
 			);
 			$this->db->where("spt_id", $ID_SPT);
-			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg");
-			$this->db->join("spt_data","spt_data.id_spt=spt_pengikut.spt_id");
-			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id");
-			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id");
-			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id");
-			$this->db->join("m_kegiatan","m_kegiatan.id_kegiatan=spt_data.kegiatan_id");
+			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg","LEFT");
+			$this->db->join("spt_data","spt_data.id_spt=spt_pengikut.spt_id","LEFT");
+			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id","LEFT");
+			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id","LEFT");
+			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id","LEFT");
+			$this->db->join("m_kegiatan","m_kegiatan.id_kegiatan=spt_data.kegiatan_id","LEFT");
 			//$this->db->join("m_kegiatan as k","k.kpa=m_pegawai.id_peg");
 			//$this->db->join("m_kegiatan as p","p.pptk=m_pegawai.id_peg");
 			//$this->db->join("m_kegiatan as b","b.bendahara=m_pegawai.id_peg");
@@ -149,7 +154,7 @@ class M_dalam extends CI_Model {
 
 				$this->tujuan_id        =$post['pilih_tujuan'];
 				$this->tujuan           =$post['tujuan'];
-				$this->$wilayah			=$post['wilayah'];
+				$this->wilayah			=$post['wilayah'];
 				$this->tgl_berangkat    =$post['berangkat'];
 				$this->tgl_kembali      =$post['kembali'];
 				$this->sumber_dana      =$post['tahun'];
@@ -171,7 +176,7 @@ class M_dalam extends CI_Model {
 				$this->tahun 			=date("Y");
 				///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
-				$this->anggaran         =$post['pasal_anggaran'];
+				$this->anggaran         =$post['pilih_beban'];
 			//EXE
 			    $this->db->insert($this->_table, $this);
 					$result  = ($this->db->affected_rows() != 1) ? false : true;
@@ -224,7 +229,7 @@ class M_dalam extends CI_Model {
 				$this->tahun 			=date("Y");
 			///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
-				$this->anggaran         =$post['pasal_anggaran'];
+				$this->anggaran         =$post['pilih_beban'];
 			//EXE
 		        $this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
 				//CEK KONDISI

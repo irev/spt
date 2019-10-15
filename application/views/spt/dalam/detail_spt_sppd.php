@@ -1,4 +1,4 @@
-			<?php 
+	<?php 	
 				$no=1; 
         		$Total=0;
         		foreach ($spt_pengikut as $pengikut) { 
@@ -16,8 +16,8 @@
         				$tgl_sppd 	= $pengikut["ttd_sppd_tgl"];
 
         				///ANGARAN KEGIATAN 
-        				$REKENING = $pengikut["rekening"];
-                        $KEGIATAN =$pengikut["kegiatan"];
+        				$REKENING 		= $pengikut["rekening"];
+                        $KEGIATAN 		=$pengikut["kegiatan"];
         				$KPA 			= $pengikut["kpa"];
         				$jabKPA 		= $pengikut["jabkpa"];
         				$nipKPA 		= $pengikut["nipkpa"];
@@ -27,6 +27,8 @@
         				$BENDAHARA 		= $pengikut["bendahara"];
         				$jabBENDAHARA 	= $pengikut["jabbendahara"];
         				$nipBENDAHARA 	= $pengikut["nipbendahara"];
+
+        				$anggaran 		= $pengikut["anggaran"];
 
 
         				$hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
@@ -53,6 +55,7 @@
                 		$subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
 						$Total += $subtotal; //SUM TOTAL
         		}
+
         	?>	
 
 
@@ -65,19 +68,28 @@ function close_window() {
 function openWindow( url ){
   window.open(url, "_blank", "fullscreen=1, toolbar=yes,scrollbars=yes,resizable=yes top=5,left=5,width=1300,height=700");
 }
+function goToPage( url ){
+ window.location.href = url;
+}
 </script>
 						<div class="row">
-							<div class="col-xs-12">		
+							<div class="col-xs-12">	
+							<?php if(count($spt_dalam) > 0){ ?>	
 								<!-- PAGE CONTENT BEGINS -->
 								<button class="btn btn-xs btn-primary" onclick="openWindow('<?= base_url('spt/cetak_spt_dalam/').'/'.$spt_dalam->id_spt ?>')">
 									<i class="fa fa-print"></i> 
 								Cetak SPD</button>
+							<?php } ?>
+							<?php if(count($spt_pengikut) > 0){ ?>		
 								<button class="btn btn-xs btn-success" onclick="openWindow('<?= base_url('spt/PrintKwitansiNominatif/').'/'.$spt_dalam->id_spt ?>')">
 									<i class="fa fa-print"></i> 
 								Cetak Nominatif</button>
+							<?php } ?>
+							<?php if(count($spt_dalam) > 0){ ?>		
 								<button class="btn btn-xs btn-danger" onclick="openWindow('<?= base_url('spt/print_kwitansi/').'/'.$spt_dalam->id_spt ?>')">
 									<i class="fa fa-print"></i> 
 								Cetak BBM</button>
+							<?php } ?>	
 								<div class="space"></div>
 								<div class="row">
 									<div class="col-sm-12">
@@ -201,7 +213,7 @@ function openWindow( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-red bigger-110"></i>
-																<span class="editable" id="about"><?= $spt_dalam->tujuan ?></span>
+																<span class="editable" id="about"><?= $spt_dalam->tujuan." <i class='red'>(Wilayah ".$spt_dalam->wilayah.")</i>" ?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
@@ -218,13 +230,20 @@ function openWindow( url ){
 																<span class="editable" id="about"><?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali) ?></span>
 															</div>
 														</div>
+														<div class="profile-info-row">
+															<div class="profile-info-name"> #</div>
+
+															<div class="profile-info-value">
+																<span class="editable" id="about"><button class="btn btn-xs btn-danger" onclick="goToPage('<?= base_url("spt/dalam/edit/".$spt_dalam->id_spt."?p=2") ?>')"><i class="fa fa-pencil"></i></button></span>
+															</div>
+														</div>
 													</div>
 
 												</div>
 												<div id="home" class="tab-pane fade in">
 													<div class="col-sm-12">
 														<b style="font-size: 22px">SPPD <?= $spt_dalam->no_sppd ?></b><br>
-														<i><?= $spt_dalam->ttd_tempat ?> - <?= $spt_dalam->tujuan ?></i>
+														<i><?= $spt_dalam->ttd_tempat ?> - <?= $spt_dalam->tujuan  ?></i>
 													</div>
 													<div class="profile-user-info profile-user-info-striped">
 														<div class="profile-info-row">
@@ -291,7 +310,7 @@ function openWindow( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-red bigger-110"></i>
-																<span class="editable" id="about"><?= $spt_dalam->tujuan ?></span>
+																<span class="editable" id="about"><?= $spt_dalam->tujuan ." <i class='red'>(Wilayah ".$spt_dalam->wilayah.")</i>" ?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
@@ -317,6 +336,9 @@ function openWindow( url ){
 </div>
 
 <div class="row">
+	<?php 
+		if (count($spt_pengikut) > 0) {	
+	 ?>
     <div style="padding-top: 0px;"  class="no-print"></div>
     <table border="0">
 
@@ -328,7 +350,16 @@ function openWindow( url ){
         <tr>
             <td colspan="2" style="text-align: justify;">
             	<p>
-                Sudah terima dari <strike>Pengguna Anggaran Dinas Pekerjaan Umum Dan Penataan Ruang Kabupaten Pasaman Barat</strike> uang Sejumlah Rp. <?= $Total ?>,- (<?= angka_terbilang($Total) ?>) sebab dari pembayaran lunas pada <?= $nm_diperintah ?><?= $cs ?>  Biaya Perjalanan Dinas Dalam Rangka <?= $maksud ?> ke <?= $tujuan ?> Kec. <?= $kec ?> Tanggal <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> pada Kegiatan <?= $KEGIATAN ?> berdasarkan SPPD Nomor : <?= $no_sppd ?>  tanggal   <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  dengan perincian sebagai berikut :
+                Sudah terima dari <?= $retVal = ($anggaran!="") ? $this->m_master->anggaran($anggaran,"ket") : "<strike>ANGGARAN</strike>" ; ?>  
+                uang Sejumlah Rp. <?= angka($Total) ?>,- (<?= angka_terbilang($Total) ?>) 
+                sebab dari pembayaran lunas pada <?= $nm_diperintah ?><?= $cs ?>  
+                Biaya Perjalanan Dinas Dalam Rangka <?= $maksud ?> 
+                ke <?= $tujuan ?> Kec. <?= $kec ?> 
+                Tanggal <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> 
+                pada Kegiatan <?= $KEGIATAN ?> 
+                berdasarkan SPPD Nomor : <?= $no_sppd ?>  
+                tanggal   <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  
+                dengan perincian sebagai berikut :
             	</p>
             </td>
         </tr>
@@ -358,12 +389,13 @@ function openWindow( url ){
         </tr>
         <tbody>
         	<?php 
+        	if ($spt_pengikut > 0) {
         		$no=1; 
         		$Total=0;
         		foreach ($spt_pengikut as $pengikut) { 
-        				$vnama = $pengikut["nama_pegawai"];
-        				$vnip = ($pengikut["nip"]=="") ? $pengikut["pangkat"] : $pengikut["nip"] ;
-        				$vgol = ($pengikut["pangkat"]==$pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"]
+        				$vnama = $pengikut["nama_pengikut"]." ".$pengikut["wilayah"];
+        				$vnip = ($pengikut["nip_pengikut"]=="") ? $pengikut["pangkat"] : $pengikut["nip"] ;
+        				$vgol = ($pengikut["pangkat"] == $pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"];
 
         		?>
             <tr>
@@ -399,22 +431,24 @@ function openWindow( url ){
                 				$uang_harian = 0;
                 				break;
                 		}
-                		echo $uang_harian;
+                		echo angka($uang_harian) ." <br><i class='red'>( wilayah ". $wil.")</i>";
                 	?>
                 		
                 </td>
-                <td><?= $subtotal = (intval($uang_harian) * intval($hari_perjalanan)) ?></td>
+                <td><?= angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan))) ?></td>
                 <td><?= $no ?>. <button class="btn btn-xs btn-success">YA</button></td>
                  <!--td></td-->
             </tr>
             <?php 
             	$no++; 
             	$Total += $subtotal;
-        	} ?>
+        	} 
+        	} 
+        	?>
             <tfoot>
                 <tr>
                     <th colspan="4">J U M L A H</th>
-                    <th><?= $Total ?></th>
+                    <th><?= angka($Total) ?></th>
                     <th></th>
                     <th></th>
                     <!--td></td-->
@@ -422,7 +456,7 @@ function openWindow( url ){
             </tfoot>
         </tbody>
     </table>
-
+<!--?= $this->db->last_query() ?-->
     <table border="0">
         <tr>
             <td width="50%"></td>
@@ -472,8 +506,14 @@ function openWindow( url ){
             <td>NIP. <?= $nipPPTK ?></td>
         </tr>
     </table>
-    
+<?php }else{ ?>  
+<center>
+	<a href="<?= base_url('spt/dalam/pengikut/').'/'.$this->uri->segment(4) ?>" class="btn btn-xs btn-warning"><i class="fa fa-users"></i> + PENGIKUT</a>
+</center>
+ 
+<?php } ?>
 </div>
+
 												</div>
 
 												<div id="bbm" class="tab-pane fade">
@@ -564,3 +604,4 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 								
 							</div>	
 						</div>		
+

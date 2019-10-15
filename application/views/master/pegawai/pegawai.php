@@ -25,6 +25,11 @@
 			<td><?= $pegawai->golongan ?></td>
 		</tr>
 		<tr>
+			<th width= "20%">Eselon</th>
+			<td width= "1%">:</td>
+			<td><?= $pegawai->eselon ?></td>
+		</tr>
+		<tr>
 			<th width= "20%">Tahun</th>
 			<td width= "1%">:</td>
 			<td><?= $pegawai->tahun ?></td>
