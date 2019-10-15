@@ -650,6 +650,29 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										</div>
 									</div>
 									<div class="form-group">
+										
+										<label class="col-sm-3 control-label no-padding-right" for="pilih_beban">Pada Kegiatan*</label>
+										<div class="col-sm-9">
+												<?php 
+													$btns = ($addanggaran=="")? "btn-danger" : "btn-primary";
+													$anga = ($addanggaran=="")? "":$this->m_master->anggaran($addanggaran);		
+												 ?>
+											<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_kegiatan">
+												<?php 
+												 		echo $retVal = ($addanggaran == "") ? "ATAS BEBAN ?" : $anga->kode." ".$anga->ket." ".$anga->tahun;
+												 ?>
+											
+											</span>
+											<select <?= $display ?>id="pilih_kegiatan" placeholder="pilih_kegiatan" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="kegiatan">
+												
+												<option value="<?= $idkegiatan ?>"><?= $kegiatan ?></option>
+												<?php foreach ($kegiatan as $keg) {
+													echo '<option value="'.$keg['id_kegiatan'].'">'.$keg['rekening'].' ▶ '.$keg['kegiatan'].'</option>';
+												} ?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="pasal_anggaran">Pasal Anggaran*</label>
 
 										<div class="col-sm-9">

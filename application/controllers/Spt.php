@@ -20,7 +20,7 @@ class Spt extends CI_Controller {
 	 */
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['m_dalam','m_transport','m_tujuan']);
+		$this->load->model(['m_dalam','m_transport','m_tujuan','m_kegiatan']);
 		//$this->load->library(['session','Mylib_form','Mylib_themes','l_paket']);
 		////$this->load->helper(['url','tanggal','tanggal_id','terbilang']);
 		$this->load->library(['session','form_validation']);
@@ -181,12 +181,14 @@ class Spt extends CI_Controller {
 			$data['anggaran']     = $this->m_master->anggaran();
 			$data['transportasi'] = $this->m_transport->trasnsportasi();
 			$data['tujuan']       = $this->m_tujuan->tujuan();
+			$data['kegiatan']     = $this->m_kegiatan->kegiatan();
 
 			$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
 				//echo $this->db->last_query();
 					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
 		}elseif($TOKEN==='add'){

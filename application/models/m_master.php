@@ -144,7 +144,94 @@ class M_master extends CI_Model {
 			else{
 				return $query->result_array();
 			}
-		}	
+		}
+
+		function belanja($ID = null, $key=null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_belanja","ASC");
+			if($ID != null){
+				$this->db->where("id_belanja", $ID);
+			}
+			$query=$this->db->get("m_belanja");
+			if($ID != null && $key != null){
+				return $query->row($key);
+			}
+			elseif($ID != null){
+				return $query->row();
+			}
+			else{
+				return $query->result_array();
+			}
+		}
+
+		function kegiatan($ID = null, $key=null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_kegiatan","ASC");
+			if($ID != null){
+				$this->db->where("id_kegiatan", $ID);
+			}
+			$query=$this->db->get("m_kegiatan");
+			if($ID != null && $key != null){
+				return $query->row($key);
+			}
+			elseif($ID != null){
+				return $query->row();
+			}
+			else{
+				return $query->result_array();
+			}
+		}
+
+		function pegawai_data($ID = null, $key=null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_peg","ASC");
+			if($ID != null){
+				$this->db->where("id_peg", $ID);
+			}
+			$query=$this->db->get("m_pegawai");
+			if($ID != null && $key != null){
+				return $query->row($key);
+			}
+			elseif($ID != null){
+				return $query->row();
+			}
+			else{
+				return $query->result_array();
+			}
+		}
+
+
+		function tujuan($ID = null, $key=null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("id_tujuan","ASC");
+			if($ID != null){
+				$this->db->where("id_tujuan", $ID);
+			}
+			$query=$this->db->get("m_tujuan");
+			if($ID != null && $key != null){
+				return $query->row($key);
+			}
+			elseif($ID != null){
+				return $query->row();
+			}
+			else{
+				return $query->result_array();
+			}
+		}
+
+		function trasportsasi_nomor($ID_TRAN = null){
+			//$ID_CLIENT = $this->session->userdata('idclient');
+			$this->db->order_by("nomor","ASC");
+			if($ID_TRAN != null){
+				$this->db->where("nomor", $ID_TRAN);
+			}
+			$query=$this->db->get("m_trasportsasi");
+			if($ID_TRAN != null){
+				return $query->row();
+			}else{
+				return $query->result_array();
+			}
+		}		
 
 
 }

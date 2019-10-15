@@ -190,6 +190,7 @@ class M_dalam extends CI_Model {
 			return $query->row($getfield);
 		}
 
+
 		function query_update(){
 			//SET DATA
 				$post = $this->input->post();
@@ -293,11 +294,12 @@ class M_dalam extends CI_Model {
 				 }
 				//$result  = ($this->db->affected_rows() > 1) ? false : true;
 				//echo $this->db->affected_rows();
-				 
     	}
     	public function deletePengikut($id){
     		return $this->db->delete("spt_pengikut", array("id_peng" => $id));
     	}	
+
+    	
 
 
 }

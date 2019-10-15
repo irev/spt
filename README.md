@@ -46,7 +46,7 @@ Ukuran Kertas	F4
 
 
 # Uanga Harian Dalam Daerah
-			wil 1	wil 2	wil 3
+		wil 1	wil 2	wil 3
 - IV		150000	175000	200000	
 - III		140000	165000	190000	
 - II,I		130000	155000	180000	
