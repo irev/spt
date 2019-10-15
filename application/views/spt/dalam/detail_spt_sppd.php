@@ -27,7 +27,6 @@
         				$BENDAHARA 		= $pengikut["bendahara"];
         				$jabBENDAHARA 	= $pengikut["jabbendahara"];
         				$nipBENDAHARA 	= $pengikut["nipbendahara"];
-
         				$anggaran 		= $pengikut["anggaran"];
 
 
