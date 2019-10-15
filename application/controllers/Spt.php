@@ -223,7 +223,7 @@ class Spt extends CI_Controller {
 			            	if($this->m_dalam->query_update() === true){
 			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
 								$red = base_url("spt/dalam");
-								//header("refresh:4; url=$red"); 
+								header("refresh:4; url=$red"); 
 							}else{
 								//echo $this->db->last_query();
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
