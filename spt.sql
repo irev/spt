@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 15 Okt 2019 pada 06.49
+-- Generation Time: 15 Okt 2019 pada 09.01
 -- Versi Server: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -240,18 +240,24 @@ CREATE TABLE `m_trasportsasi` (
   `jenis` varchar(100) NOT NULL COMMENT 'darat, laut',
   `roda` int(11) NOT NULL COMMENT '2,4',
   `cc` int(11) NOT NULL COMMENT 'cc kendaraan',
+  `bahan_bakar` varchar(30) NOT NULL,
   `wil1` decimal(50,0) NOT NULL COMMENT 'rp',
   `wil2` decimal(50,0) NOT NULL COMMENT 'rp',
   `wil3` decimal(50,0) NOT NULL COMMENT 'rp',
-  `perjalanan` set('','Darat','Udara','Laut') NOT NULL COMMENT 'Darat,Udara,Laut'
+  `liter1` int(11) NOT NULL,
+  `liter2` int(11) NOT NULL,
+  `liter3` int(11) NOT NULL,
+  `bbm_luar` decimal(50,0) NOT NULL,
+  `perjalanan` set('','Darat','Udara','Laut') NOT NULL COMMENT 'Darat,Udara,Laut',
+  `tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `m_trasportsasi`
 --
 
-INSERT INTO `m_trasportsasi` (`id_tran`, `nama`, `nomor`, `jenis`, `roda`, `cc`, `wil1`, `wil2`, `wil3`, `perjalanan`) VALUES
-(1, 'Rush', 'BA  8036 S', 'darat', 4, 1500, '150000', '180000', '185000', '');
+INSERT INTO `m_trasportsasi` (`id_tran`, `nama`, `nomor`, `jenis`, `roda`, `cc`, `bahan_bakar`, `wil1`, `wil2`, `wil3`, `liter1`, `liter2`, `liter3`, `bbm_luar`, `perjalanan`, `tahun`) VALUES
+(1, 'Rush', 'BA  8036 S', 'darat', 4, 1500, 'Bensin', '150000', '180000', '185000', 20, 30, 40, '0', 'Darat', 2019);
 
 -- --------------------------------------------------------
 
@@ -276,9 +282,9 @@ CREATE TABLE `m_tujuan` (
 --
 
 INSERT INTO `m_tujuan` (`id_tujuan`, `tujuan`, `kec`, `kab`, `prov`, `jarak`, `wilayah`, `bbm`, `perjalanan`) VALUES
-(1, 'Air Bangis', 'Sungai Beremas', 'Pasaman Barat', 'Sumatera Barat', 25, '3', 0, 'Dalam'),
-(2, 'Ujung Gading', 'Lembah Melintang', 'Pasaman Barat', 'Sumatera Barat', 20, '3', 0, 'Dalam'),
-(3, 'Kinali', 'Kinali', 'Pasaman Barat', 'Sumatera Barat', 20, '2', 0, 'Dalam');
+(1, 'Air Bangis', 'Kec. Sungai Beremas', 'Pasaman Barat', 'Sumatera Barat', 25, '3', 0, 'Dalam'),
+(2, 'Ujung Gading', 'kec. Lembah Melintang', 'Pasaman Barat', 'Sumatera Barat', 20, '3', 0, 'Dalam'),
+(3, 'Kinali', 'kec. Kinali', 'Pasaman Barat', 'Sumatera Barat', 20, '2', 0, 'Dalam');
 
 -- --------------------------------------------------------
 
@@ -329,13 +335,13 @@ CREATE TABLE `spt_data` (
 --
 
 INSERT INTO `spt_data` (`id_spt`, `no_spt`, `no_sppd`, `nama`, `nip`, `pangkat`, `golongan`, `jabatan`, `maksud`, `transportasi`, `tujuan_id`, `tujuan`, `wilayah`, `tgl_berangkat`, `tgl_kembali`, `sumber_dana`, `ttd_tempat`, `ttd_tgl`, `ttd_jabatan`, `ttd_nama`, `ttd_gol`, `ttd_nip`, `beban`, `kegiatan_id`, `anggaran`, `c_date`, `up_date`, `ttd_sppd_tempat`, `ttd_sppd_tgl`, `ttd_sppd_nama`, `ttd_sppd_nip`, `ttd_sppd_gol`, `ttd_sppd_jabatan`, `perjalanan`, `tahun`) VALUES
-('5d991a25e9d6f', '090/12/SPT/DPUPR/2019', '900/12/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'Maksud dan tujuan spt', 'BA  8036 S', 0, 'Kinali', 2, '2019-10-16', '2019-10-21', '2019', 'Simpang Empat', '0000-00-00', 'Ka. UPT Peralatan & Pengujian', 'MUHAMMAD DIS, SE', 'Pengatur II/c', '19650401 200604 1 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-06 05:33:09', '2019-10-15 08:21:41', 'Simpang Empat', '2019-10-15', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'dalam', 2019),
+('5d991a25e9d6f', '090/12/SPT/DPUPR/2019', '900/12/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'Maksud dan tujuan spt', 'BA  8036 S', 0, 'Kinali', 2, '2019-10-16', '2019-10-21', '2019', 'Simpang Empat', '2019-10-01', 'Ka. UPT Peralatan & Pengujian', 'MUHAMMAD DIS, SE', 'Pengatur II/c', '19650401 200604 1 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-06 05:33:09', '2019-10-15 13:12:50', 'Simpang Empat', '2019-10-15', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'dalam', 2019),
 ('5d991a9252cbc', '090', '900', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'kj', 'BA  8036 S', 0, 'Padang', 3, '2019-10-01', '2019-10-06', '2019', 'Simpang Empat', '2019-10-06', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '1981102 2200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-06 05:34:58', '2019-10-15 07:49:59', 'Simpang Empat', '2019-10-07', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Kepala Dinas', '', 2019),
-('5d9dd99774eed', 'yu', 'yutyuio', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'wret', 'BA  8036 S', 0, 'Air Bangis', 4, '2019-10-09', '2019-10-16', '2019', 'Simpang Empat', '2019-10-09', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '1981102 2200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '', '2019-10-09 19:59:03', '2019-10-14 04:32:35', 'Simpang Empat', '2019-10-24', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', '', 0000),
-('5da520699ecfe', 'xxxxxxxxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxxxxxxx', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'Coba membuat SPT ', 'BA  8036 S', 0, 'Ujung Gading', 3, '2019-10-15', '2019-10-15', '2019', 'Simpang Empat', '2019-10-15', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 0, '1', '2019-10-15 08:27:05', '2019-10-15 08:48:23', 'Simpang Empat', '2019-10-16', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019),
-('5da5448017117', 'yyyyyyyy', 'yyyyyyyyyyy', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'sdsd', 'BA  8036 S', 0, 'Ujung Gading', 3, '2019-10-02', '2019-10-19', '2019', 'Simpang Empat', '2019-10-17', 'Kepala Bidang Bina Marga', 'BAMBANG SUMARSONO, ST', 'Penata Tingkat 1 III/d', '19770623 200604 1 009', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 0, '', '2019-10-15 11:01:04', '2019-10-15 11:01:04', 'Simpang Empat', '2019-10-16', 'DARMAWAN, ST', '19730901 200501 1 005', 'Penata Tingkat 1 III/d', 'Kepala Bidang Tataruang', 'dalam', 2019),
-('5da546587c6bd', 'fdfdfsd', 'fdfsdfd', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'cvcv', 'BA  8036 S', 0, 'Air Bangis', 3, '2019-10-15', '2019-10-16', '2019', 'Simpang Empat', '2019-10-17', 'Staf keuangan', 'FEBRI YETTI, SE', 'Penata III/c', '19810208 200901 2 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 0, '1', '2019-10-15 11:08:56', '2019-10-15 11:12:32', 'Simpang Empat', '2019-10-17', 'FEBRIANTO, ST', '19800224 200501 1 002', 'Penata Tingkat 1 III/d', 'Kepala Bidang Cipta Karya', 'dalam', 2019),
-('5da54b7d54c89', 'zzzzzzzzzzzz', 'zzzzzzzzzzzzz', 'BAMBANG SUMARSONO, ST', '19770623 200604 1 009', 'Penata Tingkat 1 III/d', 'Penata Tingkat 1 III/d', 'Kepala Bidang Bina Marga', 'test test', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-16', '2019-10-17', '2019', 'Simpang Empat', '2019-10-16', 'Kepala Bidang Cipta Karya', 'FEBRIANTO, ST', 'Penata Tingkat 1 III/d', '19800224 200501 1 002', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 0, '1', '2019-10-15 11:30:53', '2019-10-15 11:30:53', 'Simpang Empat', '2019-10-22', 'ELDON MARON, ST', '19730727 200604 1 006', 'Penata Tingkat 1 III/d', 'Kepala Bidang PSDA', 'dalam', 2019);
+('5d9dd99774eed', 'yu', 'yutyuio', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'wret', 'BA  8036 S', 1, 'Air Bangis', 4, '2019-10-09', '2019-10-16', '2019', 'Simpang Empat', '2019-10-09', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '1981102 2200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '', '2019-10-09 19:59:03', '2019-10-15 12:59:37', 'Simpang Empat', '2019-10-24', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', '', 0000),
+('5da520699ecfe', 'xxxxxxxxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxxxxxxx', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'Coba membuat SPT ', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-15', '2019-10-15', '2019', 'Simpang Empat', '2019-10-15', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 08:27:05', '2019-10-15 13:15:20', 'Simpang Empat', '2019-10-16', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019),
+('5da5448017117', 'yyyyyyyy', 'yyyyyyyyyyy', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'sdsd', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-02', '2019-10-19', '2019', 'Simpang Empat', '2019-10-17', 'Kepala Bidang Bina Marga', 'BAMBANG SUMARSONO, ST', 'Penata Tingkat 1 III/d', '19770623 200604 1 009', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '', '2019-10-15 11:01:04', '2019-10-15 13:15:14', 'Simpang Empat', '2019-10-16', 'DARMAWAN, ST', '19730901 200501 1 005', 'Penata Tingkat 1 III/d', 'Kepala Bidang Tataruang', 'dalam', 2019),
+('5da546587c6bd', 'fdfdfsd', 'fdfsdfd', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'cvcv', 'BA  8036 S', 1, 'Air Bangis', 3, '2019-10-15', '2019-10-16', '2019', 'Simpang Empat', '2019-10-17', 'Staf keuangan', 'FEBRI YETTI, SE', 'Penata III/c', '19810208 200901 2 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 11:08:56', '2019-10-15 13:14:59', 'Simpang Empat', '2019-10-17', 'FEBRIANTO, ST', '19800224 200501 1 002', 'Penata Tingkat 1 III/d', 'Kepala Bidang Cipta Karya', 'dalam', 2019),
+('5da54b7d54c89', 'zzzzzzzzzzzz', 'zzzzzzzzzzzzz', 'BAMBANG SUMARSONO, ST', '19770623 200604 1 009', 'Penata Tingkat 1 III/d', 'Penata Tingkat 1 III/d', 'Kepala Bidang Bina Marga', 'test test', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-16', '2019-10-17', '2019', 'Simpang Empat', '2019-10-16', 'Kepala Bidang Cipta Karya', 'FEBRIANTO, ST', 'Penata Tingkat 1 III/d', '19800224 200501 1 002', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 11:30:53', '2019-10-15 13:15:06', 'Simpang Empat', '2019-10-22', 'ELDON MARON, ST', '19730727 200604 1 006', 'Penata Tingkat 1 III/d', 'Kepala Bidang PSDA', 'dalam', 2019);
 
 -- --------------------------------------------------------
 
