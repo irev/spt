@@ -364,27 +364,27 @@ function goToPage( url ){
         </tr>
     </table>
 
-    <table border="1" class="table">
+    <table border="1" class="tables">
         <tr style="text-align: center !important;">
-            <th rowspan="2" width="1%">No</th>
-            <th rowspan="2" width="30%">Nama / NIP</th>
-            <th rowspan="2" width="10%">Eselon/Golongan</th>
-            <th colspan="2" width="20%">Uang Harian</th>
-            <th rowspan="2" width="10%">Jumlah<br/>Diterima</th>
-            <th rowspan="2" width="10%">Tanda Tangan</th>
+            <th rowspan="2" width="1%" style="text-align: center;">No</th>
+            <th rowspan="2" width="30%" style="text-align: center;">Nama / NIP</th>
+            <th rowspan="2" width="10%" style="text-align: center;">Eselon/Golongan</th>
+            <th colspan="2" width="20%" style="text-align: center;">Uang Harian</th>
+            <th rowspan="2" width="10%" style="text-align: center;">Jumlah<br/>Diterima</th>
+            <th rowspan="2" width="10%" style="text-align: center;">Tanda Tangan</th>
         </tr>
         <tr>
-            <th>Jumlah Hari</th>
-            <th>Satuan</th>
+            <th style="text-align: center;">Jumlah Hari</th>
+            <th style="text-align: center;">Satuan</th>
         </tr>
         <tr>
-        	<td>1</td>
-        	<td>2</td>
-        	<td>3</td>
-        	<td>4</td>
-        	<td>5</td>
-        	<td>6=(4x5)</td>
-        	<td>7</td>
+        	<th style="text-align: center;">1</th>
+        	<th style="text-align: center;">2</th>
+        	<th style="text-align: center;" >3</th>
+        	<th style="text-align: center;">4</th>
+        	<th style="text-align: center;">5</th>
+        	<th style="text-align: center;">6=(4x5)</th>
+        	<th style="text-align: center;">7</th>
         </tr>
         <tbody>
         	<?php 
@@ -400,15 +400,14 @@ function goToPage( url ){
             <tr>
                 <td style="text-align: right;"><?= $no ?>.</td>
                 <td><?= $vnama ?><br/><?= $vnip ?></td>
-                <td><?= $vgol ?></td>
-                <td><?php
-
+                <td style="text-align: center;"><?= $vgol ?></td>
+                <td style="text-align: center;"><?php
                 		//echo $pengikut["wilayah"]; 
                 		 $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
                 		 echo $hari_perjalanan;
 
                 ?></td>
-                <td>
+                <td style="text-align: right;">
                 	<?php 
                 	    //// TENTUKAN WILAYAH PERJALANAN DINAS
                 		$wil = $pengikut["wilayah"];
@@ -434,8 +433,8 @@ function goToPage( url ){
                 	?>
                 		
                 </td>
-                <td><?= angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan))) ?></td>
-                <td><?= $no ?>. <button class="btn btn-xs btn-success">YA</button></td>
+                <td style="text-align: right;"><?= angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan))) ?></td>
+                <td ><?= $no ?>. <button class="btn btn-xs btn-success">YA</button></td>
                  <!--td></td-->
             </tr>
             <?php 
@@ -446,9 +445,8 @@ function goToPage( url ){
         	?>
             <tfoot>
                 <tr>
-                    <th colspan="4">J U M L A H</th>
-                    <th><?= angka($Total) ?></th>
-                    <th></th>
+                    <th colspan="5" style="text-align: center;">J U M L A H</th>
+                    <th style="text-align: right;"><?= angka($Total) ?></th>
                     <th></th>
                     <!--td></td-->
                 </tr>

@@ -232,7 +232,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 													echo $_perintah = ($addnama=="") ? "Pilih Pegawai !" : $addnama ;
 												 ?>
 											</a>	
-											<select style="display:none;" id="pilih_pegawai" placeholder="pilih_pegawai" class="col-xs-10 col-sm-5 <?= $hide_input ?>" name="pilih_pegawai">
+											<select style="display:none;" id="pilih_pegawai" placeholder="pilih_pegawai" class="col-xs-10 col-sm-5 " name="perintah_untuk">
 												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
 												<?php foreach ($pegawai as $peg) {
 													echo '<option value="'.$peg['id_peg'].'">'.$peg['nama'].' ▶ '.$peg['nip'].' ▶ '.$peg['jabatan'].' ▶ '.$peg['golongan'].'</option>';

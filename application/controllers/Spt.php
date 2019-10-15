@@ -223,7 +223,7 @@ class Spt extends CI_Controller {
 			            	if($this->m_dalam->query_update() === true){
 			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
 								$red = base_url("spt/dalam");
-								header("refresh:4; url=$red"); 
+								//header("refresh:4; url=$red"); 
 							}else{
 								//echo $this->db->last_query();
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
@@ -309,29 +309,25 @@ function cek_db($ID=null){
 	}
 */
 	private function MSG($warna="danger", $intro= 'Upss!', $pesan=" TAMPIL PESAN DISINI "){
-
-		$_MSG = '
-										<div class="alert alert-'.$warna.'">
-											<button type="button" class="close" data-dismiss="alert">
-												<i class="ace-icon fa fa-times"></i>
-											</button>
-											<strong>
-												<i class="ace-icon fa fa-times"></i>
-												'.$intro.'
-											</strong>
-											'.$pesan.'.
-											<br>
-										</div>
-						';
-		return $_MSG;				
+			$_MSG = '
+				<div class="alert alert-'.$warna.'">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<strong>
+						<i class="ace-icon fa fa-times"></i>
+						'.$intro.'
+					</strong>
+						'.$pesan.'.
+						<br>
+				</div>';
+			return $_MSG;				
 	}
 
 	function prints($IDSPTDLAM=null){
 			$data['ID'] = $IDSPTDLAM;
 			$this->template->load('template','spt/menu_print',$data);
 	}
-
-	
 
 	 function print_dalam($IDSPTDLAM){
 	 	// add breadcrumbs
@@ -443,12 +439,12 @@ function cek_db($ID=null){
 	 	echo json_encode($result);
 	 }
 	function simpan_pengikut(){
-		if($this->m_dalam->query_simpan_pengikut()==TRUE){
+		if($this->m_dalam->query_simpan_pengikut()!=1){
 			 $this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
 			   	$this->session->flashdata('msg');
-			  	echo json_encode($data['data'] =true);
+			  	//echo $this->db->affected_rows();//json_encode($data['data'] =true);
 		}else{
-				echo json_encode($data['data'] =false); 
+				//echo $this->db->affected_rows();//echo json_encode($data['data'] =false); 
 		}
 	}
 
