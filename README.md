@@ -24,7 +24,8 @@ Ukuran Kertas	F4
 - ES III	 275000		
 - ES II		 350000		
 - STAF GOL 3,2,1 225000		
-- THL/PTT	 200000		
+- THL/PTT	 200000
+- ---------------
 				
 				
 				
