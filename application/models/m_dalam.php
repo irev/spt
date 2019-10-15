@@ -262,6 +262,7 @@ class M_dalam extends CI_Model {
     	public function query_simpan_pengikut($token=false,  $spt_id=null, $idpegawai=null, $perjalanan=null, $tahun=null){
 
     		$post = $this->input->post();
+    		
     		if($token){
     				$data = [
 	    				'spt_id' 	  => $spt_id,
@@ -279,19 +280,19 @@ class M_dalam extends CI_Model {
 						'tahun'       => $post["tahun"],
     		      	];
     		      	$ids   = $post["spt_id"];
-    		      	$pegid = $post["pegawai_id"];
+    				$idpeg = $post["pegawai_id"];
     		}      	
 				//$this->db->trans_start();
     		   $cek = $this->cekPenikut($ids, $idpeg); 
     		  //echo $this->db->last_query();
     		     if($cek === 0){
 					$this->db->insert("spt_pengikut", $data);
-					return $this->db->affected_rows();
+					echo $this->db->affected_rows();
 				 }else{
-				 	return "2";
+				 	echo "2";
 				 }
 				//$result  = ($this->db->affected_rows() > 1) ? false : true;
-				//echo " vv ". $this->db->affected_rows();
+				//echo $this->db->affected_rows();
 				 
     	}
     	public function deletePengikut($id){
