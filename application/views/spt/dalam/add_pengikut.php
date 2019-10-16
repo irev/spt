@@ -23,7 +23,7 @@ $this->session->flashdata('msg')
 											</a>
 											<a id="add_prngikut" class="btn btn-xs btn-warning" style="float: right;"> <i class="fa fa-users" > </i> + PENGIKUT </a>
 											<?php 
-												echo count($spt_pengikut);		
+												echo count($spt_pengikut)." Orang Pengikut";		
 											 ?>
 										<table class="table table-">
 											<thead>
@@ -38,6 +38,9 @@ $this->session->flashdata('msg')
 											</thead>
 											<tbody>
 												<?php 
+
+												$this->m_dalam->spt_pengikut($ID);
+												
 												$link ="";
 												if(count($spt_pengikut) > 0){
 												$no =1;
@@ -46,10 +49,10 @@ $this->session->flashdata('msg')
 												?>		
 														 <tr>
 														 <td><?= $no ?></td>
-														 <td><?= $peng['nama'] ?></td>
-														 <td><?= $peng['nip'] ?></td>
-														 <td><?= $peng['pangkat'] ?></td>
-														 <td><?= $peng['jabatan'] ?></td>
+														 <td><?= $peng['nama_pengikut'] ?></td>
+														 <td><?= $peng['nip_pengikut'] ?></td>
+														 <td><?= $peng['gol_pengikut'] ?></td>
+														 <td><?= $peng['jabatan_pengikut'] ?></td>
 														
 														 <td><a class="btn btn-xs btn-danger" onclick="deleteConfirm('<?= site_url('spt/delete_spt_dalam_pengikut/'.$peng['id_peng'].'/'.$peng['spt_id'].'?p=2') ?>')" ><i class="fa fa-minus"></i></a></td>
 														 </tr>
@@ -71,7 +74,7 @@ $this->session->flashdata('msg')
 													<tr>
 														<td>
 															<a href="#" class="btn_show_input btn btn-xs btn-primary" $display data-id="pilih_pegawai">Pilih Pegawai ▶</a>	
-															<select style="display:none;" id="pilih_pegawai" placeholder="pilih_pegawai" class="col-xs-12 col-sm-12 <?= $hide_input ?>" name="pilih_pegawai">
+															<select style="display:none;" id="pilih_pegawai" placeholder="pilih_pegawai" class="col-xs-12 col-sm-12 <?= $hide_input ?>" name="pilih_pegawai" required>
 																<option value=""></option>
 																<?php foreach ($pegawai as $peg) {
 																	echo '<option value="'.$peg['id_peg'].'">'.$peg['nama'].' ▶ '.$peg['nip'].' ▶ '.$peg['jabatan'].' ▶ '.$peg['golongan'].'</option>';

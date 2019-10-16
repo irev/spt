@@ -43,6 +43,7 @@
 				var nip      =$('#nip').val();
 				var jabatan  =$('#jabatan').val();
 				var golongan =$('#pangkat').val();
+				if(nama!="" && jabatan !="" && golongan !="" ){
 				$.ajax({
 					url: '<?= base_url()?>spt/simpan_pengikut',
 					type: 'POST',
@@ -62,11 +63,16 @@
 						if (data==true) {
 							alert('Data berhasil disimpan');
 							location.reload();
+						}else if(data==2){
+							alert('Sudah Ada');	
 						}else{
 							alert('Data gagal disimpan');
 						}
 					}	
 				});
+				}else{
+					alert('Belum memilih pegawai');
+				}
 	});
 
 </script>

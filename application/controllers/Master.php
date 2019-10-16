@@ -139,11 +139,15 @@ public function pegawai($TOKEN=null, $ID=null)
 				}
 			}
 			$data['pegawai'] = $this->m_master->pegawai($ID);
+			//echo $this->db->last_query();
 			$data['jabatan'] = $this->m_master->jabatan();
 			$data['golongan'] = $this->m_master->golongan();
+			$data['eselon'] = $this->m_master->eselon();
 			$this->template->load_js('template','master/pegawai/add_pegawai', $data);
 		}else{
 			$data['pegawai'] = $this->m_master->pegawai();
+			//echo $this->db->last_query();
+			$data['eselon'] = $this->m_master->eselon();
 			$this->template->load_js('template','master/pegawai/v_pegawai', $data);
 		}
 		

@@ -2,9 +2,14 @@
  * Meedun (http://blog.simeedun.com)
  * Created 2019.
  !*/
+.meedun-input{
+    color: #ff6e00    !important;
+}
+
+
 input[readonly].meedun-input  {
      color: #939192;
-    background: #ffffff!important;
+    background: #ffffff !important;
     cursor: default;
     display: block;
     background: #333;
@@ -12,6 +17,8 @@ input[readonly].meedun-input  {
     outline: 0;
     border-width: 0 0 1px;
     border-color: #ffb752;
+    font-weight: bold !important;
+    color: #ff6e00 !important;
     /* width: 100%; */
     /* padding-top: 36.66667px; */
     /*border: none;*/

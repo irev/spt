@@ -1,19 +1,23 @@
 <?php 
 if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
-	$addID		 = "";
-	$addNama     = "";
-	$addNip      = "";
-	$addJabatan  = "";
-	$addGolongan = "";
-	$addTahun 	 = "";
+	$addID          = "";
+	$addNama        = "";
+	$addNip         = "";
+	$addJabatan     = "";
+	$addGolongan    = "";
+	$addGolongan_id = "";
+	$addTahun       = "";
+	$addeselon      ="";
 	$JUDUL_FORM  = "<i class='fa fa-user'></i> Tambah Pegawai <small>Tambah Master Pegawai</small>";
 }else{
-	$addID		 = $pegawai->id_peg;
-	$addNama     = $pegawai->nama;
-	$addNip      = $pegawai->nip;
-	$addJabatan  = $pegawai->jabatan;
-	$addGolongan = $pegawai->golongan;
-	$addTahun    = $pegawai->tahun;
+	$addID          = $pegawai->id_peg;
+	$addNama        = $pegawai->nama;
+	$addNip         = $pegawai->nip;
+	$addJabatan     = $pegawai->jabatan;
+	$addGolongan    = $pegawai->golongan;
+	$addGolongan_id = $pegawai->golongan_id;
+	$addTahun       = $pegawai->tahun;
+	$addeselon      = $pegawai->eselon;
 	$JUDUL_FORM  = "<i class='fa fa-user'></i> Ubah Pegawai <small>Ubah Infomasi Pegawai</small>";
 
 }
@@ -50,6 +54,21 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 									</div>
 									
 									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="eselon"> Eselon*</label>
+
+										<div class="col-sm-9">	
+											<select id="form-field-1" placeholder="eselon" class="col-xs-10 col-sm-5" name="eselon">
+												<option value="<?= $addeselon ?>"><?= $addeselon ?></option>
+												<?php foreach ($eselon as $jab) {
+													echo '<option value="'.$jab['id_eselon'].'">'.$jab['eselon'].'</option>';
+												} ?>
+												
+											</select>				
+
+										</div>
+									</div>
+
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="jabatan"> Jabatan*</label>
 
 										<div class="col-sm-9">	
@@ -69,14 +88,13 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 										<div class="col-sm-9">
 											<select id="golongan" placeholder="Golongan" class="col-xs-10 col-sm-5" name="golongan">
-												<option value="<?= $addGolongan ?>"><?= $addGolongan ?></option>
-												<option value="THL">++ Tenaga Harian Lepas ++</option>
-												<option value="PTT">++ Pegwai Tidak Tetap ++</option>
+												<option value="<?= $addGolongan_id ?>"><?= $addGolongan ?></option>
 												<?php foreach ($golongan as $gol) {
-														echo '<option value="'.$gol['pangkat'].' '.$gol['golongan'].'">'.$gol['pangkat'].' '.$gol['golongan'].'</option>';
+														echo '<option value="'.$gol['id_gol'].'">'.$gol['pangkat'].' '.$gol['golongan'].'</option>';
 												} ?>
 												
 											</select>
+											<input type="text" id="nm_gol" name="nm_gol" value="<?= $addGolongan ?>" style="display: none;">
 										</div>
 									</div>
 									
@@ -142,6 +160,11 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 		$(".alert").slideUp(500);
 		//window.location = "<?= base_url('master/jabatan/') ?>";
 	}, 3000);
+	$("#golongan").change(function(){
+		var selectedText = $("#golongan option:selected").html();
+		//console.log(selectedText);
+		$("#nm_gol").val(selectedText);
+	});
 </script>
 
 <?= $TOKEN ?><br>	

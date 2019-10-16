@@ -20,7 +20,7 @@ class Spt extends CI_Controller {
 	 */
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['m_dalam','m_transport','m_tujuan']);
+		$this->load->model(['m_dalam','m_transport','m_tujuan','m_kegiatan']);
 		//$this->load->library(['session','Mylib_form','Mylib_themes','l_paket']);
 		////$this->load->helper(['url','tanggal','tanggal_id','terbilang']);
 		$this->load->library(['session','form_validation']);
@@ -178,13 +178,18 @@ class Spt extends CI_Controller {
 		$data['ID'] = $ID;
 			$data['spt_dalam']    = $this->m_dalam->spt_dalam();
 			$data['pegawai']      = $this->m_master->pegawai();
+			$data['anggaran']     = $this->m_master->anggaran();
 			$data['transportasi'] = $this->m_transport->trasnsportasi();
 			$data['tujuan']       = $this->m_tujuan->tujuan();
+			$data['kegiatan']     = $this->m_kegiatan->kegiatan();
+
 			$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
+				//echo $this->db->last_query();
 					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
 		}elseif($TOKEN==='add'){
 	 		$this->breadcrumbs->push('ADD', '/add');
@@ -202,7 +207,7 @@ class Spt extends CI_Controller {
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
 							}
 						}else{
-							$this->session->set_flashdata('msg', $this->MSG('danger', 'Error', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
 						}
 					}
 	        	//$data['transportasi'] = $this->m_dalam->jabatan($ID);
@@ -233,10 +238,12 @@ class Spt extends CI_Controller {
 		}elseif($TOKEN==='pengikut'){
 			$this->breadcrumbs->push('Pengikut', 'spt/dalam/edit/'.$ID.'?p=2');
 			$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+			//echo $this->db->last_query();
 			$this->template->load_js('template','spt/dalam/add_pengikut', $data);
 		}else{
 				$this->template->load_js('template','spt/dalam/spt', $data);
-		}	
+		}
+		//echo $this->db->last_query();	
 	 }
 
 
@@ -304,29 +311,25 @@ function cek_db($ID=null){
 	}
 */
 	private function MSG($warna="danger", $intro= 'Upss!', $pesan=" TAMPIL PESAN DISINI "){
-
-		$_MSG = '
-										<div class="alert alert-'.$warna.'">
-											<button type="button" class="close" data-dismiss="alert">
-												<i class="ace-icon fa fa-times"></i>
-											</button>
-											<strong>
-												<i class="ace-icon fa fa-times"></i>
-												'.$intro.'
-											</strong>
-											'.$pesan.'.
-											<br>
-										</div>
-						';
-		return $_MSG;				
+			$_MSG = '
+				<div class="alert alert-'.$warna.'">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<strong>
+						<i class="ace-icon fa fa-times"></i>
+						'.$intro.'
+					</strong>
+						'.$pesan.'.
+						<br>
+				</div>';
+			return $_MSG;				
 	}
 
 	function prints($IDSPTDLAM=null){
 			$data['ID'] = $IDSPTDLAM;
 			$this->template->load('template','spt/menu_print',$data);
 	}
-
-	
 
 	 function print_dalam($IDSPTDLAM){
 	 	// add breadcrumbs
@@ -438,12 +441,12 @@ function cek_db($ID=null){
 	 	echo json_encode($result);
 	 }
 	function simpan_pengikut(){
-		if($this->m_dalam->query_simpan_pengikut()==TRUE){
+		if($this->m_dalam->query_simpan_pengikut()!=1){
 			 $this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
 			   	$this->session->flashdata('msg');
-			  	echo json_encode($data['data'] =true);
+			  	//echo $this->db->affected_rows();//json_encode($data['data'] =true);
 		}else{
-				echo json_encode($data['data'] =false); 
+				//echo $this->db->affected_rows();//echo json_encode($data['data'] =false); 
 		}
 	}
 

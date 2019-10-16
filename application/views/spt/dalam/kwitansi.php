@@ -6,7 +6,7 @@
                         $nip_diperintah = $pengikut["nip_diperintah"];
                         $pangkat_diperintah = $pengikut["pangkat_diperintah"];
                         $golongan_diperintah = $pengikut["golongan_diperintah"];
-                        $cs = (count($spt_pengikut) >= 1 ) ? ", {Cs}" : "";
+                        $cs = (count($spt_pengikut) >= 1 ) ? ", Cs" : "";
                         $maksud = $pengikut["maksud"];          
                         $tujuan = $pengikut["tujuan"];          
                         $kec    = $pengikut["kec"];
@@ -27,6 +27,7 @@
                         $BENDAHARA      = $pengikut["bendahara"];
                         $jabBENDAHARA   = $pengikut["jabbendahara"];
                         $nipBENDAHARA   = $pengikut["nipbendahara"];
+                        $anggaran       = $pengikut["anggaran"];
 
                         $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
                          //// TENTUKAN WILAYAH PERJALANAN DINAS
@@ -115,6 +116,9 @@
     }
 
 /* PAGE */
+    .blue{
+        color: #79798e;
+    }
     table {
         width: 100%;
         border-collapse: collapse;
@@ -194,7 +198,7 @@ function openWindow( url ){
         <tr>
             <td colspan="2" style="text-align: justify;">
                 <P>
-                 Sudah terima dari Pengguna Anggaran Dinas Pekerjaan Umum Dan Penataan Ruang Kabupaten Pasaman Barat uang Sejumlah Rp. <?= $Total ?>,- (<?= angka_terbilang($Total) ?>) sebab dari pembayaran lunas pada <?= $nm_diperintah ?><?= $cs ?>  Biaya Perjalanan Dinas Dalam Rangka <?= $maksud ?> ke <?= $tujuan ?> Kec. <?= $kec ?> Tanggal <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> pada Kegiatan <?= $KEGIATAN ?> berdasarkan SPPD Nomor : <?= $no_sppd ?>  tanggal   <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  dengan perincian sebagai berikut :
+                 <span class="blue">Sudah terima dari</span> <?= $this->m_master->anggaran($anggaran,"ket") ?>  <span class="blue">uang Sejumlah Rp.</span> <?= angka($Total) ?>,- (<?= angka_terbilang($Total) ?>)  <span class="blue">sebab dari pembayaran lunas pada</span> <?= $nm_diperintah ?><?= $cs ?>  <span class="blue">Biaya Perjalanan Dinas Dalam Rangka</span> <?= $maksud ?> <span class="blue">spane</i> <?= $tujuan ?> Kec. <?= $kec ?> <span class="blue">Tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> <span class="blue">pada Kegiatan</span> <?= $KEGIATAN ?> <span class="blue">berdasarkan SPPD Nomor :</span> <?= $no_sppd ?>  <span class="blue">tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  <span class="blue">dengan perincian sebagai berikut :</span>
                  </P>
             </td>
         </tr>
@@ -227,8 +231,8 @@ function openWindow( url ){
                 $no=1; 
                 $Total=0;
                 foreach ($spt_pengikut as $pengikut) { 
-                        $vnama = $pengikut["nama_pegawai"];
-                        $vnip = ($pengikut["nip"]=="") ? $pengikut["pangkat"] : $pengikut["nip"] ;
+                        $vnama = $pengikut["nama_pengikut"];
+                        $vnip = ($pengikut["nip_pengikut"]=="") ? $pengikut["pangkat"] : $pengikut["nip_pengikut"] ;
                         $vgol = ($pengikut["pangkat"]==$pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"]
 
                 ?>
@@ -265,11 +269,11 @@ function openWindow( url ){
                                 $uang_harian = 0;
                                 break;
                         }
-                        echo $uang_harian;
+                        echo angka($uang_harian);
                     ?>
                         
                 </td>
-                <td style="text-align: right;"><?= $subtotal = (intval($uang_harian) * intval($hari_perjalanan)) ?></td>
+                <td style="text-align: right;"><?= angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan))) ?></td>
                 <td><?= $no ?>. <button class="btn btn-xs btn-success no-print">YA</button></td>
                  <!--td></td-->
             </tr>
@@ -280,7 +284,7 @@ function openWindow( url ){
             <tfoot>
                 <tr>
                     <th style="text-align: right;" colspan="5">J U M L A H</th>
-                    <th style="text-align: right;"><?= $Total ?></th>
+                    <th style="text-align: right;"><?= angka($Total) ?></th>
                     <th></th>
 
                     <!--td></td-->

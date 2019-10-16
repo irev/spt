@@ -82,7 +82,12 @@ class M_dalam extends CI_Model {
 			$this->db->select(
 				"spt_pengikut.*, 
 				m_pegawai.*, 
-				m_pegawai.nama as nama_pegawai, 
+				`m_pegawai`.`nama` as `nama_pengikut`, 
+				`m_pegawai`.`nip` as `nip_pengikut`,
+				`m_pegawai`.`jabatan` as `jabatan_pengikut`,
+				`m_pegawai`.`golongan` as `gol_pengikut`,
+				`m_pegawai`.`eselon_id` as `eselon_pengikut`,
+
 				spt_data.*,
 				spt_data.nama as nm_diperintah,
 				spt_data.nip as nip_diperintah,
@@ -118,12 +123,12 @@ class M_dalam extends CI_Model {
 				//b.nama as b_nama, b.nip as b_nip, b.jabatan as b_jabatan
 			);
 			$this->db->where("spt_id", $ID_SPT);
-			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg");
-			$this->db->join("spt_data","spt_data.id_spt=spt_pengikut.spt_id");
-			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id");
-			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id");
-			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id");
-			$this->db->join("m_kegiatan","m_kegiatan.id_kegiatan=spt_data.kegiatan_id");
+			$this->db->join("m_pegawai","spt_pengikut.pegawai_id=m_pegawai.id_peg","LEFT");
+			$this->db->join("spt_data","spt_data.id_spt=spt_pengikut.spt_id","LEFT");
+			$this->db->join("m_golongan","m_golongan.id_gol=m_pegawai.golongan_id","LEFT");
+			$this->db->join("m_eselon","m_eselon.id_eselon=m_pegawai.eselon_id","LEFT");
+			$this->db->join("m_tujuan","m_tujuan.id_tujuan=spt_data.tujuan_id","LEFT");
+			$this->db->join("m_kegiatan","m_kegiatan.id_kegiatan=spt_data.kegiatan_id","LEFT");
 			//$this->db->join("m_kegiatan as k","k.kpa=m_pegawai.id_peg");
 			//$this->db->join("m_kegiatan as p","p.pptk=m_pegawai.id_peg");
 			//$this->db->join("m_kegiatan as b","b.bendahara=m_pegawai.id_peg");
@@ -149,7 +154,7 @@ class M_dalam extends CI_Model {
 
 				$this->tujuan_id        =$post['pilih_tujuan'];
 				$this->tujuan           =$post['tujuan'];
-				$this->$wilayah			=$post['wilayah'];
+				$this->wilayah			=$post['wilayah'];
 				$this->tgl_berangkat    =$post['berangkat'];
 				$this->tgl_kembali      =$post['kembali'];
 				$this->sumber_dana      =$post['tahun'];
@@ -171,9 +176,10 @@ class M_dalam extends CI_Model {
 				$this->tahun 			=date("Y");
 				///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
-				$this->anggaran         =$post['pasal_anggaran'];
+				$this->anggaran         =$post['pilih_beban'];
 			//EXE
 			    $this->db->insert($this->_table, $this);
+			    $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
 					$result  = ($this->db->affected_rows() != 1) ? false : true;
 					return $result;
 		}
@@ -183,6 +189,7 @@ class M_dalam extends CI_Model {
 			$query=$this->db->get($gettabel); //TABEL SPT
 			return $query->row($getfield);
 		}
+
 
 		function query_update(){
 			//SET DATA
@@ -222,11 +229,13 @@ class M_dalam extends CI_Model {
 				$this->ttd_sppd_jabatan =$post['ttd_sppd_jabatan'];
 				$this->perjalanan 		="dalam";
 				$this->tahun 			=date("Y");
+
 			///// INPUT TAMBAHAN UNTUK SPPD
 				$this->beban            ='DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
-				$this->anggaran         =$post['pasal_anggaran'];
+				$this->anggaran         =$post['pilih_beban'];
 			//EXE
 		        $this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
+		        $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
 				//CEK KONDISI
 				$result  = ($this->db->affected_rows() >= 1) ? false : true;
 				return  $result;
@@ -238,25 +247,59 @@ class M_dalam extends CI_Model {
     	}
 
 
-	////// query pengikut
+		////// query pengikut
     	//public $_tabel_pengikut = 'spt_pengikut';
     	public $tahun;
-    	public function query_simpan_pengikut(){
+    	private function cekPenikut($IDSPT =null, $IDPEGAWAI=null){
+    		if ($IDSPT !=null && $IDPEGAWAI!=null) {
+    			 $this->db->select("*");
+    			 $this->db->where( "pegawai_id",$IDPEGAWAI);
+    			 $this->db->where( "spt_id",$IDSPT);
+    			$query=$this->db->get("spt_pengikut"); //TABEL SPT
+				return $this->db->affected_rows();
+			}
+
+    	}
+    	public function query_simpan_pengikut($token=false,  $spt_id=null, $idpegawai=null, $perjalanan=null, $tahun=null){
+
     		$post = $this->input->post();
-    		$data = [
-	    				'spt_id' 	 => $post["spt_id"],
+    		
+    		if($token){
+    				$data = [
+	    				'spt_id' 	  => $spt_id,
+						'pegawai_id'  => $idpegawai,
+						'perjalanan'  => $perjalanan,
+						'tahun'       => $tahun,
+    		      	];
+    		      	$ids   = $spt_id;
+    		      	$idpeg = $idpegawai;
+    		}else{
+    				$data = [
+	    				'spt_id' 	  => $post["spt_id"],
 						'pegawai_id'  => $post["pegawai_id"],
 						'perjalanan'  => $post["perjalanan"],
 						'tahun'       => $post["tahun"],
-    		      ];
+    		      	];
+    		      	$ids   = $post["spt_id"];
+    				$idpeg = $post["pegawai_id"];
+    		}      	
 				//$this->db->trans_start();
-				$this->db->insert("spt_pengikut", $data);
-				$result  = ($this->db->affected_rows() != 1) ? false : true;
-				return $result;
+    		   $cek = $this->cekPenikut($ids, $idpeg); 
+    		  //echo $this->db->last_query();
+    		     if($cek === 0){
+					$this->db->insert("spt_pengikut", $data);
+					echo $this->db->affected_rows();
+				 }else{
+				 	echo "2";
+				 }
+				//$result  = ($this->db->affected_rows() > 1) ? false : true;
+				//echo $this->db->affected_rows();
     	}
     	public function deletePengikut($id){
     		return $this->db->delete("spt_pengikut", array("id_peng" => $id));
     	}	
+
+    	
 
 
 }
