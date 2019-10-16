@@ -283,7 +283,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<ul class="submenu">
 							<li class="">
-								<a href="<?= base_url('spt/dev') ?>">
+								<a href="<?= base_url('panel') ?>">
 									<i class="menu-icon fa fa-database"></i>
 									BACKUP DATA &amp; RESTORE
 								</a>

@@ -34,14 +34,28 @@ class Spt extends CI_Controller {
 		}
 		$this->breadcrumbs->push('<i class="menu-icon fa fa-list"></i> Master', '/master');
 	}
-	public function back_page(){
+
+
+
+
+
+	public function back_page($NUM=NULL){
 		$this->load->library('user_agent');
 		if ($this->agent->is_referral())
 		{
 		    echo $this->agent->referrer();
 		    redirect($_SERVER['HTTP_REFERER']);
 		}
-	}	
+		print_r();
+	}
+
+
+
+	/**
+	 * { function_description }
+	 *
+	 * @return     array  ( description_of_the_return_value )
+	 */
 	function rule_sptdalam(){
 		return [
             ['field' => 'nama',
@@ -72,6 +86,10 @@ class Spt extends CI_Controller {
             'label' => 'Transportasi',
             ],
         //pilih_tujuan    
+            ['field' => 'pilih_tujuan',
+            'label' => 'Tujuan',
+            'rules' => 'required'],
+
             ['field' => 'tujuan',
             'label' => 'Nama',
             'rules' => 'required'],
@@ -101,11 +119,11 @@ class Spt extends CI_Controller {
             'rules' => 'required'],
         //nomor_spt     
             ['field' => 'nomor_spt',
-            'label' => 'nomor_spt',
+            'label' => 'Nomor SPT',
             'rules' => 'required'],
         //nomor_sppd
              ['field' => 'nomor_sppd',
-            'label' => 'nomor_sppd',
+            'label' => 'Nomor SPPD',
             'rules' => 'required'],
         //pilih_pegawai  TTD SPT
             ['field' => 'ttd_nama',
@@ -117,15 +135,15 @@ class Spt extends CI_Controller {
             'rules' => 'required'],
 
             ['field' => 'ttd_jabatan',
-            'label' => 'ttd_jabatan',
+            'label' => 'Jabatan Pemberi Printah',
             'rules' => 'required'],
 
             ['field' => 'ttd_golongan',
-            'label' => 'ttd_golongan',
+            'label' => 'Golongan Pemberi Printah',
             'rules' => 'required'],
         //pilih_pegawai TTD SPPD    
             ['field' => 'ttd_sppd_nama',
-            'label' => 'ttd_sppd_nama',
+            'label' => 'Nama Penandatangan SPPD',
             'rules' => 'required'],
 
             ['field' => 'ttd_sppd_nip',
@@ -133,21 +151,28 @@ class Spt extends CI_Controller {
             'rules' => 'required'],
 
             ['field' => 'ttd_sppd_jabatan',
-            'label' => 'ttd_sppd_jabatan',
+            'label' => 'Penandatangan SPPD',
             'rules' => 'required'],
 
             ['field' => 'ttd_sppd_golongan',
-            'label' => 'ttd_sppd_golongan',
+            'label' => 'Golongan Penandatangan SPPD ',
             'rules' => 'required'],
 
-            ['field' => 'nama',
-            'label' => 'Nama',
+            ['field' => 'pilih_beban',
+            'label' => 'Anggaran',
+            'rules' => 'required'],
+
+             ['field' => 'kegiatan',
+            'label' => 'Kegiatan',
             'rules' => 'required'],
 
         ];
 								
 	}
 
+	/**
+	 * { function_description }
+	 */
 	public function index()
 	{
 		
@@ -167,6 +192,12 @@ class Spt extends CI_Controller {
      echo $this->db->last_query();
     }
 
+	 /**
+	  * { function_description }
+	  *
+	  * @param      string  $TOKEN  The token
+	  * @param      string  $ID     { parameter_description }
+	  */
 	 function dalam($TOKEN=null, $ID=null){
 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
@@ -225,7 +256,7 @@ class Spt extends CI_Controller {
 			            	if($this->m_dalam->query_update() === true){
 			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
 								$red = base_url("spt/dalam");
-								header("refresh:4; url=$red"); 
+								//header("refresh:4; url=$red"); 
 							}else{
 								//echo $this->db->last_query();
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
@@ -247,6 +278,11 @@ class Spt extends CI_Controller {
 	 }
 
 
+/**
+ * { function_description }
+ *
+ * @param      <type>  $ID     { parameter_description }
+ */
 function cek_db($ID=null){
 	$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
 	echo $this->db->last_query();
@@ -310,6 +346,16 @@ function cek_db($ID=null){
 
 	}
 */
+
+	/**
+	 * { function_description }
+	 *
+	 * @param      string  $warna  The warna
+	 * @param      string  $intro  The intro
+	 * @param      string  $pesan  The pesan
+	 *
+	 * @return     string  ( description_of_the_return_value )
+	 */
 	private function MSG($warna="danger", $intro= 'Upss!', $pesan=" TAMPIL PESAN DISINI "){
 			$_MSG = '
 				<div class="alert alert-'.$warna.'">
@@ -326,11 +372,21 @@ function cek_db($ID=null){
 			return $_MSG;				
 	}
 
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $IDSPTDLAM  The idsptdlam
+	 */
 	function prints($IDSPTDLAM=null){
 			$data['ID'] = $IDSPTDLAM;
 			$this->template->load('template','spt/menu_print',$data);
 	}
 
+	 /**
+	  * { function_description }
+	  *
+	  * @param      <type>  $IDSPTDLAM  The idsptdlam
+	  */
 	 function print_dalam($IDSPTDLAM){
 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
@@ -343,6 +399,12 @@ function cek_db($ID=null){
 	 $data['spt_dalam_pengikut'] = $this->m_dalam->spt_pengikut($IDSPTDLAM);
 	 	$this->template->load_js('template','spt/dalam/sptprint', $data);
 	 }
+
+	 /**
+	  * { function_description }
+	  *
+	  * @param      <type>  $IDSPTDLAM  The idsptdlam
+	  */
 	 function cetak_spt_dalam($IDSPTDLAM){
 	 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
@@ -356,7 +418,11 @@ function cek_db($ID=null){
 	 	$this->load->view('spt/dalam/sptprint', $data);
 	 }
 
-/////// CETAK KWITANSI BBM
+
+/** CETAK KWITANSI BBM
+ *  @param      <type>  $ID     { parameter_description }
+ *  
+**/
 	 function print_kwitansi($ID){
 		 // add breadcrumbs
 	 	$data['ID'] = $ID;
@@ -374,7 +440,12 @@ function cek_db($ID=null){
 		//$this->template->load('template','spt/dalam/kwitansi_bbm',$data);
 		$this->load->view('spt/dalam/kwitansi_bbm',$data);
 	}
-/////// CETAK KWITANSI nominatif	
+
+	/**
+	 *  CETAK KWITANSI nominatif	
+	 *
+	 * @param      <type>  $ID     { parameter_description }
+	 */
 	function PrintKwitansiNominatif($ID){
 		 // add breadcrumbs
 	 	$data['ID'] = $ID;
@@ -394,6 +465,11 @@ function cek_db($ID=null){
 		$this->load->view('spt/dalam/kwitansi',$data);
 	}
 
+	 /**
+	  * { function_description }
+	  *
+	  * @param      <type>  $IDSPTDLAM  The idsptdlam
+	  */
 	 function laporan_sppd($IDSPTDLAM=null){
 	 	
 	 	if($IDSPTDLAM){
@@ -412,6 +488,11 @@ function cek_db($ID=null){
 		$this->template->load('template','dev');
 	 }
 	
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $id     The identifier
+	 */
 	public function delete_spt_dalam($id=null)
     {
         if (!isset($id)) show_404();
@@ -422,24 +503,35 @@ function cek_db($ID=null){
     }
 
 
-/////////////////////////////////////
-///data ajax
-////////////////////////////////////
+
+	 /**
+	  * data ajax
+	  */
 	 function select_pegawai(){
 	 	$ID = $this->input->post('pilih_pegawai');
 	 	$result = $this->m_master->pegawai($ID);
 	 	echo json_encode($result);
 	 }
+	 /**
+	  * { function_description }
+	  */
 	 function select_tujuan(){
 	 	$ID = $this->input->post('pilih_tujuan');
 	 	$result = $this->m_tujuan->tujuan($ID);
 	 	echo json_encode($result);
 	 }
+	 /**
+	  * { function_description }
+	  */
 	 function select_transportasi(){
 	 	$ID = $this->input->post('pilih_transportasi');
 	 	$result = $this->m_transport->trasnsportasi($ID);
 	 	echo json_encode($result);
 	 }
+
+	/**
+	 * { simpan_pengikut }
+	 */
 	function simpan_pengikut(){
 		if($this->m_dalam->query_simpan_pengikut()!=1){
 			 $this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
@@ -450,12 +542,25 @@ function cek_db($ID=null){
 		}
 	}
 
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $id     The identifier
+	 * @param      <type>  $sptid  The sptid
+	 */
 	function delete_spt_dalam_pengikut($id,$sptid){
 		if (!isset($id)) show_404();
         if ($this->m_dalam->deletePengikut($id)) {
             redirect(site_url('spt/dalam/pengikut/'.$sptid));
         }
 	}	
+
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $TOKEN  The token
+	 * @param      <type>  $ID     { parameter_description }
+	 */
 	function luar($TOKEN=null, $ID=null){
 		 $this->breadcrumbs->push('SPT', '/spt');
 		 $this->breadcrumbs->push('Dinas Luar', '/spt/luar');
@@ -467,6 +572,11 @@ function cek_db($ID=null){
 		$this->template->load('template','dev', $data);
 	}
 
+	 /**
+	  * { function_description }
+	  *
+	  * @param      <type>  $IDSPTDLAM  The idsptdlam
+	  */
 	 function dev($IDSPTDLAM=null){
 		 	
 		 	if($IDSPTDLAM){
@@ -485,6 +595,9 @@ function cek_db($ID=null){
 			$this->template->load('template_load','dev');
 		 }
 
+/**
+ * { function_description }
+ */
 function readme(){
 	$this->template->load('template_load','readme');
 	//$contents = file_get_contents('README.md');

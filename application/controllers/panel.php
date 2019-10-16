@@ -36,6 +36,9 @@ class Panel extends CI_Controller {
 	}
 
 
+/**
+ * { function_description }
+ */
 public function index()
     {
         $this->load->model('m_backup');
@@ -43,6 +46,7 @@ public function index()
         //$this->load->view('db_backup',$data);
         $this->template->load('template_load','db_backup',$data);
     }
+
 
 public function backup()
     {
@@ -62,6 +66,9 @@ public function backup()
       force_download($db_name, $backup);
     }
 
+/**
+ * { function_description }
+ */
 public function restore()   
     {
         $this->load->helper('file');

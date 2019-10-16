@@ -35,6 +35,9 @@ class Master extends CI_Controller {
 		$this->breadcrumbs->push('<i class="menu-icon fa fa-list"></i> Master', '/master');
 		
 	}
+	/**
+	 * { function_description }
+	 */
 	public function index()
 	{
 		
@@ -62,6 +65,11 @@ class Master extends CI_Controller {
 		//$this->load->view('theme/FOOTER');
 	}
 
+	/**
+	 * { function_description }
+	 *
+	 * @return     array  ( description_of_the_return_value )
+	 */
 	public function rule_pegawai()
     {
         return [
@@ -87,6 +95,12 @@ class Master extends CI_Controller {
         ];
     }
 
+/**
+ * { function_description }
+ *
+ * @param      string  $TOKEN  The token
+ * @param      <type>  $ID     { parameter_description }
+ */
 public function pegawai($TOKEN=null, $ID=null)
 	{
 		// add breadcrumbs
@@ -153,6 +167,11 @@ public function pegawai($TOKEN=null, $ID=null)
 		
 	}
 
+	/**
+	 * { function_description }
+	 *
+	 * @return     array  ( description_of_the_return_value )
+	 */
 	public function rule_jabatan()
     {
         return [
@@ -167,6 +186,12 @@ public function pegawai($TOKEN=null, $ID=null)
 
     }
 
+	/**
+	 * { function_description }
+	 *
+	 * @param      string  $TOKEN  The token
+	 * @param      <type>  $ID     { parameter_description }
+	 */
 	function jabatan($TOKEN=null, $ID=null){
 		// add breadcrumbs
 		 $this->breadcrumbs->push('Jabatan', 'master/jabatan');
@@ -222,7 +247,7 @@ public function pegawai($TOKEN=null, $ID=null)
 				
 
 	}
-	//////// RULE GOLONGAN //////
+
 	public function rule_golongan()
     {
         return [
@@ -236,6 +261,35 @@ public function pegawai($TOKEN=null, $ID=null)
         ];
 
     }
+	/**
+	 *   [foo description]
+	 *   @method      foo
+	 *   Meedun function
+	 *   @author Meedun
+	 *   @date        2019-10-17
+	 *   @file        {{file}}
+	 *   @anotherdate 2019-10-17T03:30:42+0700
+	 *   @version     [version]
+	 *   @param       String                   $txt [description]
+	 *   @param       [type]                   $bol [description]
+	 *   @return      [type]                        [description]
+	 */
+    function foo($txt,$bol){
+    	return $txt_id;
+    }
+    /**
+     *   [golongan description]
+     *   @method      golongan
+     *   Meedun function
+     *   @author Meedun
+     *   @date        2019-10-17
+     *   @file        {{file}}
+     *   @anotherdate 2019-10-17T03:20:52+0700
+     *   @version     [version]
+     *   @param       [type]                   $TOKEN [description]
+     *   @param       [type]                   $ID    [description]
+     *   @return      [type]                          [description]
+     */
     function golongan($TOKEN=null, $ID=null){
 		// add breadcrumbs
 		 $this->breadcrumbs->push('Jabatan', 'master/jabatan');
@@ -293,7 +347,11 @@ public function pegawai($TOKEN=null, $ID=null)
 
 	}
 
-	//////// ESELON //////
+	//-----------------------------------------------------------------------------
+	/// ESELON //////
+	///
+	/// @return     array  ( description_of_the_return_value )
+	///
 	public function rule_eselon()
     {
         return [
@@ -364,6 +422,15 @@ public function pegawai($TOKEN=null, $ID=null)
 	}
 
 
+	/**
+	 * { function_description }
+	 *
+	 * @param      string  $warna  The warna
+	 * @param      string  $intro  The intro
+	 * @param      string  $pesan  The pesan
+	 *
+	 * @return     string  ( description_of_the_return_value )
+	 */
 	private function MSG($warna="danger", $intro= 'Upss!', $pesan=" TAMPIL PESAN DISINI "){
 
 		$_MSG = '
@@ -382,6 +449,11 @@ public function pegawai($TOKEN=null, $ID=null)
 		return $_MSG;				
 	}
 
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $id     The identifier
+	 */
 	public function delete($id=null)
     {
         if (!isset($id)) show_404();
@@ -390,6 +462,11 @@ public function pegawai($TOKEN=null, $ID=null)
             redirect(site_url('master/jabatan'));
         }
     }
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $id     The identifier
+     */
     public function delete_pegawai($id=null)
     {
         if (!isset($id)) show_404();
@@ -399,9 +476,11 @@ public function pegawai($TOKEN=null, $ID=null)
         }
     }
 
-////////////////////////////////////////////////////////////////////////////////
-///TRANSPORT TASI
-////////////////////////////////////////////////////////////////////////////////
+//------------------------------------------------------------------------------
+/// TRANSPORT TASI
+/// /////////////////////////////////////////////////////////////////////////////
+///
+/// @return     array  ( description_of_the_return_value )
 ///
 	public function rule_transportasi()
     {
@@ -432,6 +511,12 @@ public function pegawai($TOKEN=null, $ID=null)
              array('rule2' => 'Error Message on rule2 for this field_name')
         ];
     }    
+/**
+ * { function_description }
+ *
+ * @param      string  $TOKEN  The token
+ * @param      <type>  $ID     { parameter_description }
+ */
 function transportasi($TOKEN=null, $ID=null){
 		$data['TOKEN'] = $TOKEN;
 		$data['ID'] = $ID;
@@ -487,6 +572,11 @@ function transportasi($TOKEN=null, $ID=null){
 				
 
 	}
+	/**
+	 * { function_description }
+	 *
+	 * @param      <type>  $id     The identifier
+	 */
 	public function delete_trans($id=null)
     {
         if (!isset($id)) show_404();

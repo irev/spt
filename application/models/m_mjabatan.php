@@ -2,8 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * 
+ * This class describes a m mjabatan.
  */
+
 class M_mjabatan extends CI_Model {
 	
 	function __construct(){
@@ -27,6 +28,11 @@ class M_mjabatan extends CI_Model {
 			}
 		}		
 
+		/**
+		 * Queries a simpan.
+		 *
+		 * @return     <type>  ( description_of_the_return_value )
+		 */
 		function query_simpan(){
 			 		$post = $this->input->post();
 		        	//$this->product_id = uniqid();
@@ -45,6 +51,11 @@ class M_mjabatan extends CI_Model {
 				//$this->db->trans_complete();
 		}
 		
+		/**
+		 * Queries an update.
+		 *
+		 * @return     <type>  ( description_of_the_return_value )
+		 */
 		function query_update(){
 			$post = $this->input->post();
 			$this->id_jab       = $post["id_jabatan"];
@@ -62,6 +73,13 @@ class M_mjabatan extends CI_Model {
 			
 		}
 
+		/**
+		 * Deletes the given identifier.
+		 *
+		 * @param      <type>  $id     The identifier
+		 *
+		 * @return     <type>  ( description_of_the_return_value )
+		 */
 		public function delete($id)
     	{
         return $this->db->delete($this->_table, array("id_jab" => $id));

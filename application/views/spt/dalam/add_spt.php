@@ -46,7 +46,8 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addttd_sppd_nip     ="";
 	$addbeban            ="";
 	$addanggaran         ="";
-	
+	$addkegiatan         ="";
+
 	$addjarak            = "";
 	$addwilayah          = "";
 	$addperjalanan       = "";
@@ -88,6 +89,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addttd_sppd_nip         = $post['ttd_sppd_nip'];
 	$addbeban                = $post['pilih_beban'];
 	$addanggaran             = $post['pasal_anggaran'];
+	$addkegiatan             = $post['kegiatan'];
 
 	$cek =  "p=1";
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Buat Surat Perintah Tugas <small>Tambah data Surat Perintah Tugas</small>";
@@ -133,6 +135,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addttd_sppd_nip         = $post['ttd_sppd_nip'];
 	$addbeban                = $post['pilih_beban'];
 	$addanggaran             = $post['pasal_anggaran'];
+	$addkegiatan             = $post['pilih_kegiatan'];
 
 	$cek =  "p=1";
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Buat Surat Perintah Tugas <small>Tambah data Surat Perintah Tugas</small>";
@@ -183,6 +186,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	///////////////////////////
 	$addbeban                = $spt_dalam->beban;
 	$addanggaran             = $spt_dalam->anggaran;
+	$addkegiatan             = $spt_dalam->kegiatan_id;
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Ubah Surat Perintah Tugas <small>Ubah data Surat Perintah Tugas</small>";
 }
 ?>
@@ -631,18 +635,23 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										<label class="col-sm-3 control-label no-padding-right" for="pilih_beban">Atas Beban*</label>
 										<div class="col-sm-9">
 												<?php 
-													$btns = ($addanggaran=="")? "btn-danger" : "btn-primary";
-													$anga = ($addanggaran=="")? "":$this->m_master->anggaran($addanggaran);		
+													$btns = ($addanggaran=="" or $addanggaran==0)? "btn-danger" : "btn-primary";
+													$anga = ($addanggaran=="" or $addanggaran==0)? "":$this->m_master->anggaran($addanggaran);		
+															
 												 ?>
 											<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_beban">
 												<?php 
-												 		echo $retVal = ($addanggaran == "") ? "ATAS BEBAN ?" : $anga->kode." ".$anga->ket." ".$anga->tahun;
+												 		echo $btnAng = ($addanggaran == "" or $addanggaran==0) ? "ANGGARAN DPA/DPPA  ?" : $anga->kode." ".$anga->ket." ".$anga->tahun;
 												 ?>
 											
 											</span>
 											<select <?= $display ?>id="pilih_beban" placeholder="pilih_beban" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="pilih_beban">
-												
-												<option value="<?= $addanggaran ?>"><?= $anga ?></option>
+												<?php if(is_object($spt_dalam)): ?>
+												<option value="<?= $addanggaran ?>"><?= $btnAng ?></option>
+												<?php endif ?>
+												<?php if(!is_object($spt_dalam)): ?>
+												<option value="<?= $addanggaran ?>"><?= $addanggaran  ?></option>
+												<?php endif ?>
 												<?php foreach ($anggaran as $ang) {
 													echo '<option value="'.$ang['id_anggaran'].'">'.$ang['kode'].' ▶ '.$ang['ket'].' '.$ang['tahun'].'</option>';
 												} ?>
@@ -651,21 +660,25 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 									</div>
 									<div class="form-group">
 										
-										<label class="col-sm-3 control-label no-padding-right" for="pilih_beban">Pada Kegiatan*</label>
+										<label class="col-sm-3 control-label no-padding-right" for="pilih_kegiatan">Pada Kegiatan*</label>
 										<div class="col-sm-9">
 												<?php 
-													$btns = ($addanggaran=="")? "btn-danger" : "btn-primary";
-													$anga = ($addanggaran=="")? "":$this->m_master->anggaran($addanggaran);		
+													$btns = ($addkegiatan=="" or $addkegiatan==0)? "btn-danger" : "btn-primary";
+													$keg = ($addkegiatan=="" or $addkegiatan==0)? "":$this->m_master->kegiatan($addkegiatan);		
 												 ?>
 											<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_kegiatan">
 												<?php 
-												 		echo $retVal = ($addanggaran == "") ? "ATAS BEBAN ?" : $anga->kode." ".$anga->ket." ".$anga->tahun;
+												 		echo $btnKeg = ($addkegiatan=="" or $addkegiatan==0) ? "Pada Kegiatan ?" : $keg->rekening." ".$keg->kegiatan." ".$keg->tahun;
 												 ?>
 											
 											</span>
 											<select <?= $display ?>id="pilih_kegiatan" placeholder="pilih_kegiatan" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="kegiatan">
-												
-												<option value="<?= $idkegiatan ?>"><?= $kegiatan ?></option>
+												<?php if(is_object($spt_dalam)): ?>
+												<option value="<?= $spt_dalam->kegiatan_id ?>"><?= $btnKeg ?></option>
+												<?php endif ?>
+												<?php if(!is_object($spt_dalam)): ?>
+												<option value="<?= $addkegiatan ?>"><?= $addkegiatan ?></option>
+												<?php endif ?>
 												<?php foreach ($kegiatan as $keg) {
 													echo '<option value="'.$keg['id_kegiatan'].'">'.$keg['rekening'].' ▶ '.$keg['kegiatan'].'</option>';
 												} ?>

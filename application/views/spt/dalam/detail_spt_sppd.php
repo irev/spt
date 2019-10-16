@@ -1,61 +1,60 @@
-	<?php 	
-				$no=1; 
-        		$Total=0;
-        		foreach ($spt_pengikut as $pengikut) { 
-        				$nm_diperintah = $pengikut["nm_diperintah"];
-        				$nip_diperintah = $pengikut["nip_diperintah"];
-        				$pangkat_diperintah = $pengikut["pangkat_diperintah"];
-        				$golongan_diperintah = $pengikut["golongan_diperintah"];
-        				$cs = (count($spt_pengikut) >= 1 ) ? ", Cs" : "";
-        				$maksud = $pengikut["maksud"];     		
-        				$tujuan = $pengikut["tujuan"];     		
-        				$kec 	= $pengikut["kec"];
-        				$tahun  = $pengikut["tahun"];    		
-        				$tgl_berangkat 	= $pengikut["tgl_berangkat"];     		
-        				$no_sppd 	= $pengikut["no_sppd"];     		
-        				$tgl_sppd 	= $pengikut["ttd_sppd_tgl"];
+	<?php
+$no    = 1;
+$Total = 0;
+foreach ($spt_pengikut as $pengikut) {
+    $nm_diperintah       = $pengikut["nm_diperintah"];
+    $nip_diperintah      = $pengikut["nip_diperintah"];
+    $pangkat_diperintah  = $pengikut["pangkat_diperintah"];
+    $golongan_diperintah = $pengikut["golongan_diperintah"];
+    $cs                  = (count($spt_pengikut) >= 1) ? ", Cs" : "";
+    $maksud              = $pengikut["maksud"];
+    $tujuan              = $pengikut["tujuan"];
+    $kec                 = $pengikut["kec"];
+    $tahun               = $pengikut["tahun"];
+    $tgl_berangkat       = $pengikut["tgl_berangkat"];
+    $no_sppd             = $pengikut["no_sppd"];
+    $tgl_sppd            = $pengikut["ttd_sppd_tgl"];
 
-        				///ANGARAN KEGIATAN 
-        				$REKENING 		= $pengikut["rekening"];
-                        $KEGIATAN 		= $pengikut["kegiatan"];
-        				$KPA 			= $pengikut["kpa"];
-        				$jabKPA 		= $pengikut["jabkpa"];
-        				$nipKPA 		= $pengikut["nipkpa"];
-        				$PPTK 			= $pengikut["pptk"];
-        				$jabPPTK 		= $pengikut["jabpptk"];
-        				$nipPPTK 		= $pengikut["nippptk"];
-        				$BENDAHARA 		= $pengikut["bendahara"];
-        				$jabBENDAHARA 	= $pengikut["jabbendahara"];
-        				$nipBENDAHARA 	= $pengikut["nipbendahara"];
-        				$anggaran 		= $pengikut["anggaran"];
+    ///ANGARAN KEGIATAN
+    $REKENING     = $pengikut["rekening"];
+    $KEGIATAN     = $pengikut["kegiatan"];
+    $KPA          = $pengikut["kpa"];
+    $jabKPA       = $pengikut["jabkpa"];
+    $nipKPA       = $pengikut["nipkpa"];
+    $PPTK         = $pengikut["pptk"];
+    $jabPPTK      = $pengikut["jabpptk"];
+    $nipPPTK      = $pengikut["nippptk"];
+    $BENDAHARA    = $pengikut["bendahara"];
+    $jabBENDAHARA = $pengikut["jabbendahara"];
+    $nipBENDAHARA = $pengikut["nipbendahara"];
+    $anggaran     = $pengikut["anggaran"];
 
+    $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
+    //// TENTUKAN WILAYAH PERJALANAN DINAS
+    $wil         = $pengikut["wilayah"];
+    $uang_harian = 0;
+    switch ($wil) {
+        case '1': // Wilayah 1
+            $uang_harian = $pengikut["wil1"];
+            break;
+        case '2': // Wilayah 2
+            $uang_harian = $pengikut["wil2"];
+            break;
+        case '3': // Wilayah 3
+            $uang_harian = $pengikut["wil3"];
+            break;
+        case '4': // Wilayah 4
+            $uang_harian = $pengikut["harian_luar"];
+            break;
+        default:
+            $uang_harian = 0;
+            break;
+    }
+    $subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
+    $Total += $subtotal; //SUM TOTAL
+}
 
-        				$hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
-                		 //// TENTUKAN WILAYAH PERJALANAN DINAS
-                		$wil = $pengikut["wilayah"];
-                		$uang_harian =0;
-                		switch ($wil) {
-                			case '1': // Wilayah 1 
-                				$uang_harian = $pengikut["wil1"];
-                				break;
-                			case '2': // Wilayah 2 
-                				$uang_harian = $pengikut["wil2"];
-                				break;
-                			case '3': // Wilayah 3 
-                				$uang_harian = $pengikut["wil3"];
-                				break;
-                			case '4': // Wilayah 4 
-                				$uang_harian = $pengikut["harian_luar"];
-                				break;
-                			default:
-                				$uang_harian = 0;
-                				break;
-                		}
-                		$subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
-						$Total += $subtotal; //SUM TOTAL
-        		}
-
-        	?>	
+?>
 
 
 <script type="text/javascript">
@@ -72,23 +71,23 @@ function goToPage( url ){
 }
 </script>
 						<div class="row">
-							<div class="col-xs-12">	
-							<?php if(count($spt_dalam) > 0){ ?>	
+							<div class="col-xs-12">
+							<?php if (is_object($spt_dalam)) {?>
 								<!-- PAGE CONTENT BEGINS -->
-								<button class="btn btn-xs btn-primary" onclick="openWindow('<?= base_url('spt/cetak_spt_dalam/').'/'.$spt_dalam->id_spt ?>')">
-									<i class="fa fa-print"></i> 
+								<button class="btn btn-xs btn-primary" onclick="openWindow('<?=base_url('spt/cetak_spt_dalam/') . '/' . $spt_dalam->id_spt?>')">
+									<i class="fa fa-print"></i>
 								Cetak SPD</button>
-							<?php } ?>
-							<?php if(count($spt_pengikut) > 0){ ?>		
-								<button class="btn btn-xs btn-success" onclick="openWindow('<?= base_url('spt/PrintKwitansiNominatif/').'/'.$spt_dalam->id_spt ?>')">
-									<i class="fa fa-print"></i> 
+							<?php }?>
+							<?php if (count($spt_pengikut) > 0) {?>
+								<button class="btn btn-xs btn-success" onclick="openWindow('<?=base_url('spt/PrintKwitansiNominatif/') . '/' . $spt_dalam->id_spt?>')">
+									<i class="fa fa-print"></i>
 								Cetak Nominatif</button>
-							<?php } ?>
-							<?php if(count($spt_dalam) > 0){ ?>		
-								<button class="btn btn-xs btn-danger" onclick="openWindow('<?= base_url('spt/print_kwitansi/').'/'.$spt_dalam->id_spt ?>')">
-									<i class="fa fa-print"></i> 
+							<?php }?>
+							<?php if (is_object($spt_dalam)) {?>
+								<button class="btn btn-xs btn-danger" onclick="openWindow('<?=base_url('spt/print_kwitansi/') . '/' . $spt_dalam->id_spt?>')">
+									<i class="fa fa-print"></i>
 								Cetak BBM</button>
-							<?php } ?>	
+							<?php }?>
 								<div class="space"></div>
 								<div class="row">
 									<div class="col-sm-12">
@@ -110,7 +109,7 @@ function goToPage( url ){
 												<li>
 													<a data-toggle="tab" href="#nominatif">
 														Nominatif
-														<span class="badge badge-danger"><?= count($spt_pengikut) ?></span>
+														<span class="badge badge-danger"><?=count($spt_pengikut)?></span>
 													</a>
 												</li>
 												<li>
@@ -142,16 +141,16 @@ function goToPage( url ){
 											<div class="tab-content">
 												<div id="homes" class="tab-pane fade in active">
 													<div class="col-sm-12">
-														<b style="font-size: 22px">SPT <?= $spt_dalam->no_spt ?></b><br>
-														<i><?= $spt_dalam->ttd_tempat ?> - <?= $spt_dalam->tujuan ?></i>
+														<b style="font-size: 22px">SPT <?=$spt_dalam->no_spt?></b><br>
+														<i><?=$spt_dalam->ttd_tempat?> - <?=$spt_dalam->tujuan?></i>
 													</div>
-													
+
 
 													<div class="profile-user-info profile-user-info-striped">
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pejabat Pemberi Perintah </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><b><?= $spt_dalam->ttd_nama ?></b><br><?= $spt_dalam->ttd_nip ?></span>
+																<span class="editable" id="username"><b><?=$spt_dalam->ttd_nama?></b><br><?=$spt_dalam->ttd_nip?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
@@ -163,13 +162,13 @@ function goToPage( url ){
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pegawai </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><b><?= $spt_dalam->nama .'</b><br>'.$spt_dalam->nip?> </span>
+																<span class="editable" id="username"><b><?=$spt_dalam->nama . '</b><br>' . $spt_dalam->nip?> </span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pangkat dan Golongan </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><?= $spt_dalam->pangkat ?> </span>
+																<span class="editable" id="username"><?=$spt_dalam->pangkat?> </span>
 															</div>
 														</div>
 
@@ -177,8 +176,8 @@ function goToPage( url ){
 															<div class="profile-info-name"> Jabatan / Instansi </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="country"><?= $spt_dalam->jabatan ?></span> ke
-																
+																<span class="editable" id="country"><?=$spt_dalam->jabatan?></span> ke
+
 															</div>
 														</div>
 
@@ -186,7 +185,7 @@ function goToPage( url ){
 															<div class="profile-info-name"> Maksud Perjalanan Dinas </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="age"><?= $spt_dalam->maksud ?></span>
+																<span class="editable" id="age"><?=$spt_dalam->maksud?></span>
 															</div>
 														</div>
 
@@ -194,7 +193,7 @@ function goToPage( url ){
 															<div class="profile-info-name"> Dasar Surat Perintah </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="signup"><?= $spt_dalam->beban ?></span>
+																<span class="editable" id="signup"><?=$spt_dalam->beban?></span>
 															</div>
 														</div>
 
@@ -203,7 +202,7 @@ function goToPage( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-green bigger-110"></i>
-																<span class="editable" id="login"><?= $spt_dalam->ttd_tempat ?></span>
+																<span class="editable" id="login"><?=$spt_dalam->ttd_tempat?></span>
 															</div>
 														</div>
 
@@ -212,28 +211,28 @@ function goToPage( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-red bigger-110"></i>
-																<span class="editable" id="about"><?= $spt_dalam->tujuan." <i class='red'>(Wilayah ".$spt_dalam->wilayah.")</i>" ?></span>
+																<span class="editable" id="about"><?=$spt_dalam->tujuan . " <i class='red'>(Wilayah " . $spt_dalam->wilayah . ")</i>"?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Tanggal Berangkat </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="about"><?= LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat) ?></span>
+																<span class="editable" id="about"><?=LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat)?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Tanggal Kembali </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="about"><?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali) ?></span>
+																<span class="editable" id="about"><?=LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> #</div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="about"><button class="btn btn-xs btn-danger" onclick="goToPage('<?= base_url("spt/dalam/edit/".$spt_dalam->id_spt."?p=2") ?>')"><i class="fa fa-pencil"></i></button></span>
+																<span class="editable" id="about"><button class="btn btn-xs btn-danger" onclick="goToPage('<?=base_url("spt/dalam/edit/" . $spt_dalam->id_spt . "?p=2")?>')"><i class="fa fa-pencil"></i></button></span>
 															</div>
 														</div>
 													</div>
@@ -241,14 +240,14 @@ function goToPage( url ){
 												</div>
 												<div id="home" class="tab-pane fade in">
 													<div class="col-sm-12">
-														<b style="font-size: 22px">SPPD <?= $spt_dalam->no_sppd ?></b><br>
-														<i><?= $spt_dalam->ttd_tempat ?> - <?= $spt_dalam->tujuan  ?></i>
+														<b style="font-size: 22px">SPPD <?=$spt_dalam->no_sppd?></b><br>
+														<i><?=$spt_dalam->ttd_tempat?> - <?=$spt_dalam->tujuan?></i>
 													</div>
 													<div class="profile-user-info profile-user-info-striped">
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pejabat Pemberi Perintah </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><b><?= $spt_dalam->ttd_nama ?></b><br><?= $spt_dalam->ttd_nip ?></span>
+																<span class="editable" id="username"><b><?=$spt_dalam->ttd_nama?></b><br><?=$spt_dalam->ttd_nip?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
@@ -260,13 +259,13 @@ function goToPage( url ){
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pegawai </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><b><?= $spt_dalam->nama .'</b><br>'.$spt_dalam->nip?> </span>
+																<span class="editable" id="username"><b><?=$spt_dalam->nama . '</b><br>' . $spt_dalam->nip?> </span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Pangkat dan Golongan </div>
 															<div class="profile-info-value">
-																<span class="editable" id="username"><?= $spt_dalam->pangkat ?> </span>
+																<span class="editable" id="username"><?=$spt_dalam->pangkat?> </span>
 															</div>
 														</div>
 
@@ -274,8 +273,8 @@ function goToPage( url ){
 															<div class="profile-info-name"> Jabatan / Instansi </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="country"><?= $spt_dalam->jabatan ?></span> ke
-																
+																<span class="editable" id="country"><?=$spt_dalam->jabatan?></span> ke
+
 															</div>
 														</div>
 
@@ -283,7 +282,7 @@ function goToPage( url ){
 															<div class="profile-info-name"> Maksud Perjalanan Dinas </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="age"><?= $spt_dalam->maksud ?></span>
+																<span class="editable" id="age"><?=$spt_dalam->maksud?></span>
 															</div>
 														</div>
 
@@ -300,7 +299,7 @@ function goToPage( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-green bigger-110"></i>
-																<span class="editable" id="login"><?= $spt_dalam->ttd_tempat ?></span>
+																<span class="editable" id="login"><?=$spt_dalam->ttd_tempat?></span>
 															</div>
 														</div>
 
@@ -309,55 +308,55 @@ function goToPage( url ){
 
 															<div class="profile-info-value">
 																<i class="fa fa-map-marker light-red bigger-110"></i>
-																<span class="editable" id="about"><?= $spt_dalam->tujuan ." <i class='red'>(Wilayah ".$spt_dalam->wilayah.")</i>" ?></span>
+																<span class="editable" id="about"><?=$spt_dalam->tujuan . " <i class='red'>(Wilayah " . $spt_dalam->wilayah . ")</i>"?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Tanggal Berangkat </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="about"><?= LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat) ?></span>
+																<span class="editable" id="about"><?=LONGE_DATE_INDONESIA($spt_dalam->tgl_berangkat)?></span>
 															</div>
 														</div>
 														<div class="profile-info-row">
 															<div class="profile-info-name"> Tanggal Kembali </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="about"><?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali) ?></span>
+																<span class="editable" id="about"><?=LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)?></span>
 															</div>
 														</div>
 													</div>
 												</div>
 
 												<div id="nominatif" class="tab-pane fade">
-													
+
 <div class="row" style="width: 100%;">
 </div>
 
 <div class="row">
-	<?php 
-		if (count($spt_pengikut) > 0) {	
-	 ?>
+	<?php
+if (count($spt_pengikut) > 0) {
+    ?>
     <div style="padding-top: 0px;"  class="no-print"></div>
     <table border="0">
 
         <tr>
             <td></td>
-            <td style="text-align:right;">Kode Rekening :  M.A. 1.03 . 1.03.01. <?= $this->m_master->kegiatan($spt_dalam->kegiatan_id,"rekening")  ?> . 01</td>
+            <td style="text-align:right;">Kode Rekening :  M.A. 1.03 . 1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?> . 01</td>
         </tr>
 
         <tr>
             <td colspan="2" style="text-align: justify;">
             	<p>
-                Sudah terima dari <?= $retVal = ($anggaran!="") ? $this->m_master->anggaran($anggaran,"ket") : "<strike>ANGGARAN</strike>" ; ?>  
-                uang Sejumlah Rp. <?= angka($Total) ?>,- (<?= angka_terbilang($Total) ?>) 
-                sebab dari pembayaran lunas pada <?= $nm_diperintah ?><?= $cs ?>  
-                Biaya Perjalanan Dinas Dalam Rangka <?= $maksud ?> 
-                ke <?= $tujuan ?>  <?= $kec ?> 
-                Tanggal <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> 
-                pada Kegiatan <?= $this->m_master->belanja($spt_dalam->kegiatan_id,"nama_belanja").' '.$spt_dalam->kegiatan_id ?> 
-                berdasarkan SPPD Nomor : <?= $no_sppd ?>  
-                tanggal   <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  
+                Sudah terima dari <?=$retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike>ANGGARAN</strike>";?>
+                uang Sejumlah Rp. <?=angka($Total)?>,- (<?=angka_terbilang($Total)?>)
+                sebab dari pembayaran lunas pada <?=$nm_diperintah?><?=$cs?>
+                Biaya Perjalanan Dinas Dalam Rangka <?=$maksud?>
+                ke <?=$tujuan?>  <?=$kec?>
+                Tanggal <?=LONGE_DATE_INDONESIA($tgl_berangkat)?>
+                pada Kegiatan <?=$this->m_master->belanja($spt_dalam->kegiatan_id, "nama_belanja") . ' ' . $spt_dalam->kegiatan_id?>
+                berdasarkan SPPD Nomor : <?=$no_sppd?>
+                tanggal   <?=LONGE_DATE_INDONESIA($tgl_sppd)?>
                 dengan perincian sebagai berikut :
             	</p>
             </td>
@@ -387,66 +386,66 @@ function goToPage( url ){
         	<th style="text-align: center;">7</th>
         </tr>
         <tbody>
-        	<?php 
-        	if ($spt_pengikut > 0) {
-        		$no=1; 
-        		$Total=0;
-        		foreach ($spt_pengikut as $pengikut) { 
-        				$vnama = $pengikut["nama_pengikut"]." ".$pengikut["wilayah"];
-        				$vnip = ($pengikut["nip_pengikut"]=="") ? $pengikut["pangkat"] : $pengikut["nip"] ;
-        				$vgol = ($pengikut["pangkat"] == $pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"];
+        	<?php
+if ($spt_pengikut > 0) {
+        $no    = 1;
+        $Total = 0;
+        foreach ($spt_pengikut as $pengikut) {
+            $vnama = $pengikut["nama_pengikut"] . " " . $pengikut["wilayah"];
+            $vnip  = ($pengikut["nip_pengikut"] == "") ? $pengikut["pangkat"] : $pengikut["nip"];
+            $vgol  = ($pengikut["pangkat"] == $pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"] . ' ' . $pengikut["golongan"];
 
-        		?>
+            ?>
             <tr>
-                <td style="text-align: right;"><?= $no ?>.</td>
-                <td><?= $vnama ?><br/><?= $vnip ?></td>
-                <td style="text-align: center;"><?= $vgol ?></td>
+                <td style="text-align: right;"><?=$no?>.</td>
+                <td><?=$vnama?><br/><?=$vnip?></td>
+                <td style="text-align: center;"><?=$vgol?></td>
                 <td style="text-align: center;"><?php
-                		//echo $pengikut["wilayah"]; 
-                		 $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
-                		 echo $hari_perjalanan;
+//echo $pengikut["wilayah"];
+            $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
+            echo $hari_perjalanan;
 
-                ?></td>
+            ?></td>
                 <td style="text-align: right;">
-                	<?php 
-                	    //// TENTUKAN WILAYAH PERJALANAN DINAS
-                		$wil = $pengikut["wilayah"];
-                		$uang_harian =0;
-                		switch ($wil) {
-                			case '1': // Wilayah 1 
-                				$uang_harian = $pengikut["wil1"];
-                				break;
-                			case '2': // Wilayah 2 
-                				$uang_harian = $pengikut["wil2"];
-                				break;
-                			case '3': // Wilayah 3 
-                				$uang_harian = $pengikut["wil3"];
-                				break;
-                			case '4': // Wilayah 4 
-                				$uang_harian = $pengikut["harian_luar"];
-                				break;
-                			default:
-                				$uang_harian = 0;
-                				break;
-                		}
-                		echo angka($uang_harian) ." <br><i class='red'>( wilayah ". $wil.")</i>";
-                	?>
-                		
+                	<?php
+//// TENTUKAN WILAYAH PERJALANAN DINAS
+            $wil         = $pengikut["wilayah"];
+            $uang_harian = 0;
+            switch ($wil) {
+                case '1': // Wilayah 1
+                    $uang_harian = $pengikut["wil1"];
+                    break;
+                case '2': // Wilayah 2
+                    $uang_harian = $pengikut["wil2"];
+                    break;
+                case '3': // Wilayah 3
+                    $uang_harian = $pengikut["wil3"];
+                    break;
+                case '4': // Wilayah 4
+                    $uang_harian = $pengikut["harian_luar"];
+                    break;
+                default:
+                    $uang_harian = 0;
+                    break;
+            }
+            echo angka($uang_harian) . " <br><i class='red'>( wilayah " . $wil . ")</i>";
+            ?>
+
                 </td>
-                <td style="text-align: right;"><?= angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan))) ?></td>
-                <td ><?= $no ?>. <button class="btn btn-xs btn-success">YA</button></td>
+                <td style="text-align: right;"><?=angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan)))?></td>
+                <td ><?=$no?>. <button class="btn btn-xs btn-success">YA</button></td>
                  <!--td></td-->
             </tr>
-            <?php 
-            	$no++; 
-            	$Total += $subtotal;
-        	} 
-        	} 
-        	?>
+            <?php
+$no++;
+            $Total += $subtotal;
+        }
+    }
+    ?>
             <tfoot>
                 <tr>
                     <th colspan="5" style="text-align: center;">J U M L A H</th>
-                    <th style="text-align: right;"><?= angka($Total) ?></th>
+                    <th style="text-align: right;"><?=angka($Total)?></th>
                     <th></th>
                     <!--td></td-->
                 </tr>
@@ -471,16 +470,16 @@ function goToPage( url ){
             <td class="ttd"></td>
             <td class="ttd"></td>
         </tr>
-        
-        
+
+
         <tr class="ttd-tr">
-            <th><u><?= $KPA ?></u></th>
-            <th><u><?= $nm_diperintah ?></u></th>
+            <th><u><?=$KPA?></u></th>
+            <th><u><?=$nm_diperintah?></u></th>
         </tr>
 
         <tr class="ttd-tr">
-            <td>NIP. <?= $nipKPA ?></td>
-            <td>NIP. <?= $nip_diperintah ?></td>
+            <td>NIP. <?=$nipKPA?></td>
+            <td>NIP. <?=$nip_diperintah?></td>
         </tr>
         <tr class="ttd-tr">
             <td>Lunas tanggal</td>
@@ -495,20 +494,20 @@ function goToPage( url ){
             <td class="ttd"></td>
         </tr>
         <tr class="ttd-tr">
-            <th><u><?= $BENDAHARA ?></u></th>
-            <th><u><?= $PPTK ?></u></th>
+            <th><u><?=$BENDAHARA?></u></th>
+            <th><u><?=$PPTK?></u></th>
         </tr>
         <tr class="ttd-tr">
-            <td>NIP. <?= $nipBENDAHARA ?></td>
-            <td>NIP. <?= $nipPPTK ?></td>
+            <td>NIP. <?=$nipBENDAHARA?></td>
+            <td>NIP. <?=$nipPPTK?></td>
         </tr>
     </table>
-<?php }else{ ?>  
+<?php } else {?>
 <center>
-	<a href="<?= base_url('spt/dalam/pengikut/').'/'.$this->uri->segment(4) ?>" class="btn btn-xs btn-warning"><i class="fa fa-users"></i> + PENGIKUT</a>
+	<a href="<?=base_url('spt/dalam/pengikut/') . '/' . $this->uri->segment(4)?>" class="btn btn-xs btn-warning"><i class="fa fa-users"></i> + PENGIKUT</a>
 </center>
- 
-<?php } ?>
+
+<?php }?>
 </div>
 
 												</div>
@@ -522,71 +521,71 @@ function goToPage( url ){
 	<div class="nomor-kwitansi">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi"></div>
-	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01.<?= $this->m_master->kegiatan($spt_dalam->kegiatan_id,"rekening")  ?>.06</div>
-	<span>Sudah terima dari : </span><div class="col-kanan"> 
-		<?php $retVal = ($anggaran!="") ? $this->m_master->anggaran($anggaran,"ket") : "<strike>ANGGARAN</strike>" ; ?> 
-		<b><?= strtoupper($retVal) ?>
-	 	TAHUN ANGGARAN <?= $this->m_master->anggaran($anggaran,"tahun") ?></b>
-	 	
+	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01.<?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?>.06</div>
+	<span>Sudah terima dari : </span><div class="col-kanan">
+		<?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike>ANGGARAN</strike>";?>
+		<b><?=strtoupper($retVal)?>
+	 	TAHUN ANGGARAN <?=$this->m_master->anggaran($anggaran, "tahun")?></b>
+
 	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka" style="display: contents;">
-	<?php 
-		//[wil1] => 150000 [wil2] => 180000 [wil3] => 185000 [bbm_luar] 
-						$wil = $pengikut["wilayah"];
-                		$uang_harian =0;
-                		$liter       =0;
-                		switch ($wil) {
-								case '1': // Wilayah 1 
-								$uang_harian = $transpor->wil1;
-								$liter       = $transpor->liter1;
-								break;
-								case '2': // Wilayah 2 
-								$uang_harian = $transpor->wil2;
-								$liter       = $transpor->liter2;
-								break;
-								case '3': // Wilayah 3 
-								$uang_harian = $transpor->wil3;
-								$liter       = $transpor->liter3;
-								break;
-								case '4': // Wilayah 4 
-								$uang_harian = $pengikut->harian_luar;
-								$liter       = $pengikut->liter_luar;
-                				break;
-                			default:
-                				$uang_harian = 0;
-                				$liter  	 = 0;
-                				break;
-                		}
+	<?php
+//[wil1] => 150000 [wil2] => 180000 [wil3] => 185000 [bbm_luar]
+$wil         = $pengikut["wilayah"];
+$uang_harian = 0;
+$liter       = 0;
+switch ($wil) {
+    case '1': // Wilayah 1
+        $uang_harian = $transpor->wil1;
+        $liter       = $transpor->liter1;
+        break;
+    case '2': // Wilayah 2
+        $uang_harian = $transpor->wil2;
+        $liter       = $transpor->liter2;
+        break;
+    case '3': // Wilayah 3
+        $uang_harian = $transpor->wil3;
+        $liter       = $transpor->liter3;
+        break;
+    case '4': // Wilayah 4
+        $uang_harian = $pengikut->harian_luar;
+        $liter       = $pengikut->liter_luar;
+        break;
+    default:
+        $uang_harian = 0;
+        $liter       = 0;
+        break;
+}
 
-	 ?>
+?>
 
-		<b><?= angka($uang_harian) ?></b>
+		<b><?=angka($uang_harian)?></b>
 	</div>
-			
-	<div id="terbilang" > 
-				<b><i><?= angka_terbilang($uang_harian) ?></i></b>
+
+	<div id="terbilang" >
+				<b><i><?=angka_terbilang($uang_harian)?></i></b>
 	</div>
 	<span>Sebab dari : </span><div class="col-kanan" style="text-align: justify;">
-	Pembayaran Lunas Pada "<?= $spt_dalam->nama ?>" 
-	atas Penggantian Biaya BBM <?= $transpor->bahan_bakar ?> 
-	Untuk Kendaraan Dinas <?= $transpor->nomor ?> 
-	Sebanyak  <?= $transpor->bahan_bakar.' '.$liter ?>  liter, 
-	Atas Perjalanan Dinas Ke <?= $this->m_master->tujuan($spt_dalam->tujuan_id, "kec"); ?> 
-	Pada Tanggal  <?= LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali) ?>. 
-	Pada Kegiatan <?= $this->m_master->kegiatan($spt_dalam->kegiatan_id,"kegiatan")  ?>. 
+	Pembayaran Lunas Pada "<?=$spt_dalam->nama?>"
+	atas Penggantian Biaya BBM <?=$transpor->bahan_bakar?>
+	Untuk Kendaraan Dinas <?=$transpor->nomor?>
+	Sebanyak  <?=$transpor->bahan_bakar . ' ' . $liter?>  liter,
+	Atas Perjalanan Dinas Ke <?=$this->m_master->tujuan($spt_dalam->tujuan_id, "kec");?>
+	Pada Tanggal  <?=LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)?>.
+	Pada Kegiatan <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "kegiatan")?>.
 	Seperti SPT, SPPD dan LHP Terlampir.</div>
-<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada Anggaran Belanja Langsung Tahun  <?= date("Y") ?></div>
+<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada Anggaran Belanja Langsung Tahun  <?=date("Y")?></div>
 <div style="width: 35%; display: inline-flex;">
 <table class="border" width="100%">
 	<tr><td>Diterima tgl………………………………………</td></tr>
 	<tr><td>Dibayar tgl……………………………………….</td></tr>
 	<tr><td>Dibukukan tgl……………………………………</td></tr>
 	<tr><td>No.Folio Buku Kas………………………………</td></tr>
-	<tr><td>Barang-barang yang dibeli ini telah diterima dalam		
- 			keadaan baik dan telah dibukukan sebagai barang		
- 			Inventaris/stock dalam daftar Inventaris/stock.<br>	
- 			No……………………….	tgl……………….	
+	<tr><td>Barang-barang yang dibeli ini telah diterima dalam
+ 			keadaan baik dan telah dibukukan sebagai barang
+ 			Inventaris/stock dalam daftar Inventaris/stock.<br>
+ 			No……………………….	tgl……………….
  			Oleh…………………………………………		</td></tr>
 </table>
 
@@ -600,27 +599,25 @@ function goToPage( url ){
 	<tr><td>Kuasa Pengguna Anggaran</td><td></td></tr>
 	<tr>
 		<td>
-			<?php 
-			$k = $this->m_master->kegiatan($spt_dalam->kegiatan_id,"kpa");
-			$p = $this->m_master->kegiatan($spt_dalam->kegiatan_id,"pptk");
-			$b = $this->m_master->kegiatan($spt_dalam->kegiatan_id,"bendahara");
-			$kpa       = "<b><i>(".$this->m_master->pegawai_data($k, "nama").")</i></b><br/>Nip. ".$this->m_master->pegawai_data($k, "nip");
-			$pptk      = "<b><i>(".$this->m_master->pegawai_data($p, "nama").")</i></b><br/>Nip. ".$this->m_master->pegawai_data($p, "nip");
-			$bendahara = "<b><i>(".$this->m_master->pegawai_data($b, "nama").")</i></b><br/>Nip. ".$this->m_master->pegawai_data($b, "nip");
-				
+			<?php
+$k         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "kpa");
+$p         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "pptk");
+$b         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "bendahara");
+$kpa       = "<b><i>(" . $this->m_master->pegawai_data($k, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($k, "nip");
+$pptk      = "<b><i>(" . $this->m_master->pegawai_data($p, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($p, "nip");
+$bendahara = "<b><i>(" . $this->m_master->pegawai_data($b, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($b, "nip");
 
-
-			 ?>
-			<?= $kpa ?>
+?>
+			<?=$kpa?>
 			<br></td>
-		<td><br><br>Nama terang :  <b><?= $nm_diperintah ?></b> <br>Alamat terang : Simpang Empat</td>
+		<td><br><br>Nama terang :  <b><?=$nm_diperintah?></b> <br>Alamat terang : Simpang Empat</td>
 	</tr>
 	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:<br><b>Pejabat Pelaksana Teknis Kegiatan</b></td></tr>
 	<tr><td><br>
-			<?= $bendahara ?>
+			<?=$bendahara?>
 		</td>
 		<td>
-			 <?= $pptk ?>
+			 <?=$pptk?>
 		</td>
 	</tr>
 </table>
@@ -641,7 +638,7 @@ function goToPage( url ){
 										</div>
 									</div><!-- /.col -->
 								</div><!-- /.row -->
-								
-							</div>	
-						</div>		
+
+							</div>
+						</div>
 

@@ -22,11 +22,17 @@ class About extends CI_Controller {
 		parent::__construct();
 	}	
 
+/**
+ * { function_description }
+ */
 function index(){
 	$this->breadcrumbs->push('About', '/About');
 	$this->template->load('template_load','readme');
 }
 
+/**
+ * { function_description }
+ */
 function readme(){
 	$this->breadcrumbs->push('About', '/About');
 	$this->breadcrumbs->push('ReadMe', '/About/ReadMe');
