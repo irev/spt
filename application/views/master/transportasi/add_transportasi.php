@@ -1,26 +1,38 @@
 <?php 
 if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
-	$addId    =  $this->input->post('ID');
-	$addNama  =  $this->input->post('nama');
-	$addNomor =  $this->input->post('nomor');
-	$addJenis =  $this->input->post('jenis');
-	$addRoda  =  $this->input->post('roda');
-	$addCc    =  $this->input->post('cc');
-	$addWil1  =  $this->input->post('wil1');
-	$addWil2  =  $this->input->post('wil2');
-	$addWil3  =  $this->input->post('wil3');
+	$addId      =  $this->input->post('ID');
+	$addNama    =  $this->input->post('nama');
+	$addNomor   =  $this->input->post('nomor');
+	$addbahanbakar   =  $this->input->post('bahan_bakar');
+	$addJenis   =  $this->input->post('jenis');
+	$addRoda    =  $this->input->post('roda');
+	$addCc      =  $this->input->post('cc');
+	$addWil1    =  $this->input->post('wil1');
+	$addWil2    =  $this->input->post('wil2');
+	$addWil3    =  $this->input->post('wil3');
+	$addWilluar =  $this->input->post('wil4');
+	$addbbmwil1 = $this->input->post('addbbmwil1');
+	$addbbmwil2 = $this->input->post('addbbmwil2');
+	$addbbmwil3 = $this->input->post('addbbmwil3');
+	$addbbmwil4 = $this->input->post('addbbmwil4');
 
 	$JUDUL_FORM = "<i class='fa fa-car'></i> Tambah Transportasi <small>Tambah Master Transportasi</small>";
 }else{
-	$addId    = $transportasi->id_tran;
-	$addNama  = $transportasi->nama;
-	$addNomor = $transportasi->nomor;
-	$addJenis = $transportasi->jenis;
-	$addRoda  = $transportasi->roda;
-	$addCc    = $transportasi->cc;
-	$addWil1  = $transportasi->wil1;
-	$addWil2  = $transportasi->wil2;
-	$addWil3  = $transportasi->wil3;
+	$addId      = $transportasi->id_tran;
+	$addNama    = $transportasi->nama;
+	$addNomor   = $transportasi->nomor;
+	$addbahanbakar = $transportasi->bahan_bakar;
+	$addJenis   = $transportasi->jenis;
+	$addRoda    = $transportasi->roda;
+	$addCc      = $transportasi->cc;
+	$addWil1    = $transportasi->wil1;
+	$addWil2    = $transportasi->wil2;
+	$addWil3    = $transportasi->wil3;
+	$addWilluar = $transportasi->wil4;
+	$addbbmwil1 = $transportasi->liter1;
+	$addbbmwil2 = $transportasi->liter1;
+	$addbbmwil3 = $transportasi->liter1;
+	$addbbmwil4 = $transportasi->bbm_luar;
 	$JUDUL_FORM = "<i class='fa fa-car'></i> Ubah Transportasi <small>Ubah Infomasi Transportasi</small>";
 }
 //print_r($transportasi);
@@ -53,6 +65,25 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 										<div class="col-sm-9">
 											<input type="text" id="nomor" placeholder="Nomor Transportasi" class="col-xs-10 col-sm-5" name="nomor" value="<?= $addNomor ?>">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="Nomor" > Bahan Bakar*</label>
+
+										<div class="col-sm-9">
+											<!--input type="text" id="bahan_bakar" placeholder="Bahan Bakar" class="col-xs-10 col-sm-5" name="bahan_bakar" value="<?= $addbahanbakar ?>"-->
+											<select id="bahan_bakar" class="col-xs-10 col-sm-5" name="bahan_bakar">
+
+												<option value="<?= $addbahanbakar ?>"><?= $addbahanbakar ?></option>
+												<option value="Premium">Premium</option>
+												<option value="Solar">Solar</option>
+												<option value="Bio Solar">Bio Solar</option>
+												<option value="Dexlite">Dexlite</option>
+												<option value="Pertalite">Pertalite</option>
+												<option value="Pertamax">Pertamax</option>
+												<option value="Pertamax Turbo">Pertamax Turbo</option>
+												<option value="Pertamina Dex">Pertamina Dex</option>
+											</select>
 										</div>
 									</div>
 
@@ -89,27 +120,36 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 											<input type="text" id="cc" placeholder="Volume (CC)*" class="col-xs-10 col-sm-5" name="cc" value="<?= $addCc ?>">
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="wil2" > Wilayah 1</label>
-
+									<!--div class="form-group">
+										<label class="col-sm-2 control-label no-padding-right" for="wil2">Wilayah</label>
 										<div class="col-sm-9">
-											<input type="text" id="wil2" placeholder="Wilayah 1" class="col-xs-10 col-sm-5" name="wil1" value="<?= $addWil1 ?>">
+											<input type="text" id="wil2" placeholder="Wilayah 1" class="col-xs-3 col-sm-3" name="wil1" value="<?= $addWil1 ?>">
+										
+											<input type="text" id="wil2" placeholder="Wilayah 2" class="col-xs-3 col-sm-3" name="wil2" value="<?= $addWil2 ?>">
+										
+											<input type="text" id="wil3" placeholder="Wilayah 3" class="col-xs-3 col-sm-3" name="wil3" value="<?= $addWil3 ?>">
+
+											<input type="text" id="wil4" placeholder="Luar Daerah" class="col-xs-3 col-sm-3" name="wil4" value="<?= $addWilluar ?>">
+										</div>
+									</div-->
+						<div class="row">
+									<div class="form-group">
+										<label class="col-sm-2 control-label no-padding-right" for="wil3" >BBM Liter </label>
+										<div class="col-sm-9">
+											<input type="text" id="addbbmwil1" placeholder="Wilayah 1 (satu)" class="col-xs-3 col-sm-3" name="addbbmwil1" value="<?= $addbbmwil1 ?>">
+											
+											<input type="text" id="addbbmwil2" placeholder="Wilayah 2 (dua)" class="col-xs-3 col-sm-3" name="addbbmwil2" value="<?= $addbbmwil2 ?>">
+											
+											<input type="text" id="addbbmwil3" placeholder="Wilayah 3 (tiga)" class="col-xs-3 col-sm-3" name="addbbmwil3" value="<?= $addbbmwil3 ?>">
+											
+											<input type="text" id="addbbmwil4" placeholder="Luar Daerah" class="col-xs-3 col-sm-3" name="addbbmwil4" value="<?= $addbbmwil4 ?>">
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="wil2" > Wilayah 2</label>
+						</div>
 
-										<div class="col-sm-9">
-											<input type="text" id="wil2" placeholder="Wilayah 2" class="col-xs-10 col-sm-5" name="wil2" value="<?= $addWil2 ?>">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="wil3" > Wilayah 3</label>
 
-										<div class="col-sm-9">
-											<input type="text" id="wil3" placeholder="Wilayah 3" class="col-xs-10 col-sm-5" name="wil3" value="<?= $addWil3 ?>">
-										</div>
-									</div>
+
+
 <div class="clearfix form-actions">
 	<?php 
 	echo validation_errors('<div class="col-md-3"></div><div class="text-left col-md-9" style="color: red;"><i class="fa fa-times"></i> ', '</div>'); 

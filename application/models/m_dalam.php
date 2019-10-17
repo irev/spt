@@ -21,6 +21,7 @@ class M_dalam extends CI_Model
     public $golongan;
     public $jabatan;
     public $maksud;
+    public $dasar_spt; 
     public $transportasi;
     public $tujuan;
     public $wilayah;
@@ -55,7 +56,6 @@ class M_dalam extends CI_Model
         $query     = $this->db->get("spt_data");
         $count_row = $query->num_rows();
         if ($count_row > 0) {
-
             return false; // jika ada.
         } else {
 
@@ -155,6 +155,7 @@ class M_dalam extends CI_Model
 
         $this->jabatan      = $post['jabatan'];
         $this->maksud       = $post['maksud'];
+        $this->dasar_spt    = $post['dasarSPT'];
         $this->transportasi = $post['transpor'];
 
         $this->tujuan_id     = $post['pilih_tujuan'];
@@ -189,11 +190,17 @@ class M_dalam extends CI_Model
         $result = ($this->db->affected_rows() != 1) ? false : true;
         return $result;
     }
-
+    /**
+     * @param  [type] gettabel
+     * @param  [type] getfield
+     * @param  [type] keyfield
+     * @param  [type] key
+     * @return [type]
+     */
     public function get_data($gettabel, $getfield, $keyfield, $key)
     {
         $this->db->where($keyfield, $key);
-        $query = $this->db->get($gettabel); //TABEL SPT
+        $query = $this->db->get($gettabel); //TABEL
         return $query->row($getfield);
     }
 
@@ -212,6 +219,7 @@ class M_dalam extends CI_Model
 
         $this->jabatan      = $post['jabatan'];
         $this->maksud       = $post['maksud'];
+        $this->dasar_spt    = $post['dasarSPT'];
         $this->transportasi = $post['transpor'];
 
         $this->tujuan_id     = $post['pilih_tujuan'];
@@ -246,8 +254,8 @@ class M_dalam extends CI_Model
         $this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
         $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
         //CEK KONDISI
-        //$result  = ($this->db->affected_rows() >= 1) ? false : true;
-        //return  $result;
+        $result  = ($this->db->affected_rows() >= 1) ? false : true;
+        return  $result;
     }
 
     public function delete($id)
@@ -280,6 +288,7 @@ class M_dalam extends CI_Model
                 'pegawai_id' => $idpegawai,
                 'perjalanan' => $perjalanan,
                 'tahun'      => $tahun,
+                'bayar'      => 'yes',
             ];
             $ids   = $spt_id;
             $idpeg = $idpegawai;
@@ -289,6 +298,7 @@ class M_dalam extends CI_Model
                 'pegawai_id' => $post["pegawai_id"],
                 'perjalanan' => $post["perjalanan"],
                 'tahun'      => $post["tahun"],
+                'bayar'      => 'yes',
             ];
             $ids   = $post["spt_id"];
             $idpeg = $post["pegawai_id"];
@@ -298,11 +308,12 @@ class M_dalam extends CI_Model
         //echo $this->db->last_query();
         if ($cek === 0) {
             $this->db->insert("spt_pengikut", $data);
-            echo $this->db->affected_rows();
+            return $this->db->affected_rows();
         } else {
-            echo "2";
+            return "2";
         }
-        //$result  = ($this->db->affected_rows() > 1) ? false : true;
+        $result  = ($this->db->affected_rows() > 1) ? false : true;
+        return $result;
         //echo $this->db->affected_rows();
     }
     public function deletePengikut($id)
@@ -310,4 +321,30 @@ class M_dalam extends CI_Model
         return $this->db->delete("spt_pengikut", array("id_peng" => $id));
     }
 
+
+    function update_bayar(){
+        $post = $this->input->post();
+        //$this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
+        $this->db->update("spt_pengikut", ["bayar"=>$post["bayar"]], array('id_peng' => $post["id_peng"]));
+    }
+
+
+
+    function cari_spt($match=null){
+        $this->db->select("*");
+        if($match!=null){
+            $array = array(
+                'no_spt' => $match,
+                'no_sppd' => $match,
+                'nama' => $match, 
+                'jabatan' => $match,
+                'maksud' => $match,
+                'transportasi' => $match,
+              );
+            $this->db->or_like($array);
+        }
+        $query = $this->db->get("spt_data"); //TABEL SPT
+        return $query->result_array();
+
+    }
 }

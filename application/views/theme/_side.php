@@ -99,6 +99,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<b class="arrow"></b>
 							</li>
 							<?php 
+								if ($this->uri->segment(2)=='eselon') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<!--li class=""-->
+								<a href="<?= base_url('/master/eselon/') ?>">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Daftar Eselon
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<?php 
+								if ($this->uri->segment(2)=='kegiatan') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<!--li class=""-->
+								<a href="<?= base_url('/master/kegiatan/') ?>">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Data Kegiatan
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<?php 
 								if ($this->uri->segment(2)=='pegawai') {
 									echo '<li class="active">';
 								}else{

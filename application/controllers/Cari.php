@@ -143,7 +143,8 @@ class Cari extends CI_Controller {
 
 	public function index()
 	{
-		$data['spt_dalam'] = $this->m_dalam->spt_dalam();
+            $key = $this->input->get("q");
+		$data['cari_spd'] = $this->m_dalam->cari_spt($key);
 	 	$this->template->load_js('template','cari', $data);
 	}
 }

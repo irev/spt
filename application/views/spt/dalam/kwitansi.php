@@ -231,6 +231,7 @@ function openWindow( url ){
                 $no=1; 
                 $Total=0;
                 foreach ($spt_pengikut as $pengikut) { 
+                    if($pengikut["bayar"]==="yes"){
                         $vnama = $pengikut["nama_pengikut"];
                         $vnip = ($pengikut["nip_pengikut"]=="") ? $pengikut["pangkat"] : $pengikut["nip_pengikut"] ;
                         $vgol = ($pengikut["pangkat"]==$pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"]
@@ -280,6 +281,7 @@ function openWindow( url ){
             <?php 
                 $no++; 
                 $Total += $subtotal;
+              }  
             } ?>
             <tfoot>
                 <tr>

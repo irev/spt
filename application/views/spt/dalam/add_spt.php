@@ -1,8 +1,3 @@
-<style type="text/css">
-
-
-</style>
-
 <?php 
 
 $addNULL                 =""; //default NULL
@@ -17,20 +12,30 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addid_spt           ="";
 	$addno_spt           ="";
 	$addno_sppd          ="";
+	$adddiprintah        ="";
+	$addnm_diperintah    ="";
 	$addnama             ="";
 	$addnip              ="";
 	$addpangkat          ="";
 	$addgolongan         ="";
 	$addjabatan          ="";
 	$addmaksud           ="";
+	$adddasar            ="";
+
+	$addtrans ="";
 	$addtransportasi     ="";
 	$addtransnomor  	 ="";
+
+	$addidtujuan ="";
+	$addnmtujuan ="";
 	$addtujuan           ="";
 	$addtgl_berangkat    ="";
 	$addtgl_kembali      ="";
 	$addsumber_dana;
 
-	/////////////////// SPT  	
+	/////////////////// SPT 
+	$addidttdSPT         ="";
+	$addnmttdSPT         ="";
 	$addttd_tempat       ="";
 	$addttd_tgl          ="";
 	$addttd_jabatan      ="";
@@ -38,6 +43,8 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addttd_gol          ="";
 	$addttd_nip          ="";
 	//////////////////// SPPD
+	$addidttdSPPT        ="";
+	$addnmttdSPPT        ="";
 	$addttd_sppd_tempat  ="";
 	$addttd_sppd_tgl     ="";
 	$addttd_sppd_jabatan ="";
@@ -47,6 +54,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addbeban            ="";
 	$addanggaran         ="";
 	$addkegiatan         ="";
+	$addnmkegiatan ="";
 
 	$addjarak            = "";
 	$addwilayah          = "";
@@ -56,40 +64,59 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 }elseif($this->input->get('p') == '1') {
 	$hide = 'btn btn-xs btn-primary';
 	$post = $this->input->post();
-	$modul 					 = 1;
-	$LINK 					 = 'spt/dalam/add?p='.$modul;
-	$addid_spt               = '';//$post['id_spt'];
-	$addno_spt               = $post['nomor_spt'];
-	$addno_sppd              = $post['nomor_sppd'];
-	$addnama                 = $post['nama'];
-	$addnip                  = $post['nip'];
-	//$addpangkat              = $post['pangkat'];
-	$addgolongan             = $post['golongan'];
-	$addjabatan              = $post['jabatan'];
-	$addmaksud               = $post['maksud'];
-	$addtransportasi         = $post['transpor'];
-	$addtransnomor           = $post['tran_nama'];
-	$addtujuan               = $post['tujuan'];
-	$addtgl_berangkat        = $post['berangkat'];
-	$addtgl_kembali          = $post['kembali'];
+	$modul               = 1;
+	$LINK                = 'spt/dalam/add?p='.$modul;
+	$addid_spt           = '';//$post['id_spt'];
+	$addno_spt           = $post['nomor_spt'];
+	$addno_sppd          = $post['nomor_sppd'];
+	
+	$adddiprintah        = $post['perintah_untuk'];
+	$addnm_diperintah    = $this->m_dalam->get_data('m_pegawai','nama','id_peg', $adddiprintah);
+	$addnama             = $post['nama'];
+	$addnip              = $post['nip'];
+	//$addpangkat        = $post['pangkat'];
+	$addgolongan         = $post['golongan'];
+	$addjabatan          = $post['jabatan'];
+	$addmaksud           = $post['maksud'];
+	$adddasar  		     = $post['dasarSPT'];
+	//transpot
+	//$addtransportasi  $addtrans 
+	$addtrans            = $post['transpor'];
+	$addtransportasi     = $post['pilih_transportasi'];
+	$addtransnomor       = $post['tran_nama'];
+	//tujuan
+	
+	
+	$addidtujuan         = $post["pilih_tujuan"];
+	$addnmtujuan         = $post["tujuan"];
+	$pilih_tujuan        = $post["pilih_tujuan"];
+	$nm_tujuan           = $this->m_dalam->get_data('m_tujuan','tujuan','id_tujuan',$pilih_tujuan);
+	$addtujuan           = $post['tujuan'];
+	$addtgl_berangkat    = $post['berangkat'];
+	$addtgl_kembali      = $post['kembali'];
 	$addsumber_dana;
 	/////////////////// SPT  	
-	$addttd_tempat           = $tempat;
-	$addttd_tgl              = $post['tanggal_spt'];
-	$addttd_jabatan          = $post['ttd_jabatan'];
-	$addttd_nama             = $post['ttd_nama'];
-	$addttd_gol              = $post['ttd_golongan'];
-	$addttd_nip 			 = $post['ttd_nip'];
+	$addidttdSPT         = $post['pilih_pegawai_ttd_spt'];
+	$addnmttdSPT         = $post['ttd_nama'];
+	$addttd_tempat       = $tempat;
+	$addttd_tgl          = $post['tanggal_spt'];
+	$addttd_jabatan      = $post['ttd_jabatan'];
+	$addttd_nama         = $post['ttd_nama'];
+	$addttd_gol          = $post['ttd_golongan'];
+	$addttd_nip          = $post['ttd_nip'];
 	//////////////////// SPPD
-	$addttd_sppd_tempat      = $tempat;
-	$addttd_sppd_tgl         = $post['tanggal_sppd'];
-	$addttd_sppd_jabatan     = $post['ttd_sppd_jabatan'];
-	$addttd_sppd_nama        = $post['ttd_sppd_nama'];
-	$addttd_sppd_gol         = $post['ttd_sppd_golongan'];
-	$addttd_sppd_nip         = $post['ttd_sppd_nip'];
-	$addbeban                = $post['pilih_beban'];
-	$addanggaran             = $post['pasal_anggaran'];
-	$addkegiatan             = $post['kegiatan'];
+	$addidttdSPT         = $post['pilih_pegawai_ttd_spt'];
+	$addnmttdSPT         = $post['ttd_sppd_nama'];
+	$addttd_sppd_tempat  = $tempat;
+	$addttd_sppd_tgl     = $post['tanggal_sppd'];
+	$addttd_sppd_jabatan = $post['ttd_sppd_jabatan'];
+	$addttd_sppd_nama    = $post['ttd_sppd_nama'];
+	$addttd_sppd_gol     = $post['ttd_sppd_golongan'];
+	$addttd_sppd_nip     = $post['ttd_sppd_nip'];
+	$addbeban            = $post['pilih_beban'];
+	$addanggaran         = $post['pasal_anggaran'];
+	$addkegiatan         = $post['kegiatan'];
+	$addnmkegiatan       = "";
 
 	$cek =  "p=1";
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Buat Surat Perintah Tugas <small>Tambah data Surat Perintah Tugas</small>";
@@ -113,8 +140,13 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addgolongan             = $post['golongan'];
 	$addjabatan              = $post['jabatan'];
 	$addmaksud               = $post['maksud'];
+	$adddasar  				 = $post['dasarSPT'];
+	//transportasi 
 	$addtransportasi         = $post['transpor'];
 	$addtransportasinama     = $post['tran_nama'];
+	//tujuan
+	$pilih_tujuan			 = $post["pilih_tujuan"];
+	$nm_tujuan				 = $this->m_dalam->get_data('m_tujuan','tujuan','tujuan',$pilih_tujuan);	
 	$addtujuan               = $post['tujuan'];
 	$addtgl_berangkat        = $post['berangkat'];
 	$addtgl_kembali          = $post['kembali'];
@@ -136,6 +168,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addbeban                = $post['pilih_beban'];
 	$addanggaran             = $post['pasal_anggaran'];
 	$addkegiatan             = $post['pilih_kegiatan'];
+	$addnmkegiatan           ="";
 
 	$cek =  "p=1";
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Buat Surat Perintah Tugas <small>Tambah data Surat Perintah Tugas</small>";
@@ -146,22 +179,32 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addperjalanan = $post['perjalanan'];
 
 }elseif($TOKEN ==='edit' && $this->input->get('p') == '2'){
-	$cek = $this->input->get('p').'else';
+	$cek = $this->input->get('p');
 	$modul 					 = 2;
 	$LINK 					 = 'spt/dalam/edit/'.$spt_dalam->id_spt.'?p='.$modul;
 	$addid_spt               = $spt_dalam->id_spt;
 	$addno_spt               = $spt_dalam->no_spt;
 	$addno_sppd              = $spt_dalam->no_sppd;
+
+	$adddiprintah 			 = $this->m_dalam->get_data('m_pegawai','id_peg','nama',$spt_dalam->nama);
+	$addnm_diperintah 		 = $this->m_dalam->get_data('m_pegawai','nama','nama',$spt_dalam->nama);
 	$addnama                 = $spt_dalam->nama;
 	$addnip                  = $spt_dalam->nip;
 	$addpangkat              = $spt_dalam->pangkat;
 	$addgolongan             = $spt_dalam->golongan;
 	$addjabatan              = $spt_dalam->jabatan;
 	$addmaksud               = $spt_dalam->maksud;
-	$addtransportasi         = $spt_dalam->transportasi;
-	$addtransnomor           = $this->m_dalam->get_data('m_trasportsasi','nama','nomor',$addtransportasi);
+	$adddasar				 = $spt_dalam->dasar_spt;
+	//TRANSPORTASI
+	//$addtransportasi  $addtrans 
+	$addtransportasi         = $this->m_dalam->get_data('m_trasportsasi','id_tran','nomor',$spt_dalam->transportasi);
+	$addtrans 				 = $this->m_dalam->get_data('m_trasportsasi','nama','nomor',$spt_dalam->transportasi).'  
+							   [ '.$this->m_dalam->get_data('m_trasportsasi','nomor','nomor',$spt_dalam->transportasi).' ]';
+	$addtransnomor           = $this->m_dalam->get_data('m_trasportsasi','nomor','nomor',$spt_dalam->transportasi);
 
 	$addtujuan               = $spt_dalam->tujuan;
+	$addidtujuan             = $spt_dalam->tujuan_id;
+	$addnmtujuan             = $spt_dalam->tujuan;
 	$addjarak 				 = $this->m_dalam->get_data('m_tujuan','jarak','tujuan',$addtujuan);
 	$addwilayah				 = $this->m_dalam->get_data('m_tujuan','wilayah','tujuan',$addtujuan);
 	$addperjalanan			 = $this->m_dalam->get_data('m_tujuan','perjalanan','tujuan',$addtujuan);
@@ -169,7 +212,9 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addtgl_berangkat        = $spt_dalam->tgl_berangkat;
 	$addtgl_kembali          = $spt_dalam->tgl_kembali;
 	$addsumber_dana;
-	/////////////////// SPT  	
+	/////////////////// SPT  
+	$addidttdSPT         	 = $this->m_dalam->get_data('m_pegawai','id_peg','nama',$spt_dalam->ttd_nama);
+	$addnmttdSPT         	 = $this->m_dalam->get_data('m_pegawai','nama','nama',$spt_dalam->ttd_nama);
 	$addttd_tempat           = $spt_dalam->ttd_tempat;
 	$addttd_tgl              = $spt_dalam->ttd_tgl;
 	$addttd_jabatan          = $spt_dalam->ttd_jabatan;
@@ -177,6 +222,8 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addttd_gol              = $spt_dalam->ttd_gol;
 	$addttd_nip  			 = $spt_dalam->ttd_nip;
 	//////////////////// SPPD
+	$addidttdSPPT         	 = $this->m_dalam->get_data('m_pegawai','id_peg','nama',$spt_dalam->ttd_sppd_nama);
+	$addnmttdSPPT         	 = $this->m_dalam->get_data('m_pegawai','nama','nama',$spt_dalam->ttd_sppd_nama);
 	$addttd_sppd_tempat      = $spt_dalam->ttd_sppd_tempat;
 	$addttd_sppd_tgl         = $spt_dalam->ttd_sppd_tgl;
 	$addttd_sppd_jabatan     = $spt_dalam->ttd_sppd_jabatan;
@@ -187,16 +234,17 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 	$addbeban                = $spt_dalam->beban;
 	$addanggaran             = $spt_dalam->anggaran;
 	$addkegiatan             = $spt_dalam->kegiatan_id;
+	$addnmkegiatan           = $this->m_dalam->get_data('m_kegiatan','rekening','id_kegiatan',$spt_dalam->kegiatan_id).' '.$this->m_dalam->get_data('m_kegiatan','kegiatan','id_kegiatan',$spt_dalam->kegiatan_id);
+	$this->m_dalam->get_data('m_pegawai','nama','nama',$spt_dalam->ttd_sppd_nama);
 	$JUDUL_FORM  = "<i class='fa fa-file'></i> Ubah Surat Perintah Tugas <small>Ubah data Surat Perintah Tugas</small>";
 }
 ?>
 
 
-<h3 class="header smaller lighter blue"><?= $JUDUL_FORM. uniqid() ?></h3>
+<h3 class="header smaller lighter blue">  <?= $JUDUL_FORM. uniqid() ?></h3>
 <?= $this->session->flashdata('msg') ?>	
 <div class="text-center" style="color: red;">
-
-									<?php 
+									<!--?php 
 									echo  validation_errors ('<div class="alert alert-danger">
 											<button type="button" class="close" data-dismiss="alert">
 												<i class="ace-icon fa fa-times"></i>
@@ -207,10 +255,10 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 												Oh snap!
 											</strong>',
 											'<br>
-										   </div>');  ?>
+										   </div>');  ?-->
 									</div>
 
-<!--?= $this->session->flashdata('msg'). $cek ?-->
+
 <form class="form-horizontal" role="form" action="<?= base_url($LINK) ?>" method="post" enctype="multipart/form-data">
 
 <div class="col-md-6">	
@@ -237,13 +285,11 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 												 ?>
 											</a>	
 											<select style="display:none;" id="pilih_pegawai" placeholder="pilih_pegawai" class="col-xs-10 col-sm-5 " name="perintah_untuk">
-												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
+												<option value="<?= $adddiprintah ?>"><?= $addnm_diperintah ?></option>
 												<?php foreach ($pegawai as $peg) {
 													echo '<option value="'.$peg['id_peg'].'">'.$peg['nama'].' ▶ '.$peg['nip'].' ▶ '.$peg['jabatan'].' ▶ '.$peg['golongan'].'</option>';
 												} ?>
-												
-											</select>				
-
+											</select>
 										</div>
 									</div>	
 									<div class="form-group">
@@ -313,6 +359,14 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 											
 										</div>
 									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="maksud"> Dasar Perintah</label>
+
+										<div class="col-sm-9">
+											<textarea id="maksud" placeholder="Dasar melaksanakan perintah (nomor surat/ memo / undangan / dll)" class="col-xs-10 col-sm-5 col-md-12 meedun-input" name="dasarSPT" ><?= $adddasar ?></textarea>	
+											
+										</div>
+									</div>
 </div>										
 <div class="col-md-6">
 <h3 class="header smaller lighter blue"><i class="fa fa-car"></i> TRANSPORTASI</h3>
@@ -321,14 +375,14 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 
 										<div class="col-sm-9">
 											<?php
-												$btns = ($addtransportasi=="")? "btn-danger" : "btn-primary";
+												$btns = ($addtransportasi=="" or $addtransportasi ==0)? "btn-danger" : "btn-primary";
 											?>	
 											<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_transportasi">
-													<?= $_transport = ($addtransportasi=="") ? "Pilih Transportasi" : $addtransportasi ?>
+													<?= $_transport = ($addtransportasi=="" or $addtransportasi ==0) ? "Pilih Transportasi" : $addtransnomor ?>
 											</span>
 										
 											<select style="display:none;" id="pilih_transportasi" placeholder="pilih_transportasi" class="col-xs-10 col-sm-5 col-md-6" name="pilih_transportasi">
-												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
+												<option value="<?= $addtransportasi ?>"><?= $addtrans ?></option>
 												<?php foreach ($transportasi as $tran) {
 													echo '<option value="'.$tran['id_tran'].'">'.$tran['nama'].' ▶ '.$tran['nomor'].' ▶ '.$tran['jenis'].' ▶ '.$tran['roda'].'</option>';
 												} ?>
@@ -341,7 +395,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										<label class="col-sm-3 control-label no-padding-right" for="transpor"> 6.	Nomor Polisi*</label>
 
 										<div class="col-sm-9">
-											<input readonly type="text" id="transpor" placeholder="Transportasi" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="transpor" value="<?= $addtransportasi ?>">	
+											<input readonly type="text" id="transpor" placeholder="Transportasi" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="transpor" value="<?= $addtransnomor ?>">	
 											<div class="bar"></div>
 										</div>
 									</div>
@@ -349,7 +403,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										<label class="col-sm-3 control-label no-padding-right" for="tran_nama"> 6.	Nama Kendraan*</label>
 
 										<div class="col-sm-9">
-											<input readonly type="text" id="tran_nama" placeholder="Transportasi" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="tran_nama" value="<?= $addtransnomor ?>">	
+											<input readonly type="text" id="tran_nama" placeholder="Transportasi" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="tran_nama" value="<?= $addtrans ?>">	
 											<div class="bar"></div>
 										</div>
 									</div>
@@ -370,7 +424,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 												 ?>
 											</span>	
 											<select style="display:none;" id="pilih_tujuan" placeholder="pilih_tujuan" class="col-xs-10 col-sm-5 col-md-6 meedun-input" name="pilih_tujuan">
-												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
+												<option value="<?= $addidtujuan ?>"><?= $addnmtujuan ?></option>
 												<?php foreach ($tujuan as $ke) {
 													echo '<option value="'.$ke['id_tujuan'].'">'.$ke['tujuan'].' ▶ '.$ke['jarak'].' ▶ '.$ke['wilayah'].' ▶ '.$tran['perjalanan'].'</option>';
 												} ?>
@@ -497,8 +551,8 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_pegawai_spt">
 											<?= $retVal = ($addttd_nama == "") ? "Tanda Tangan SPT ?" : $addttd_nama; ?>
 										</span>	
-											<select <?= $display ?> id="pilih_pegawai_spt" placeholder="Pilih Penanda Tangan SPT" class="col-xs-10 col-sm-5 col-md-12" name="pilih_pegawai">
-												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
+											<select <?= $display ?> id="pilih_pegawai_spt" placeholder="Pilih Penanda Tangan SPT" class="col-xs-10 col-sm-5 col-md-12" name="pilih_pegawai_ttd_spt">
+												<option value="<?= $addidttdSPT ?>"><?= $addnmttdSPT ?></option>
 												<?php foreach ($pegawai as $peg) {
 													echo '<option value="'.$peg['id_peg'].'">'.$peg['nama'].' ▶ '.$peg['nip'].' ▶ '.$peg['jabatan'].' ▶ '.$peg['golongan'].'</option>';
 												} ?>
@@ -583,7 +637,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 												<?= $retVal = ($addttd_sppd_nama == "") ? "Tanda Tangan SPPD ?" : $addttd_sppd_nama; ?>
 											</span>
 											<select <?= $display ?>id="pilih_pegawai_sppd" placeholder="pilih_pegawai_sppd" class="col-xs-10 col-sm-5 col-md-12" name="pilih_pegawai">
-												<option value="<?= $addNULL ?>"><?= $addNULL ?></option>
+												<option value="<?= $addidttdSPPT ?>"><?= $addnmttdSPPT ?></option>
 												<?php foreach ($pegawai as $peg) {
 													echo '<option value="'.$peg['id_peg'].'">'.$peg['nama'].' ▶ '.$peg['nip'].' ▶ '.$peg['jabatan'].' ▶ '.$peg['golongan'].'</option>';
 												} ?>
@@ -664,21 +718,17 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 										<div class="col-sm-9">
 												<?php 
 													$btns = ($addkegiatan=="" or $addkegiatan==0)? "btn-danger" : "btn-primary";
-													$keg = ($addkegiatan=="" or $addkegiatan==0)? "":$this->m_master->kegiatan($addkegiatan);		
+													$keg = ($addkegiatan=="" or $addkegiatan==0)? "": $addnmkegiatan;		
 												 ?>
 											<span class="btn_show_input btn btn-xs <?= $btns ?>" $display data-id="pilih_kegiatan">
 												<?php 
-												 		echo $btnKeg = ($addkegiatan=="" or $addkegiatan==0) ? "Pada Kegiatan ?" : $keg->rekening." ".$keg->kegiatan." ".$keg->tahun;
+												 		echo $addkegiatan."  ". $btnKeg = ($addkegiatan=="" or $addkegiatan==0) ? "Pada Kegiatan ?" : $addnmkegiatan;
 												 ?>
 											
 											</span>
 											<select <?= $display ?>id="pilih_kegiatan" placeholder="pilih_kegiatan" class="col-xs-10 col-sm-5 col-md-10 meedun-input" name="kegiatan">
-												<?php if(is_object($spt_dalam)): ?>
-												<option value="<?= $spt_dalam->kegiatan_id ?>"><?= $btnKeg ?></option>
-												<?php endif ?>
-												<?php if(!is_object($spt_dalam)): ?>
-												<option value="<?= $addkegiatan ?>"><?= $addkegiatan ?></option>
-												<?php endif ?>
+												<option value="<?= $addkegiatan ?>"><?= $addnmkegiatan ?></option>
+												
 												<?php foreach ($kegiatan as $keg) {
 													echo '<option value="'.$keg['id_kegiatan'].'">'.$keg['rekening'].' ▶ '.$keg['kegiatan'].'</option>';
 												} ?>
