@@ -42,7 +42,17 @@ class M_master extends CI_Model
         return $this->db->get_where($this->_table_pegawai, ["id_peg" => $id])->row();
     }
 
-///////////////////////////// GOLONGAN
+/**
+ *   [golongan description]
+ *   @method      golongan
+ *   @author Meedun
+ *   @date        2019-10-17
+ *   @file        file_name()
+ *   @anotherdate 2019-10-17T06:12:43+0700
+ *   @version     [version]
+ *   @param       [type]                   $ID_GOLONGAN [description]
+ *   @return      [type]                                [description]
+ */
     public function golongan($ID_GOLONGAN = null)
     {
         //$ID_CLIENT = $this->session->userdata('idclient');

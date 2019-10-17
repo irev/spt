@@ -37,7 +37,14 @@ class Panel extends CI_Controller {
 
 
 /**
- * { function_description }
+ *   [index description]
+ *   @method      index
+ *   @author Meedun
+ *   @date        2019-10-17
+ *   @file        {{%copy_file_path%}}
+ *   @anotherdate 2019-10-17T06:08:04+0700
+ *   @version     [version]
+ *   @return      [type]                   [description]
  */
 public function index()
     {
