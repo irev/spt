@@ -114,28 +114,13 @@ function goToPage( url ){
 												</li>
 												<li>
 													<a data-toggle="tab" href="#bbm">
+														<i class="glyphicon glyphicon-tint"></i>
 														BBM
-														<span class="badge badge-danger">4</span>
+														<span class="badge badge-danger"></span>
 													</a>
 												</li>
 
 
-												<li class="dropdown">
-													<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-														Dropdown &nbsp;
-														<i class="ace-icon fa fa-caret-down bigger-110 width-auto"></i>
-													</a>
-
-													<ul class="dropdown-menu dropdown-info">
-														<li>
-															<a data-toggle="tab" href="#dropdown1">@fat</a>
-														</li>
-
-														<li>
-															<a data-toggle="tab" href="#dropdown2">@mdo</a>
-														</li>
-													</ul>
-												</li>
 											</ul>
 
 											<div class="tab-content">
@@ -290,7 +275,7 @@ function goToPage( url ){
 															<div class="profile-info-name"> Dasar Surat Perintah </div>
 
 															<div class="profile-info-value">
-																<span class="editable" id="signup">2010/06/20</span>
+																<span class="editable" id="signup"><?=$spt_dalam->dasar_spt?></span>
 															</div>
 														</div>
 
@@ -370,7 +355,7 @@ if (count($spt_pengikut) > 0) {
             <th rowspan="2" width="10%" style="text-align: center;">Eselon/Golongan</th>
             <th colspan="2" width="20%" style="text-align: center;">Uang Harian</th>
             <th rowspan="2" width="10%" style="text-align: center;">Jumlah<br/>Diterima</th>
-            <th rowspan="2" width="10%" style="text-align: center;">Tanda Tangan</th>
+            <th rowspan="2" width="5%" style="text-align: center;">Bayar</th>
         </tr>
         <tr>
             <th style="text-align: center;">Jumlah Hari</th>
@@ -433,7 +418,7 @@ if ($spt_pengikut > 0) {
 
                 </td>
                 <td style="text-align: right;"><?=angka($subtotal = (intval($uang_harian) * intval($hari_perjalanan)))?></td>
-                <td ><?=$no?>. <button class="btn btn-xs btn-success">YA</button></td>
+                <td ><?=$no?>. <button class="btn btn-xs btn-success btn-bayar btn-<?=$pengikut["bayar"]?>" data-val="<?=$pengikut["bayar"]?>" data-id="<?=$pengikut['id_peng']  ?>"><?=$pengikut["bayar"]?></button></td>
                  <!--td></td-->
             </tr>
             <?php
@@ -625,14 +610,6 @@ $bendahara = "<b><i>(" . $this->m_master->pegawai_data($b, "nama") . ")</i></b><
 </div>
 </div>
 </div>
-												</div>
-
-												<div id="dropdown1" class="tab-pane fade">
-													<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-												</div>
-
-												<div id="dropdown2" class="tab-pane fade">
-													<p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
 												</div>
 											</div>
 										</div>

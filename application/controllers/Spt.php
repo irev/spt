@@ -78,6 +78,11 @@ class Spt extends CI_Controller {
             'label' => 'maksud',
             'rules' => 'required'],
 			//pilih_transportasi:
+            
+			['field' => 'pilih_transportasi',
+            'label' => 'transpor',
+            'rules' => 'required'],
+
             ['field' => 'transpor',
             'label' => 'transpor',
             'rules' => 'required'],
@@ -213,8 +218,7 @@ class Spt extends CI_Controller {
 			$data['transportasi'] = $this->m_transport->trasnsportasi();
 			$data['tujuan']       = $this->m_tujuan->tujuan();
 			$data['kegiatan']     = $this->m_kegiatan->kegiatan();
-
-			$data['spt_pengikut'] = array();
+			//$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
@@ -245,18 +249,19 @@ class Spt extends CI_Controller {
 	        	//if (!$data['spt_dalam']) show_404();	
 				$this->template->load_js('template','spt/dalam/add_spt', $data);
 
-		}elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
+		}
+		elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
 				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
-				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				$data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
 				$validation = $this->form_validation;
 	        	$validation->set_rules($this->rule_sptdalam());
 	        	if ($validation->run()) {
 	        		///DUPLIKAT KODE NOMOR SPT
 	        		if(!$this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
-			            	if($this->m_dalam->query_update() === true){
+			            	if($this->m_dalam->query_update() === false){
 			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
 								$red = base_url("spt/dalam");
-								//header("refresh:4; url=$red"); 
+								header("refresh:4; url=$red"); 
 							}else{
 								//echo $this->db->last_query();
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
@@ -277,6 +282,14 @@ class Spt extends CI_Controller {
 		//echo $this->db->last_query();	
 	 }
 
+/**
+ * @return [type]
+ */
+function bayar(){
+	if($this->m_dalam->update_bayar() === false){
+		//update_bayar
+	}
+}
 
 /**
  * { function_description }

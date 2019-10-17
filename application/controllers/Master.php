@@ -20,7 +20,7 @@ class Master extends CI_Controller {
 	 */
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['m_mjabatan','m_transport']);
+		$this->load->model(['m_mjabatan','m_transport','m_eselon']);
 		//$this->load->library(['session','Mylib_form','Mylib_themes','l_paket']);
 		////$this->load->helper(['url','tanggal','tanggal_id','terbilang']);
 		$this->load->library(['session','form_validation']);
@@ -347,11 +347,10 @@ public function pegawai($TOKEN=null, $ID=null)
 
 	}
 
-	//-----------------------------------------------------------------------------
-	/// ESELON //////
-	///
-	/// @return     array  ( description_of_the_return_value )
-	///
+	/**
+	 * function rule eselon
+	 * @return [type]
+	 */
 	public function rule_eselon()
     {
         return [
@@ -359,46 +358,58 @@ public function pegawai($TOKEN=null, $ID=null)
             'label' => 'Nama Eselon',
             'rules' => 'required'],
 
-            ['field' => 'nominal',
+            ['field' => 'uang_harian_eselon',
             'label' => 'Uang Saku',
             'rules' => 'required'],
         ];
 
     }
+    	/**
+    	 *   [eselon description]
+    	 *   @method      eselon
+    	 *   @author Meedun
+    	 *   @date        2019-10-17
+    	 *   @file        file_name()
+    	 *   @anotherdate 2019-10-17T12:19:11+0700
+    	 *   @version     [version]
+    	 *   @param       [type]                   $TOKEN [description]
+    	 *   @param       [type]                   $ID    [description]
+    	 *   @return      [type]                          [description]
+    	 */
     	function eselon($TOKEN=null, $ID=null){
 		// add breadcrumbs
-		 $this->breadcrumbs->push('Jabatan', 'master/jabatan');
+		 $this->breadcrumbs->push('Eselon', 'master/eselon');
 		$data['TOKEN'] = $TOKEN;
 		$data['ID'] = $ID;
 
-		if($TOKEN==='jabatan'){
-			$data['jabatan'] = $this->m_mjabatan->jabatan($ID);
-			if (!$data['jabatan']) show_404();	
-			$this->template->load_js('template','master/jabatan/jabatan', $data);
+		if($TOKEN==='eselon'){
+			$data['eselon'] = $this->m_eselon->eselon($ID);
+			if (!$data['eselon']) show_404();	
+			$this->template->load('template_load','master/eselon/eselon', $data);
 
 		}elseif($TOKEN==='add'){
 			$this->breadcrumbs->push('<i class="menu-icon fa fa-plus"></i> Add', '/add');
 			$validation = $this->form_validation;
-        	$validation->set_rules($this->rule_jabatan());
+        	$validation->set_rules($this->rule_eselon());
         	if ($validation->run()) {
-            	if($this->m_mjabatan->query_simpan() === true){
-            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
-					$red = base_url("master/jabatan/");
+            	if($this->m_eselon->query_simpan() === true){
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_eselon').' berhasil disimpan'));
+					$red = base_url("master/eselon/");
 					header("refresh:4; url=$red"); 
 				}else{
             		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
 				}
 			}
-        	$data['jabatan'] = $this->m_mjabatan->jabatan($ID);
-        	if (!$data['jabatan']) show_404();	
-			$this->template->load_js('template','master/jabatan/add_jabatan',$data);
+        	$data['eselon'] = $this->m_mjabatan->jabatan($ID);
+        	if (!$data['eselon']) show_404();	
+			$this->template->load('template_load','master/eselon/add_eselon',$data);
 
 		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
 			$this->breadcrumbs->push('<i class="menu-icon fa fa-pencil"></i> Edit', '/edit');
 			 //echo $TOKEN;
 			 //echo $ID;
 			$validation = $this->form_validation;
-        	$validation->set_rules($this->rule_jabatan());
+        	$validation->set_rules($this->rule_eselon());
         	if ($validation->run()) {
         		$this->m_mjabatan->query_update();
 				if($this->m_mjabatan->query_update() === true){
@@ -409,19 +420,81 @@ public function pegawai($TOKEN=null, $ID=null)
 				}
 				
 			}
-        	$data['jabatan'] = $this->m_mjabatan->jabatan($ID);
-        	if (!$data['jabatan']) show_404();	
-        	$this->template->load_js('template','master/jabatan/add_jabatan', $data);
+        	$data['eselon'] = $this->m_eselon->eselon($ID);
+        	if (!$data['eselon']) show_404();	
+        	$this->template->load('template_load','master/eselon/add_eselon', $data);
 		}else{
-			$data['jabatan'] = $this->m_mjabatan->jabatan();
-			if (!$data['jabatan']) show_404();	
-			$this->template->load_js('template','master/jabatan/jabatan', $data);
+			$data['eselon'] = $this->m_eselon->eselon();
+			if (!$data['eselon']) show_404();	
+			$this->template->load('template_load','master/eselon/eselon', $data);
 		}
-				
-
 	}
 
+/**
+ *   [kegiatan description]
+ *   @method      kegiatan
+ *   @author Meedun
+ *   @date        2019-10-17
+ *   @file        file_name()
+ *   @anotherdate 2019-10-17T15:42:28+0700
+ *   @version     [version]
+ *   @param       [type]                   $TOKEN [description]
+ *   @param       [type]                   $ID    [description]
+ *   @return      [type]                          [description]
+ */
+function kegiatan($TOKEN=null, $ID=null){
+		// add breadcrumbs
+		 $this->breadcrumbs->push('Eselon', 'master/kegiatans');
+		$data['TOKEN'] = $TOKEN;
+		$data['ID'] = $ID;
 
+		if($TOKEN==='kegiatans'){
+			$data['kegiatans'] = $this->m_kegiatan->kegiatans($ID);
+			if (!$data['kegiatans']) show_404();	
+			$this->template->load('template_load','master/kegiatans/kegiatans', $data);
+
+		}elseif($TOKEN==='add'){
+			$this->breadcrumbs->push('<i class="menu-icon fa fa-plus"></i> Add', '/add');
+			$validation = $this->form_validation;
+        	$validation->set_rules($this->rule_kegiatans());
+        	if ($validation->run()) {
+            	if($this->m_kegiatan->query_simpan() === true){
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_kegiatans').' berhasil disimpan'));
+					$red = base_url("master/kegiatans/");
+					header("refresh:4; url=$red"); 
+				}else{
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+				}
+			}
+        	$data['kegiatans'] = $this->m_kegiatan->jabatan($ID);
+        	if (!$data['kegiatans']) show_404();	
+			$this->template->load('template_load','master/kegiatans/add_kegiatans',$data);
+
+		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
+			$this->breadcrumbs->push('<i class="menu-icon fa fa-pencil"></i> Edit', '/edit');
+			 //echo $TOKEN;
+			 //echo $ID;
+			$validation = $this->form_validation;
+        	$validation->set_rules($this->rule_kegiatans());
+        	if ($validation->run()) {
+        		$this->m_kegiatan->query_update();
+				if($this->m_kegiatan->query_update() === true){
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+					
+				}else{
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+				}
+				
+			}
+        	$data['kegiatans'] = $this->m_kegiatan->kegiatans($ID);
+        	if (!$data['kegiatans']) show_404();	
+        	$this->template->load('template_load','master/kegiatans/add_kegiatans', $data);
+		}else{
+			$data['kegiatans'] = $this->m_kegiatan->kegiatans();
+			if (!$data['kegiatans']) show_404();	
+			$this->template->load('template_load','master/kegiatans/kegiatans', $data);
+		}
+	}
 	/**
 	 * { function_description }
 	 *
@@ -508,6 +581,39 @@ public function pegawai($TOKEN=null, $ID=null)
              ['field' => 'cc',
             'label' => 'Volume Sentimeter Kubik (CC) Transportasi',
             'rules' => 'required|is_natural'],
+
+          /**  ['field' => 'wil1',
+            'label' => 'wil1',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'wil2',
+            'label' => 'wil2',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'wil3',
+            'label' => 'wil3',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'wil4',
+            'label' => 'wil4',
+            'rules' => 'required|is_natural'],
+            */
+
+            ['field' => 'addbbmwil1',
+            'label' => 'BBM wilayah 1 @(liter)',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'addbbmwil2',
+            'label' => 'BBM wilayah 2 @(liter)',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'addbbmwil3',
+            'label' => 'BBM wilayah 3 @(liter)',
+            'rules' => 'required|is_natural'],
+
+            ['field' => 'addbbmwil4',
+            'label' => 'BBM Luar Daerah @(liter)',
+            'rules' => 'required|is_natural'],
              array('rule2' => 'Error Message on rule2 for this field_name')
         ];
     }    
@@ -532,15 +638,17 @@ function transportasi($TOKEN=null, $ID=null){
         	$validation->set_rules($this->rule_transportasi());
         	if ($validation->run()) {
             	if($this->m_transport->query_simpan() === true){
+            		echo $this->db->last_query();
             		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
 					$red = base_url("master/transportasi/");
-					header("refresh:4; url=$red"); 
+					//header("refresh:4; url=$red"); 
 				}else{
             		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
 				}
 			}
         	$data['transportasi'] = $this->m_mjabatan->jabatan($ID);
         	if (!$data['transportasi']) show_404();	
+        	
 			$this->template->load_js('template','master/transportasi/add_transportasi',$data);
 
 		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
@@ -583,6 +691,14 @@ function transportasi($TOKEN=null, $ID=null){
         
         if ($this->m_transport->delete($id)) {
             redirect(site_url('master/transportasi'));
+        }
+    }
+    public function delete_eselon($id=null)
+    {
+        if (!isset($id)) show_404();
+        
+        if ($this->m_eselon->delete($id)) {
+            redirect(site_url('master/eselon'));
         }
     }
 
