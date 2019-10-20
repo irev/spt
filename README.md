@@ -1,6 +1,6 @@
 # SPD (Surat Perintah Dinas) 
 Sistem Informasri SPD
-![Alt text](../../asset/Screenshot_1.jpg?raw=true)
+![Alt text](https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_1.jpge)
 
 # Ukuran Kertas F4 dalam satuan mm, cm, inci
 Ukuran Kertas	F4 
@@ -19,9 +19,9 @@ Ukuran Kertas	F4
 -- Versi protokol: 10 UTF-8 Unicode (utf8)
 
 # PRINT OUT
-<img src="../../asset/Screenshot_2.jpg?raw=true" width="800" height="500">
+<img src="https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_2.jpg" width="800" height="500">
 
-<img src="../../asset/Screenshot_3.jpg?raw=true" width="800" height="500">
+<img src="https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_3.jpg" width="800" height="500">
 
 # Contribution
 - Febri Yetti, SE as project idea
