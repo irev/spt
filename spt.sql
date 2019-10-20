@@ -1,24 +1,37 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15 Okt 2019 pada 09.01
--- Versi Server: 10.1.9-MariaDB
--- PHP Version: 5.6.15
+-- Generation Time: 20 Okt 2019 pada 21.01
+-- Versi Server: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `spt`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `faq`
+--
+
+CREATE TABLE `faq` (
+  `id_faq` int(11) NOT NULL,
+  `tab` varchar(100) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `sub_title` varchar(200) NOT NULL,
+  `icon` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `cDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cUpdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,7 +99,7 @@ INSERT INTO `m_eselon` (`id_eselon`, `tingkat`, `eselon`, `rp_oh`, `tahun`) VALU
 (1, '', 'ESELON IV', '250000', 2019),
 (2, '', 'ESELON III', '275000', 2019),
 (3, '', 'ESELON II', '350000', 2019),
-(4, '', 'GOL I', '225000', 2019),
+(4, '', 'GOL I,II dan III', '225000', 2019),
 (7, '', 'PTT', '200000', 2019),
 (8, '', 'THL', '200000', 2019);
 
@@ -204,7 +217,7 @@ CREATE TABLE `m_pegawai` (
   `nip` varchar(500) NOT NULL,
   `jabatan` text NOT NULL,
   `golongan` varchar(300) NOT NULL,
-  `golongan_id` varchar(11) NOT NULL DEFAULT '0',
+  `golongan_id` int(11) NOT NULL DEFAULT '0',
   `eselon_id` int(11) NOT NULL DEFAULT '0',
   `tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -214,18 +227,18 @@ CREATE TABLE `m_pegawai` (
 --
 
 INSERT INTO `m_pegawai` (`id_peg`, `nama`, `nip`, `jabatan`, `golongan`, `golongan_id`, `eselon_id`, `tahun`) VALUES
-(1, 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Kepala Dinas', 'Pembina IV/a', '0', 0, 2019),
-(5, 'MUHAMMAD HORNAS, SH', '', 'Sopir Kadis PUPR', 'PTT ', '18', 7, 2019),
-(6, 'REFYANDRA, S. Kom', '', 'Staf keuangan', 'THL', '19', 8, 2019),
-(7, 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Ka. UPT Peralatan & Pengujian', 'Pengatur II/c', '7', 0, 2019),
-(8, 'WILDAN, SH. M.Si', '19690314 199003 1 002', 'Sekretaris', 'Pembina IV/a', '13', 3, 2019),
-(9, 'ALIN MARIANA, Amd', '19780419 201101 2 001', 'Bendahara', '', '0', 0, 2019),
-(10, 'NASRIL, ST, MT', '19760120 200312 1 007', 'Kasubag Umum', '', '0', 0, 2019),
-(11, 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Staf keuangan', 'Penata III/c', '0', 0, 2019),
-(12, 'DARMAWAN, ST', '19730901 200501 1 005', 'Kepala Bidang Tataruang', 'Penata Tingkat 1 III/d', '12', 0, 2019),
-(13, 'ELDON MARON, ST', '19730727 200604 1 006', 'Kepala Bidang PSDA', 'Penata Tingkat 1 III/d', '12', 0, 2019),
-(14, 'FEBRIANTO, ST', '19800224 200501 1 002', 'Kepala Bidang Cipta Karya', 'Penata Tingkat 1 III/d', '12', 0, 2019),
-(15, 'BAMBANG SUMARSONO, ST', '19770623 200604 1 009', 'Kepala Bidang Bina Marga', 'Penata Tingkat 1 III/d', '12', 3, 2019);
+(1, 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Kepala Dinas', 'Pembina IV/a', 13, 3, 2019),
+(5, 'MUHAMMAD HORNAS, SH', '', 'Sopir Kadis PUPR', 'PTT ', 18, 7, 2019),
+(6, 'REFYANDRA, S. Kom', '', 'Staf keuangan', 'THL', 19, 8, 2019),
+(7, 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Ka. UPT Peralatan & Pengujian', 'Pengatur II/c', 7, 0, 2019),
+(8, 'WILDAN, SH. M.Si', '19690314 199003 1 002', 'Sekretaris', 'Pembina IV/a', 13, 3, 2019),
+(9, 'ALIN MARIANA, Amd', '19780419 201101 2 001', 'Bendahara', '', 0, 0, 2019),
+(10, 'NASRIL, ST, MT', '19760120 200312 1 007', 'Kasubag Umum', '', 0, 0, 2019),
+(11, 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Kasubag Program dan Aset', 'Penata III/c', 7, 0, 2019),
+(12, 'DARMAWAN, ST', '19730901 200501 1 005', 'Kepala Bidang Tataruang', 'Penata Tingkat 1 III/d', 12, 0, 2019),
+(13, 'ELDON MARON, ST', '19730727 200604 1 006', 'Kepala Bidang PSDA', 'Penata Tingkat 1 III/d', 12, 0, 2019),
+(14, 'FEBRIANTO, ST', '19800224 200501 1 002', 'Kepala Bidang Cipta Karya', 'Penata Tingkat 1 III/d', 12, 0, 2019),
+(15, 'BAMBANG SUMARSONO, ST', '197706232006041009', 'Kepala Bidang Bina Marga', 'Penata Tingkat 1 III/d', 12, 3, 2019);
 
 -- --------------------------------------------------------
 
@@ -327,21 +340,16 @@ CREATE TABLE `spt_data` (
   `ttd_sppd_gol` varchar(200) NOT NULL,
   `ttd_sppd_jabatan` varchar(200) NOT NULL,
   `perjalanan` set('dalam','luar','luarnegeri','') NOT NULL,
-  `tahun` year(4) NOT NULL
+  `tahun` year(4) NOT NULL,
+  `dasar_spt` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `spt_data`
 --
 
-INSERT INTO `spt_data` (`id_spt`, `no_spt`, `no_sppd`, `nama`, `nip`, `pangkat`, `golongan`, `jabatan`, `maksud`, `transportasi`, `tujuan_id`, `tujuan`, `wilayah`, `tgl_berangkat`, `tgl_kembali`, `sumber_dana`, `ttd_tempat`, `ttd_tgl`, `ttd_jabatan`, `ttd_nama`, `ttd_gol`, `ttd_nip`, `beban`, `kegiatan_id`, `anggaran`, `c_date`, `up_date`, `ttd_sppd_tempat`, `ttd_sppd_tgl`, `ttd_sppd_nama`, `ttd_sppd_nip`, `ttd_sppd_gol`, `ttd_sppd_jabatan`, `perjalanan`, `tahun`) VALUES
-('5d991a25e9d6f', '090/12/SPT/DPUPR/2019', '900/12/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'Maksud dan tujuan spt', 'BA  8036 S', 0, 'Kinali', 2, '2019-10-16', '2019-10-21', '2019', 'Simpang Empat', '2019-10-01', 'Ka. UPT Peralatan & Pengujian', 'MUHAMMAD DIS, SE', 'Pengatur II/c', '19650401 200604 1 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-06 05:33:09', '2019-10-15 13:12:50', 'Simpang Empat', '2019-10-15', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'dalam', 2019),
-('5d991a9252cbc', '090', '900', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'kj', 'BA  8036 S', 0, 'Padang', 3, '2019-10-01', '2019-10-06', '2019', 'Simpang Empat', '2019-10-06', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '1981102 2200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-06 05:34:58', '2019-10-15 07:49:59', 'Simpang Empat', '2019-10-07', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Kepala Dinas', '', 2019),
-('5d9dd99774eed', 'yu', 'yutyuio', 'HENNY FERNIZA, ST. MT', '1981102 2200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'wret', 'BA  8036 S', 1, 'Air Bangis', 4, '2019-10-09', '2019-10-16', '2019', 'Simpang Empat', '2019-10-09', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '1981102 2200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '', '2019-10-09 19:59:03', '2019-10-15 12:59:37', 'Simpang Empat', '2019-10-24', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', '', 0000),
-('5da520699ecfe', 'xxxxxxxxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxxxxxxx', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'Coba membuat SPT ', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-15', '2019-10-15', '2019', 'Simpang Empat', '2019-10-15', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 08:27:05', '2019-10-15 13:15:20', 'Simpang Empat', '2019-10-16', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019),
-('5da5448017117', 'yyyyyyyy', 'yyyyyyyyyyy', 'FEBRI YETTI, SE', '19810208 200901 2 003', 'Penata III/c', 'Penata III/c', 'Staf keuangan', 'sdsd', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-02', '2019-10-19', '2019', 'Simpang Empat', '2019-10-17', 'Kepala Bidang Bina Marga', 'BAMBANG SUMARSONO, ST', 'Penata Tingkat 1 III/d', '19770623 200604 1 009', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '', '2019-10-15 11:01:04', '2019-10-15 13:15:14', 'Simpang Empat', '2019-10-16', 'DARMAWAN, ST', '19730901 200501 1 005', 'Penata Tingkat 1 III/d', 'Kepala Bidang Tataruang', 'dalam', 2019),
-('5da546587c6bd', 'fdfdfsd', 'fdfsdfd', 'MUHAMMAD DIS, SE', '19650401 200604 1 003', 'Pengatur II/c', 'Pengatur II/c', 'Ka. UPT Peralatan & Pengujian', 'cvcv', 'BA  8036 S', 1, 'Air Bangis', 3, '2019-10-15', '2019-10-16', '2019', 'Simpang Empat', '2019-10-17', 'Staf keuangan', 'FEBRI YETTI, SE', 'Penata III/c', '19810208 200901 2 003', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 11:08:56', '2019-10-15 13:14:59', 'Simpang Empat', '2019-10-17', 'FEBRIANTO, ST', '19800224 200501 1 002', 'Penata Tingkat 1 III/d', 'Kepala Bidang Cipta Karya', 'dalam', 2019),
-('5da54b7d54c89', 'zzzzzzzzzzzz', 'zzzzzzzzzzzzz', 'BAMBANG SUMARSONO, ST', '19770623 200604 1 009', 'Penata Tingkat 1 III/d', 'Penata Tingkat 1 III/d', 'Kepala Bidang Bina Marga', 'test test', 'BA  8036 S', 2, 'Ujung Gading', 3, '2019-10-16', '2019-10-17', '2019', 'Simpang Empat', '2019-10-16', 'Kepala Bidang Cipta Karya', 'FEBRIANTO, ST', 'Penata Tingkat 1 III/d', '19800224 200501 1 002', 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '1', '2019-10-15 11:30:53', '2019-10-15 13:15:06', 'Simpang Empat', '2019-10-22', 'ELDON MARON, ST', '19730727 200604 1 006', 'Penata Tingkat 1 III/d', 'Kepala Bidang PSDA', 'dalam', 2019);
+INSERT INTO `spt_data` (`id_spt`, `no_spt`, `no_sppd`, `nama`, `nip`, `pangkat`, `golongan`, `jabatan`, `maksud`, `transportasi`, `tujuan_id`, `tujuan`, `wilayah`, `tgl_berangkat`, `tgl_kembali`, `sumber_dana`, `ttd_tempat`, `ttd_tgl`, `ttd_jabatan`, `ttd_nama`, `ttd_gol`, `ttd_nip`, `beban`, `kegiatan_id`, `anggaran`, `c_date`, `up_date`, `ttd_sppd_tempat`, `ttd_sppd_tgl`, `ttd_sppd_nama`, `ttd_sppd_nip`, `ttd_sppd_gol`, `ttd_sppd_jabatan`, `perjalanan`, `tahun`, `dasar_spt`) VALUES
+('5daaf7402abd7', '090/001/SPT/DPUPR/2019', '090/001/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'TEST SPD', 'BA  8036 S', 1, 'Air Bangis', 3, '2019-10-19', '2019-10-23', '2019', 'Simpang Empat', '2019-10-19', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPPA  Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-19 18:45:04', '2019-10-19 21:53:01', 'Simpang Empat', '2019-10-23', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019, '');
 
 -- --------------------------------------------------------
 
@@ -368,10 +376,41 @@ INSERT INTO `spt_pengikut` (`id_peng`, `spt_id`, `pegawai_id`, `bayar`, `perjala
 (14, '5d991a25e9d6f', 11, '', 'dalam', 2019),
 (15, '5d991a25e9d6f', 15, '', 'dalam', 2019),
 (17, '5d991a9252cbc', 15, '', 'dalam', 2019),
-(36, '5da520699ecfe', 5, '', 'dalam', 2019),
 (37, '5da546587c6bd', 7, '', 'dalam', 2019),
 (38, '5da54b7d54c89', 15, '', 'dalam', 2019),
-(39, '5da546587c6bd', 6, '', 'dalam', 2019);
+(39, '5da546587c6bd', 6, '', 'dalam', 2019),
+(40, '5da520699ecfe', 11, 'yes', 'dalam', 2019),
+(41, '5da520699ecfe', 5, 'yes', 'dalam', 2019),
+(42, '5daa25f624524', 1, 'yes', 'dalam', 2019),
+(43, '5daa25f624524', 5, 'yes', 'dalam', 2019),
+(44, '5daa25f624524', 11, 'yes', 'dalam', 2019),
+(45, '5daaf7402abd7', 1, 'yes', 'dalam', 2019),
+(46, '5daaf7402abd7', 6, 'yes', 'dalam', 2019),
+(50, '5daaf7402abd7', 8, 'yes', 'dalam', 2019),
+(51, '5daaf7402abd7', 9, 'yes', 'dalam', 2019);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbluser`
+--
+
+CREATE TABLE `tbluser` (
+  `id` int(11) NOT NULL,
+  `uname` varchar(100) NOT NULL,
+  `upwd` varchar(100) NOT NULL,
+  `urole` varchar(100) NOT NULL,
+  `intusertype` int(11) NOT NULL,
+  `struseremail` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tbluser`
+--
+
+INSERT INTO `tbluser` (`id`, `uname`, `upwd`, `urole`, `intusertype`, `struseremail`) VALUES
+(0, 'admin', 'admin', 'admin', 1, NULL),
+(1, 'casheir', 'casheir', 'admin', 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -452,6 +491,12 @@ ALTER TABLE `spt_pengikut`
   ADD PRIMARY KEY (`id_peng`);
 
 --
+-- Indexes for table `tbluser`
+--
+ALTER TABLE `tbluser`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -459,32 +504,35 @@ ALTER TABLE `spt_pengikut`
 -- AUTO_INCREMENT for table `m_belanja`
 --
 ALTER TABLE `m_belanja`
-  MODIFY `id_belanja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_belanja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `m_jabatan`
 --
 ALTER TABLE `m_jabatan`
   MODIFY `id_jab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT for table `m_pegawai`
 --
 ALTER TABLE `m_pegawai`
   MODIFY `id_peg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `m_trasportsasi`
 --
 ALTER TABLE `m_trasportsasi`
   MODIFY `id_tran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `m_tujuan`
 --
 ALTER TABLE `m_tujuan`
   MODIFY `id_tujuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `spt_pengikut`
 --
 ALTER TABLE `spt_pengikut`
-  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+COMMIT;
