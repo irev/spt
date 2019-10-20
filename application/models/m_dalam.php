@@ -181,7 +181,8 @@ class M_dalam extends CI_Model
         $this->perjalanan       = "dalam";
         $this->tahun            = date("Y");
         ///// INPUT TAMBAHAN UNTUK SPPD
-        $this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
+        $this->beban       = $post['pilih_beban_text'];
+        //$this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
         $this->anggaran    = $post['pilih_beban'];
         $this->kegiatan_id = $post['kegiatan'];
         //EXE
@@ -246,7 +247,8 @@ class M_dalam extends CI_Model
         $this->tahun            = date("Y");
 
         ///// INPUT TAMBAHAN UNTUK SPPD
-        $this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
+        $this->beban       = $post['pilih_beban_text'];
+        //$this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
         $this->anggaran    = $post['pilih_beban'];
         $this->kegiatan_id = $post['kegiatan'];
 

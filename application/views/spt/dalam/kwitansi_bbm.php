@@ -220,40 +220,139 @@ table.noborder tr td{
     border-color: #27c1ea;
  }    
 </style>
+	<?php
+$no    = 1;
+$Total = 0;
+foreach ($spt_pengikut as $pengikut) {
+    $nm_diperintah       = $pengikut["nm_diperintah"];
+    $nip_diperintah      = $pengikut["nip_diperintah"];
+    $pangkat_diperintah  = $pengikut["pangkat_diperintah"];
+    $golongan_diperintah = $pengikut["golongan_diperintah"];
+    $cs                  = (count($spt_pengikut) >= 1) ? ", Cs" : "";
+    $maksud              = $pengikut["maksud"];
+    $tujuan              = $pengikut["tujuan"];
+    $kec                 = $pengikut["kec"];
+    $tahun               = $pengikut["tahun"];
+    $tgl_berangkat       = $pengikut["tgl_berangkat"];
+    $no_sppd             = $pengikut["no_sppd"];
+    $tgl_sppd            = $pengikut["ttd_sppd_tgl"];
 
-<div style="float: right; width: 15%;">
+    ///ANGARAN KEGIATAN
+    $REKENING     = $pengikut["rekening"];
+    $KEGIATAN     = $pengikut["kegiatan"];
+    $KPA          = $pengikut["kpa"];
+    $jabKPA       = $pengikut["jabkpa"];
+    $nipKPA       = $pengikut["nipkpa"];
+    $PPTK         = $pengikut["pptk"];
+    $jabPPTK      = $pengikut["jabpptk"];
+    $nipPPTK      = $pengikut["nippptk"];
+    $BENDAHARA    = $pengikut["bendahara"];
+    $jabBENDAHARA = $pengikut["jabbendahara"];
+    $nipBENDAHARA = $pengikut["nipbendahara"];
+    $anggaran     = $pengikut["anggaran"];
+
+    $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
+    //// TENTUKAN WILAYAH PERJALANAN DINAS
+    $wil         = $pengikut["wilayah"];
+    $uang_harian = 0;
+    switch ($wil) {
+        case '1': // Wilayah 1
+            $uang_harian = $pengikut["wil1"];
+            break;
+        case '2': // Wilayah 2
+            $uang_harian = $pengikut["wil2"];
+            break;
+        case '3': // Wilayah 3
+            $uang_harian = $pengikut["wil3"];
+            break;
+        case '4': // Wilayah 4
+            $uang_harian = $pengikut["harian_luar"];
+            break;
+        default:
+            $uang_harian = 0;
+            break;
+    }
+    $subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
+    $Total += $subtotal; //SUM TOTAL
+
+    /**
+     *   PENENTUAN JUMLAH BBM PERWILAYAH  
+     * [wil1] => 150000 [wil2] => 180000 [wil3] => 185000 [bbm_luar]
+     */
+		$wil         = $pengikut["wilayah"];
+		$uang_harian = 0;
+		$liter       = 0;
+		switch ($wil) {
+		    case '1': // Wilayah 1
+		        $uang_harian = $transpor->wil1;
+		        $liter       = $transpor->liter1;
+		        break;
+		    case '2': // Wilayah 2
+		        $uang_harian = $transpor->wil2;
+		        $liter       = $transpor->liter2;
+		        break;
+		    case '3': // Wilayah 3
+		        $uang_harian = $transpor->wil3;
+		        $liter       = $transpor->liter3;
+		        break;
+		    case '4': // Wilayah 4
+		        $uang_harian = $pengikut->harian_luar;
+		        $liter       = $pengikut->liter_luar;
+		        break;
+		    default:
+		        $uang_harian = 0;
+		        $liter       = 0;
+		        break;
+		}
+
+}
+$halaman = 2; //jumlah cetak halaman
+?>
+<div style="float: right; width: 15%;" class="no-print">
  <button class="no-print" onclick="print(7)" style="">CETAK</button>
+ <br><br><hr>Lembar:
+ <select name="lembar" onchange="myFunction(this.value)">
+ 	<option value="0">1 Lembar</option>
+ 	<option value="2" selected>2 Lembar</option>
+ 	<option value="3">3 Lembar</option>
+ 	<option value="4">4 Lembar</option>
+ 	<option value="5">5 Lembar</option>
+ </select>
 </div>
-
+<div  id="kwitansi">
+<?php for ($i=0; $i < $halaman ; $i++): ?>
 <div class="page">
 	<div>
 	<center><b><u style="letter-spacing: 8px;">KWITANSI</u></b></center>
 	<div class="nomor-kwitansi">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi"></div>
-	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01.01.03.5.2.2.01.06</div>
-	<span>Sudah terima dari : </span><div class="col-kanan">PENGGUNA ANGGARAN DINAS PEKERJAAN UMUM DAN PENATAAN RUANG KAB. PASAMAN BARAT TAHUN ANGGARAN 2018</div>
+	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?></div>
+	<span>Sudah terima dari : </span><div class="col-kanan"><?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
+		<b><?=strtoupper($retVal)?>
+	 	<?=$this->m_master->anggaran($anggaran, "tahun")?></b>
+	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka"> 
-		<p>30.000.000</p>
+		<p><?=  angka($uang_harian)  ?></p>
 	</div>
 			<span></span>
 	<div id="terbilang"> 
 		<p>
 			<i>
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
+				<?=angka_terbilang($uang_harian)?> Rupiah
 			</i>
 		</p>
 	</div>
-	<span></span><div class="col-kanan" style="text-align: justify;">RUANG KAB. PASAMAN BARAT TAHUN ANGGARAN 2018
-Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk Kendaraan Dinas BA 8036 S Sebanyak  40 liter, Atas Perjalanan Dinas Ke Kec. Sungai Beremas Pada Tanggal  07 April  2018. Pada Kegiatan Rapat-Rapat Koordinasi dan Konsultasi.Seperti SPT,SPPD dan LHP Terlampir.</div>
-<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada {Anggaran Belanja Langsung Tahun  2018}</div>
+	<span>Sebab dari : </span><div class="col-kanan" style="text-align: justify;">Pembayaran Lunas Pada "<?=$spt_dalam->nama?>"
+	atas Penggantian Biaya BBM <?=$transpor->bahan_bakar?>
+	Untuk Kendaraan Dinas <?=$transpor->nomor?>
+	Sebanyak  <?=$transpor->bahan_bakar . ' ' . $liter?>  liter,
+	Atas Perjalanan Dinas Ke <?=$this->m_master->tujuan($spt_dalam->tujuan_id, "kec");?>
+	Pada Tanggal  <?=LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)?>.
+	Pada Kegiatan <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "kegiatan")?>.
+	Seperti SPT, SPPD dan LHP Terlampir.</div>
+<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada Anggaran Belanja Langsung Tahun  <?=date("Y")?></div>
 <div style="width: 35%; display: inline-flex;">
 <table class="border" width="100%">
 	<tr><td>Diterima tgl………………………………………</td></tr>
@@ -274,19 +373,28 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 		<td colspan="2">Simpang Empat, ………………………………………2019</td>
 	</tr>
 	<tr><td width="50%"> </td><td width="50%">Yang terima,</td></tr>
-	<tr><td>Kuasa Pengguna Anggaran</td><td></td></tr>
+	<tr><td><b>Kuasa Pengguna Anggaran</b></td><td></td></tr>
 	<tr>
-		<td><b class="sign-name">(HENNY FERNIZA, ST, MT )</b>Nip. 19811022 200604 2 007<br></td>
-		<td><br><br>Nama terang : Drs. H. RAF'AN, MM<br>Alamat terang : Simpang Empat</td>
-	</tr>
-	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
-	<tr><td><br>
-			<b class="sign-name">(HENNY FERNIZA, ST, MT )</b>
-			Nip. 19811022 200604 2 007<br>
-		</td>
 		<td>
-			 <b class="sign-name">( NASRIL, ST, MT )</b>
-			 Nip. 19811022 200604 2 007<br>
+			<?php
+$k         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "kpa");
+$p         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "pptk");
+$b         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "bendahara");
+$kpa       = "<b><i>(" . $this->m_master->pegawai_data($k, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($k, "nip");
+$pptk      = "<b><i>(" . $this->m_master->pegawai_data($p, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($p, "nip");
+$bendahara = "<b><i>(" . $this->m_master->pegawai_data($b, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($b, "nip");
+
+?>
+			<br><br><?=$kpa?>
+			<br></td>
+		<td><br><br>Nama terang :  <b><?=$nm_diperintah?></b> <br>Alamat terang : Simpang Empat</td>
+	</tr>
+	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:<br><b>Pejabat Pelaksana Teknis Kegiatan</b></td></tr>
+	<tr><td><br><br>
+			<?=$bendahara?>
+		</td>
+		<td><br><br>
+			 <?=$pptk?>
 		</td>
 	</tr>
 </table>
@@ -297,41 +405,44 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 
 <br>
 <br>
-<br>
-<br>
-<br>
+
 <hr class="garis-putus"></hr>
 
-
-<div class="page">
+<?php endfor ?>
+</div>
+<div id="kwitansi-copy"></div>
+<!--div class="page">
 	<div>
 	<center><b><u style="letter-spacing: 8px;">KWITANSI</u></b></center>
 	<div class="nomor-kwitansi">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi"></div>
-	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01.01.03.5.2.2.01.06</div>
-	<span>Sudah terima dari : </span><div class="col-kanan">PENGGUNA ANGGARAN DINAS PEKERJAAN UMUM DAN PENATAAN RUANG KAB. PASAMAN BARAT TAHUN ANGGARAN 2018</div>
+	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?></div>
+	<span>Sudah terima dari : </span><div class="col-kanan"><?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
+		<b><?=strtoupper($retVal)?>
+	 	<?=$this->m_master->anggaran($anggaran, "tahun")?></b>
+	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka"> 
-		<p>30.000.000</p>
+		<p><?=  angka($uang_harian)  ?></p>
 	</div>
-<span></span>
+			<span></span>
 	<div id="terbilang"> 
 		<p>
 			<i>
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
-				Tiga puluh juta
+				<?=angka_terbilang($uang_harian)?> Rupiah
 			</i>
 		</p>
 	</div>
-	<span></span><div class="col-kanan" style="text-align: justify;">RUANG KAB. PASAMAN BARAT TAHUN ANGGARAN 2018
-Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk Kendaraan Dinas BA 8036 S Sebanyak  40 liter, Atas Perjalanan Dinas .</div>
-<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada {Anggaran Belanja Langsung Tahun  2018}</div>
+	<span>Sebab dari : </span><div class="col-kanan" style="text-align: justify;">Pembayaran Lunas Pada "<?=$spt_dalam->nama?>"
+	atas Penggantian Biaya BBM <?=$transpor->bahan_bakar?>
+	Untuk Kendaraan Dinas <?=$transpor->nomor?>
+	Sebanyak  <?=$transpor->bahan_bakar . ' ' . $liter?>  liter,
+	Atas Perjalanan Dinas Ke <?=$this->m_master->tujuan($spt_dalam->tujuan_id, "kec");?>
+	Pada Tanggal  <?=LONGE_DATE_INDONESIA($spt_dalam->tgl_kembali)?>.
+	Pada Kegiatan <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "kegiatan")?>.
+	Seperti SPT, SPPD dan LHP Terlampir.</div>
+<span></span><div class="col-kanan" style="text-align: center;">Dibebankan Pada Anggaran Belanja Langsung Tahun  <?=date("Y")?></div>
 <div style="width: 35%; display: inline-flex;">
 <table class="border" width="100%">
 	<tr><td>Diterima tgl………………………………………</td></tr>
@@ -352,25 +463,50 @@ Pembayaran Lunas Pada "Drs. H.RAF'AN,MM" atas Penggantian Biaya BBM Solar Untuk 
 		<td colspan="2">Simpang Empat, ………………………………………2019</td>
 	</tr>
 	<tr><td width="50%"> </td><td width="50%">Yang terima,</td></tr>
-	<tr><td>Kuasa Pengguna Anggaran</td><td></td></tr>
+	<tr><td><b>Kuasa Pengguna Anggaran</b></td><td></td></tr>
 	<tr>
-		<td><b class="sign-name">(HENNY FERNIZA, ST, MT )</b>Nip. 19811022 200604 2 007<br></td>
-		<td><br><br>Nama terang : Drs. H. RAF'AN, MM<br>Alamat terang : Simpang Empat</td>
-	</tr>
-	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:</td></tr>
-	<tr><td><br>
-			<b class="sign-name">(HENNY FERNIZA, ST, MT )</b>
-			Nip. 19811022 200604 2 007<br>
-		</td>
 		<td>
-			 <b class="sign-name">( NASRIL, ST, MT )</b>
-			 Nip. 19811022 200604 2 007<br>
+			<?php
+$k         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "kpa");
+$p         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "pptk");
+$b         = $this->m_master->kegiatan($spt_dalam->kegiatan_id, "bendahara");
+$kpa       = "<b><i>(" . $this->m_master->pegawai_data($k, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($k, "nip");
+$pptk      = "<b><i>(" . $this->m_master->pegawai_data($p, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($p, "nip");
+$bendahara = "<b><i>(" . $this->m_master->pegawai_data($b, "nama") . ")</i></b><br/>Nip. " . $this->m_master->pegawai_data($b, "nip");
+
+?>
+			<br><br><?=$kpa?>
+			<br></td>
+		<td><br><br>Nama terang :  <b><?=$nm_diperintah?></b> <br>Alamat terang : Simpang Empat</td>
+	</tr>
+	<tr><td>Lunas tgl………………………………<b><br/>Bendahara Pengeluaran</b></td><td>Diketahui Oleh:<br><b>Pejabat Pelaksana Teknis Kegiatan</b></td></tr>
+	<tr><td><br><br>
+			<?=$bendahara?>
+		</td>
+		<td><br><br>
+			 <?=$pptk?>
 		</td>
 	</tr>
 </table>
 
 </div>
 </div>
-</div>
+</div-->
 
- 
+ <script type="text/javascript">
+  //document.getElementById("lembar").addEventListener("change", myFunction);
+  function copyDiv(int) {
+  		var firstDivContent = document.getElementById('kwitansi');
+  		var tempDivContent  = '';
+    	var secondDivContent = document.getElementById('kwitansi-copy');
+ 		for (var i = 0; i < int-1 ; i++) {
+ 			var br =  '<br>';
+ 			tempDivContent += br+br+firstDivContent.innerHTML; 
+ 		}
+ 		secondDivContent.innerHTML = tempDivContent;
+	}
+  function myFunction(val) {
+	copyDiv(val);
+  }
+  copyDiv(2);
+ </script>

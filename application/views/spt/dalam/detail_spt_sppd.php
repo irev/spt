@@ -6,7 +6,7 @@ foreach ($spt_pengikut as $pengikut) {
     $nip_diperintah      = $pengikut["nip_diperintah"];
     $pangkat_diperintah  = $pengikut["pangkat_diperintah"];
     $golongan_diperintah = $pengikut["golongan_diperintah"];
-    $cs                  = (count($spt_pengikut) >= 1) ? ", Cs" : "";
+    $cs                  = (count($spt_pengikut) > 1 ) ? ", Cs" : "";
     $maksud              = $pengikut["maksud"];
     $tujuan              = $pengikut["tujuan"];
     $kec                 = $pengikut["kec"];
@@ -55,7 +55,6 @@ foreach ($spt_pengikut as $pengikut) {
 }
 
 ?>
-
 
 <script type="text/javascript">
 function close_window() {
@@ -333,15 +332,15 @@ if (count($spt_pengikut) > 0) {
         <tr>
             <td colspan="2" style="text-align: justify;">
             	<p>
-                Sudah terima dari <?=$retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike>ANGGARAN</strike>";?>
-                uang Sejumlah Rp. <?=angka($Total)?>,- (<?=angka_terbilang($Total)?>)
-                sebab dari pembayaran lunas pada <?=$nm_diperintah?><?=$cs?>
-                Biaya Perjalanan Dinas Dalam Rangka <?=$maksud?>
-                ke <?=$tujuan?>  <?=$kec?>
-                Tanggal <?=LONGE_DATE_INDONESIA($tgl_berangkat)?>
-                pada Kegiatan <?=$this->m_master->belanja($spt_dalam->kegiatan_id, "nama_belanja") . ' ' . $spt_dalam->kegiatan_id?>
-                berdasarkan SPPD Nomor : <?=$no_sppd?>
-                tanggal   <?=LONGE_DATE_INDONESIA($tgl_sppd)?>
+                Sudah terima dari <span class="blue"><?=$retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket").' '.$this->m_master->anggaran($anggaran, "tahun") : "<strike>ANGGARAN</strike>";?></span>
+                uang sejumlah Rp. <span class="blue"><?=angka($Total)?></span>,- (<span class="blue"><?=angka_terbilang($Total)?></span>)
+                sebab dari pembayaran lunas pada <span class="blue"><?=$nm_diperintah?><?=$cs?></span>
+                Biaya Perjalanan Dinas Dalam Rangka <span class="blue"><?=$maksud?></span>
+                ke <span class="blue"><?=$tujuan?>  <?=$kec?></span>
+                Tanggal <span class="blue"><?=LONGE_DATE_INDONESIA($tgl_berangkat)?></span>
+                pada Kegiatan <span class="blue"><?=$this->m_master->belanja($spt_dalam->kegiatan_id, "nama_belanja") . ' ' . $spt_dalam->kegiatan_id?></span>
+                berdasarkan SPPD Nomor : <span class="blue"><?=$no_sppd?></span>
+                tanggal   <span class="blue"><?=LONGE_DATE_INDONESIA($tgl_sppd)?></span>
                 dengan perincian sebagai berikut :
             	</p>
             </td>
@@ -506,12 +505,11 @@ $no++;
 	<div class="nomor-kwitansi">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi"></div>
-	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01.<?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?>.06</div>
+	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?></div>
 	<span>Sudah terima dari : </span><div class="col-kanan">
-		<?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike>ANGGARAN</strike>";?>
+		<?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
 		<b><?=strtoupper($retVal)?>
-	 	TAHUN ANGGARAN <?=$this->m_master->anggaran($anggaran, "tahun")?></b>
-
+	 	<?=$this->m_master->anggaran($anggaran, "tahun")?></b>
 	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka" style="display: contents;">

@@ -10,12 +10,14 @@ class M_master extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $tahun = $this->session->userdata("TA");
     }
 
     private $_tablepegawai = "m_pegawai";
     public $id_peg;
     public $eselon_id;
     public $golongan_id;
+   
     //public $nama_jabatan;
 
     public function pegawai($ID_PEGAWAI = null)
@@ -56,7 +58,8 @@ class M_master extends CI_Model
     public function golongan($ID_GOLONGAN = null)
     {
         //$ID_CLIENT = $this->session->userdata('idclient');
-        $this->db->order_by("id_gol", "ASC");
+        $this->db->order_by("golongan", "ASC");
+        $this->db->where("tahun", $this->session->userdata("TA"));
         if ($ID_GOLONGAN != null) {
             $this->db->where("id_gol", $ID_GOLONGAN);
         }
@@ -110,6 +113,7 @@ class M_master extends CI_Model
         }
     }
 
+
     public function query_simpanpegawai()
     {
         $post              = $this->input->post();
@@ -118,7 +122,7 @@ class M_master extends CI_Model
         $this->jabatan     = $post["jabatan"];
         $this->golongan    = $post["nm_gol"];
         $this->golongan_id = $post["golongan"];
-        $this->eselon_id   = $post["eselon"];
+        $this->eselon_id   = $this->input->post("eselon"); //$post["eselon"];
         $this->tahun       = $post["tahun"];
         //$this->db->trans_start();
         $this->db->insert($this->_tablepegawai, $this);
@@ -128,7 +132,16 @@ class M_master extends CI_Model
         //echo $this->db->last_query();
 
     }
-
+    /**
+     *   [query_updatepegawai description]
+     *   @method      query_updatepegawai
+     *   @author Meedun
+     *   @date        2019-10-19
+     *   @file        file_name()
+     *   @anotherdate 2019-10-19T04:23:21+0700
+     *   @version     [v1.0]
+     *   @return      [bolean]           
+     */
     public function query_updatepegawai()
     {
         $post              = $this->input->post();

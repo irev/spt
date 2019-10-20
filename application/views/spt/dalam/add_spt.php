@@ -241,7 +241,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 ?>
 
 
-<h3 class="header smaller lighter blue">  <?= $JUDUL_FORM. uniqid() ?></h3>
+<h3 class="header smaller lighter blue">  <?= $JUDUL_FORM ?></h3>
 <?= $this->session->flashdata('msg') ?>	
 <div class="text-center" style="color: red;">
 									<!--?php 
@@ -257,7 +257,6 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 											'<br>
 										   </div>');  ?-->
 									</div>
-
 
 <form class="form-horizontal" role="form" action="<?= base_url($LINK) ?>" method="post" enctype="multipart/form-data">
 
@@ -710,6 +709,7 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 													echo '<option value="'.$ang['id_anggaran'].'">'.$ang['kode'].' ▶ '.$ang['ket'].' '.$ang['tahun'].'</option>';
 												} ?>
 											</select>
+											<input type="text" id="pilih_beban_text" name="pilih_beban_text" class="col-xs-10 col-sm-5 col-md-10 meedun-input hide" value="<?= $btnAng ?>">
 										</div>
 									</div>
 									<div class="form-group">
@@ -829,6 +829,14 @@ if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
 		$(".alert-x").slideUp(500);
 		//window.location = "<?= base_url('spt/dalam') ?>";
 	}, 3000);
+
+
+	var namaFungsi = function(a, asli='true', set='ya'){
+    console.log("Hello World! "+a+" asli ="+asli+" set ="+set);
+
+	}
+
+
 </script>
 
 <?= $TOKEN ?><br>	

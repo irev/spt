@@ -1,4 +1,18 @@
 <script type="text/javascript">
+	/**
+	 *   999/9999/SPT/DPUPR/2099
+	 *   ___/____/SPT/DPUPR/20__
+	 */
+	$('#nomor_spt').inputmask("9{3}/9{3,4}/SPT[*{4,8}][-*{3,8}]/DPUPR[*{3,10}]/20[9]{2}");
+	$('#nomor_sppd').inputmask("9{3}/9{3,4}/SPPD[*{4,8}][-*{3,8}]/DPUPR[*{3,10}]/20[9]{2}");
+	/**
+	 *   999/9999/SPT-AZZZZZ/DPUPR-AZZZZZ/2099
+	 *   ___/____/SPT-_____/DPUPR_____/20__
+	 */
+	//$('#nomor_spt').inputmask("9{3}/9{3,4}/SPT[*{4,8}][-*{3,8}]/DPUPR[*{3,10}]/20[9]{2}");
+	//$('#nomor_sppd').inputmask("9{3}/9{3,4}/SPPD[*{4,8}][-*{3,8}]/DPUPR[*{3,10}]/20[9]{2}");
+// [a-za-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?
+
 	$('#pilih_pegawai').change(function(event) {
 		/* Setelah memilih pegawai */
 		$(this).toggle('slow');
@@ -136,6 +150,15 @@ $('#pilih_tujuan').change(function(event) {
 		});
 		
 	});
+////////////////////////////////////////////////// 	pilih_beban	
+$('#pilih_beban').change(function(event) {
+	var text = $("select#pilih_beban option:selected").text();
+	console.log(text);
+	$('#pilih_beban_text').val(text.replace(/▶/gi, ""));
+		/* Setelah memilih pegawai */
+		$(this).toggle('slow');
+		var idtujuan = $(this).val();
+	});
 	/* Act on the event btn_show_input click*/
 	$('.btn_show_input').click(function(event) {
 		var data = $(this).attr('data-id');
@@ -164,6 +187,11 @@ $('#pilih_tujuan').change(function(event) {
 						class_name: 'gritter-danger gritter-center'
 					});
 	<?php } ?>
+
+
+
+
+
 
 </script>
 

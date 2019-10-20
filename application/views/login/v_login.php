@@ -45,9 +45,9 @@
 								<h1>
 									<i class="ace-icon fa fa-leaf green"></i>
 									<span class="red">ONLINE</span>
-									<span class="white" id="id-text2"><?= _APLIKASI_?></span>
+									<span class="white" id="id-text2"><?= _APLIKASI_?> PASAMAN BARAT</span>
 								</h1>
-								<h4 class="blue" id="id-company-text">&copy; bap.simeedun.com</h4>
+								<h4 class="blue" id="id-company-text">TIM IT DPUPR PASBAR</h4>
 							</div>
 
 							<div class="space-6"></div>
@@ -63,22 +63,24 @@
 
 											<div class="space-6"></div>
 
-											<form>
+											<form >
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="login_username" class="form-control" placeholder="Username" />
+															<input id="name" type="text" name="login_username" class="form-control" placeholder="Username" autocomplete="username"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input name="login_password" type="password" class="form-control" placeholder="Password" />
+															<input id="pwd" name="login_password" type="password" class="form-control" placeholder="Password" autocomplete="new-password"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
 
+													<div class="space"></div>
+													<div id="msg" class="red">msg <?php echo $this->session->userdata("username"); ?></div>
 													<div class="space"></div>
 
 													<div class="clearfix">
@@ -87,7 +89,7 @@
 															<span class="lbl"> Ingat Saya</span>
 														</label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+														<button type="button" class="width-35 pull-right btn btn-sm btn-primary masuk">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">Masuk</span>
 														</button>
@@ -128,7 +130,7 @@
 
 											<div>
 												<a href="#" data-target="#signup-box" class="user-signup-link">
-													Mendaftar Jadi Member
+													Daftar Baru
 													<i class="ace-icon fa fa-arrow-right"></i>
 												</a>
 											</div>
@@ -199,21 +201,21 @@
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" class="form-control" placeholder="Username" autocomplete="username"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" class="form-control" placeholder="Password" autocomplete="new-password"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Repeat password" />
+															<input type="password" class="form-control" placeholder="Repeat password" autocomplete="new-password"/>
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
 													</label>
@@ -252,6 +254,7 @@
 										</div>
 									</div><!-- /.widget-body -->
 								</div><!-- /.signup-box -->
+								<h4 class="blue" id="id-company-text">&copy; blog.simeedun.com</h4>
 							</div><!-- /.position-relative -->
 
 							<div class="navbar-fixed-top align-right">
@@ -325,6 +328,46 @@
 				e.preventDefault();
 			 });
 			 
+			});
+
+			jQuery(function($) {
+				$('.masuk').on('click', function(){
+					var user_name = $("#name").val();  
+        			var password = $("#pwd").val(); 
+					$.ajax({
+						url: '<?= base_url('login/login_action') ?>',
+						type: 'post',
+						data: {'name': user_name, 'pwd': password},
+						cache: false,  
+				        success: function(result){  
+				            if(result!='0'){  
+				                // On success redirect.  
+				            window.location.replace(result);  
+				            }else{
+				                jQuery("div#err_msg").show();  
+				                jQuery("div#msg").html("Login Failed");  
+				        	} 
+				        } 
+					})
+					.done(function() {
+						console.log("success");
+					})
+					.fail(function() {
+						console.log("error");
+					})
+					.always(function(result) {
+						console.log("complete "+ result);
+						if(result!='0'){  
+				                // On success redirect.  
+				            //window.location.replace(result);  
+				            }  
+				            else{  
+				                jQuery("div#err_msg").show();  
+				                jQuery("div#msg").html("Login Failed");  
+				        	}  
+					});
+					
+				});
 			});
 		</script>
 	</body>

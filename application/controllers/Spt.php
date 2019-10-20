@@ -249,8 +249,30 @@ class Spt extends CI_Controller {
 	        	//if (!$data['spt_dalam']) show_404();	
 				$this->template->load_js('template','spt/dalam/add_spt', $data);
 
-		}
-		elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
+		}elseif($TOKEN==='addw'){
+	 		$this->breadcrumbs->push('ADD', '/add');
+				//FORM ADD / TAMBAH 
+				$validation = $this->form_validation;
+	        	$validation->set_rules($this->rule_sptdalam());
+	        	if ($validation->run()) {
+	        		///DUPLIKAT KODE NOMOR SPT
+	        		if($this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
+			            	if($this->m_dalam->query_simpan() === true){
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+								$red = base_url("spt/dalam");
+								header("refresh:4; url=$red"); 
+							}else{
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+							}
+						}else{
+							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+						}
+					}
+	        	//$data['transportasi'] = $this->m_dalam->jabatan($ID);
+	        	//if (!$data['spt_dalam']) show_404();	
+				$this->template->load_js('template','spt/dalam/add_spt_w', $data);
+
+		}elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
 				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
 				$validation = $this->form_validation;
@@ -260,7 +282,7 @@ class Spt extends CI_Controller {
 	        		if(!$this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
 			            	if($this->m_dalam->query_update() === false){
 			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
-								$red = base_url("spt/dalam");
+								$red = base_url("spt/dalam/detail-spt-sppd/".$ID);
 								header("refresh:4; url=$red"); 
 							}else{
 								//echo $this->db->last_query();
@@ -444,13 +466,10 @@ function cek_db($ID=null){
 		 $nospt = $this->m_dalam->get_data('spt_data','no_spt','id_spt',$ID);
 		 $this->breadcrumbs->push('Print', 'spt/prints/'.$ID);
 		 $this->breadcrumbs->push($nospt, '#');
-		// unshift crumb
-		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
-		
-		//$this->template->load_js('template','spt/luar/spt', $data);
-		//$this->template->load('template','dev', $data);
-		//$this->template->load('template','spt/dalam/kwitansi',$data);
-		//$this->template->load('template','spt/dalam/kwitansi_bbm',$data);
+		 ////// GET DATA
+		 		$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
+				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
 		$this->load->view('spt/dalam/kwitansi_bbm',$data);
 	}
 

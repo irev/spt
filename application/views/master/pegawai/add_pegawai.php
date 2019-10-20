@@ -43,6 +43,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 										<div class="col-sm-9">
 											<input type="text" id="nama" placeholder="Nama Pegawai" class="col-xs-10 col-sm-5" name="nama" value="<?= $addNama ?>">
+											<small style="color: red;">&nbsp;&nbsp; Wajib disisi.</small>
 										</div>
 									</div>
 									<div class="form-group">
@@ -50,6 +51,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 										<div class="col-sm-9">
 											<input type="text" id="nip" placeholder="Nip" class="col-xs-10 col-sm-5" name="nip" value="<?= $addNip ?>">
+										<small style="color: blue;">&nbsp;&nbsp; *Untuk PTT dan THL di kosongkan.</small>
 										</div>
 									</div>
 									
@@ -64,7 +66,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 												} ?>
 												
 											</select>				
-
+											<small style="color: blue;">&nbsp;&nbsp; *Untuk PTT dan THL tetap  diisi sesuai dengan status pegawai.</small>
 										</div>
 									</div>
 
@@ -79,7 +81,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 												} ?>
 												
 											</select>				
-
+											<small style="color: red;">&nbsp;&nbsp; Wajib disisi.</small>
 										</div>
 									</div>
 
@@ -90,11 +92,12 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 											<select id="golongan" placeholder="Golongan" class="col-xs-10 col-sm-5" name="golongan">
 												<option value="<?= $addGolongan_id ?>"><?= $addGolongan ?></option>
 												<?php foreach ($golongan as $gol) {
-														echo '<option value="'.$gol['id_gol'].'">'.$gol['pangkat'].' '.$gol['golongan'].'</option>';
+														echo '<option value="'.$gol['id_gol'].'">'.$gol['golongan'].' - '.$gol['pangkat'].'</option>';
 												} ?>
 												
 											</select>
 											<input type="text" id="nm_gol" name="nm_gol" value="<?= $addGolongan ?>" style="display: none;">
+											<small style="color: blue;">&nbsp;&nbsp; *Untuk PTT dan THL tetap  diisi sesuai dengan status pegawai.</small>
 										</div>
 									</div>
 									
@@ -117,6 +120,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 												 ?> 
 											</select>
+											<small style="color: red;">&nbsp;&nbsp; Wajib disisi.</small>
 										</div>
 									</div>
 
@@ -155,16 +159,16 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 
 
 <script type="text/javascript">
-	setTimeout(function(){ 
+	//setTimeout(function(){ 
 		//$( ".alert" ).hide( "slow" );
 		$(".alert").slideUp(500);
 		//window.location = "<?= base_url('master/jabatan/') ?>";
-	}, 3000);
-	$("#golongan").change(function(){
-		var selectedText = $("#golongan option:selected").html();
+	//}, 3000);
+	//$("#golongan").change(function(){
+	//	var selectedText = $("#golongan option:selected").html();
 		//console.log(selectedText);
-		$("#nm_gol").val(selectedText);
-	});
+	//	$("#nm_gol").val(selectedText);
+	//});
 </script>
 
 <?= $TOKEN ?><br>	

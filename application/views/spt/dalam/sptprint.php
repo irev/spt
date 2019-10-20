@@ -243,7 +243,7 @@ function textAreaAdjust(o) {
                     <tr>
                         <td colspan="2">&nbsp;DENGAN DASAR</td>
                         <td>:</td>
-                        <td>&nbsp;<?= $spt_dalam->beban ?></td>
+                        <td>&nbsp;<?= $spt_dalam->beban.' - '.$spt_dalam->beban ?></td>
                     </tr>
                     <tr>
                         <td colspan="5" style="text-align: center;"><h3>MEMERINTAHKAN</h3></td>
@@ -446,10 +446,10 @@ function textAreaAdjust(o) {
                         	:<br>
                         </td>
                         <td>
-                            &nbsp;<?=$spt_dalam->nama ?><br>
-                            &nbsp;<?=$spt_dalam->nip ?><br> 
-                            &nbsp;<?=$spt_dalam->jabatan ?><br>
-                            &nbsp;<?= $spt_dalam->pangkat ?><br>
+                            &nbsp;<?=$spt_dalam->nama?><br>
+                            &nbsp;<?=$spt_dalam->nip?><br> 
+                            &nbsp;<?=$spt_dalam->jabatan?><br>
+                            &nbsp;<?=$spt_dalam->pangkat?><br>
                             <!--select name="select_nama">
                                 <option>HENNY FERNIZA, ST, MT</option>
                                 <option>WILDAN, SH, M.Si</option>

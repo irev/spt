@@ -15,10 +15,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
+							<small>
+								Diakses menggunakan browser <?= $this->agent->browser().' v.'.$this->agent->version() ?>
+							<br>
 							<span class="blue bolder"><?= _AUTHOR_ ?> </span>-
 							<?= _APLIKASI_ ?> &copy; 2018-<?= date('Y')?>
 						</span>
-
+							</small>
 						&nbsp; &nbsp;
 						<span class="action-buttons">
 							<a href="#">
@@ -81,6 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="<?= base_url() ?>asset/theme/assets/js/jquery.maskedinput.min.js"></script>
 		<script src="<?= base_url() ?>asset/theme/assets/js/select2.min.js"></script>
 		<script src="<?= base_url() ?>asset/theme/assets/js/jquery.inputmask.js"></script>
+		<script src="<?= base_url() ?>asset/meedun/meedun.v1.js"></script>
 
 		<!-- inline scripts related to this page refyandra-->
 

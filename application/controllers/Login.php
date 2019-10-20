@@ -18,19 +18,71 @@ class Login extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	function __construct(){
+		parent::__construct();
+		$this->load->model(['m_login']);
+		$this->load->library(['session']);
+		$this->load->helper(['url']);
+	}
 
 	public function index()
 	{
+	if($this->session->userdata("username") ===TRUE){
+		// with 301 redirect
+		redirect('dashboard', 'location');
+	}
 	$this->load->view('login/v_login');
-	//$this->template->load('template','order/data_order','login/v_login');
 	}
+	/**
+	 *   [login_action description]
+	 *   @method      login_action
+	 *   @author Meedun
+	 *   @date        2019-10-19
+	 *   @file        file_name()
+	 *   @anotherdate 2019-10-19T18:18:47+0700
+	 *   @version     [version]
+	 *   @return      [type]     [description]
+	 */
 	function login_action(){
-		$data =[
-			$this->input->post('');
-		];
-	}
-	public function logout()
-	{
-	$this->template->load('template','order/data_order');
-	}
+			 $name = $this->input->post('name');
+			 $pwd  = $this->input->post('pwd');
+		   	$data['username']=htmlspecialchars($name);  
+    		$data['password']=htmlspecialchars($pwd);  
+    		$res=$this->m_login->islogin($data);  
+		    if($res){    
+		        //$this->session->set_userdata('id',$data['username']);
+				$newdata = array(
+					'level'   => '1',
+					'username'   => $name,
+					'perusahaan' => '1',
+					'Addresses' => $_SERVER['REMOTE_ADDR'], 
+					'TA'		=> "2019",
+					'email'      => 'meedun@simeedun.com',
+			        'logged_in' => TRUE
+				);
+				
+				$this->session->set_userdata($newdata);
+				echo base_url()."dashboard/"; 
+				$this->session->userdata("username");
+		    }  
+		    else{  
+		       echo 0;  
+		    } 
+		     $this->db->last_query();
+		     $this->input->post('name');  
+	}  
+	/**
+	 *   [logout description]
+	 *   @method      logout
+	 *   @author Meedun
+	 *   @date        2019-10-19
+	 *   @file        file_name()
+	 *   @anotherdate 2019-10-19T18:19:00+0700
+	 *   @version     [version]
+	 *   @return      [type]                   [description]
+	 */
+	public function logout(){  
+    	$this->session->sess_destroy();  
+    	header('location:'.base_url()."login/".$this->index());  
+      }
 }

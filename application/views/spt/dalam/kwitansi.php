@@ -1,12 +1,14 @@
             <?php 
                 $no=1; 
                 $Total=0;
+                $or =0; //pengikut
+                $org =0; 
                 foreach ($spt_pengikut as $pengikut) { 
                         $nm_diperintah = $pengikut["nm_diperintah"];
                         $nip_diperintah = $pengikut["nip_diperintah"];
                         $pangkat_diperintah = $pengikut["pangkat_diperintah"];
                         $golongan_diperintah = $pengikut["golongan_diperintah"];
-                        $cs = (count($spt_pengikut) >= 1 ) ? ", Cs" : "";
+                        
                         $maksud = $pengikut["maksud"];          
                         $tujuan = $pengikut["tujuan"];          
                         $kec    = $pengikut["kec"];
@@ -50,9 +52,17 @@
                                 $uang_harian = 0;
                                 break;
                         }
+                        $bayar = $pengikut['bayar'];
+                        if($bayar=="yes"){
+                             $or=1;
+                        }else{
+                             $or=0;
+                        }
+                        $org += $or;
                         $subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
-                        $Total += $subtotal; //SUM TOTAL
+                        $Total += $subtotal; //SUM TOTAL       
                 }
+                $cs = ($org > 1 ) ? ", Cs ".$org : " ".$org; /// penambahan kalimat CS di belakang nama jika memiliki pengikut 
             ?>  
 
 
@@ -172,9 +182,11 @@ function openWindow( url ){
                 width: inherit;
                 margin-top: -9px;
                 margin-left: -9px;" >
+<?php if($org != 0 ): ?>            
     <button class="btn-cetak no-print" onclick="print()">CETAK</button>
+<?php endif?>
     <button class="btn-cetak no-print" onclick="close_window()">TUTUP</button>
-    <button class="btn-cetak no-print" onclick="openWindow()">buka</button>
+    
 
     </div>
 </div>
@@ -227,6 +239,11 @@ function openWindow( url ){
             <td>7</td>
         </tr>
         <tbody>
+            <?php if($org == 0 ): ?>
+                <tr>
+                    <td colspan="7" style="color: red; font-size: 25pt;"><center>==== DAFTAR PERGAWAI YANG DIBAYARKAN TIDAK ADA===</center></td>
+                </tr>
+            <?php endif ?>
             <?php 
                 $no=1; 
                 $Total=0;
@@ -237,6 +254,7 @@ function openWindow( url ){
                         $vgol = ($pengikut["pangkat"]==$pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"]
 
                 ?>
+                
             <tr>
                 <td style="text-align: center;"><?= $no ?>.</td>
                 <td><?= $vnama ?><br/><?= $vnip ?></td>

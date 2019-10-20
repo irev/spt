@@ -76,11 +76,11 @@ class Master extends CI_Controller {
             ['field' => 'nama',
             'label' => 'Nama',
             'rules' => 'required'],
-/*
-            ['field' => 'nip',
-            'label' => 'Nip',
+
+            ['field' => 'eselon',
+            'label' => 'Eselon',
             'rules' => 'required'],
-*/
+
             ['field' => 'jabatan',
             'label' => 'Jabatan',
             'rules' => 'required'],
@@ -103,21 +103,12 @@ class Master extends CI_Controller {
  */
 public function pegawai($TOKEN=null, $ID=null)
 	{
-		// add breadcrumbs
-		 $this->breadcrumbs->push('Pegawai', 'master/pegawai');
-		$newdata = array(
-			'idclient'   => '1',
-			'username'   => 'user',
-			'perusahaan' => '1',
-			'email'      => 'johndoe@some-site.com',
-	        'logged_in' => TRUE
-		);
 
-		$this->session->set_userdata($newdata);
-
-		$idclient = $this->session->userdata('idclient');
 		$data['TOKEN'] = $TOKEN;
 		$data['ID'] = $ID;
+		$data['eselon'] = $this->m_master->eselon();
+		$data['jabatan'] = $this->m_master->jabatan();
+		$data['golongan'] = $this->m_master->golongan();
 		if($TOKEN==='pegawai' && is_numeric($ID)){
 			$data['pegawai'] = $this->m_master->pegawai($ID);
 			$this->template->load('template','master/pegawai/pegawai', $data);
@@ -135,8 +126,6 @@ public function pegawai($TOKEN=null, $ID=null)
 				}
 			}
 			$data['pegawai'] = $this->m_master->pegawai($ID);
-			$data['jabatan'] = $this->m_master->jabatan();
-			$data['golongan'] = $this->m_master->golongan();
 			$this->template->load_js('template','master/pegawai/add_pegawai', $data);
 			
 		}elseif ($TOKEN==='edit' && is_numeric($ID)) {

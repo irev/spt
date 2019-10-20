@@ -17,8 +17,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<a href="<?= base_url() ?>" class="navbar-brand">
 						<small>
 							<i class="fa fa-folder-open-o"></i>
-							<?= _APLIKASI_ ?>
-						</small>
+							<?= _APLIKASI_ ." TA ".$this->session->userdata("TA") ?>
+
+							<?php
+							//print_r($this->session->userdata());
+							if (!$this->agent->is_browser('Chrome'))
+								{
+								        echo  '<small> Sangat disarankan memakai browser Google Chrome.</small> <a target="_blank" href="https://www.google.com/chrome/" class="btn btn-xs">Download disisni</a>';
+								}
+							?>	
+							</small>
 					</a>
 				</div>
 
@@ -284,7 +292,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<img class="nav-user-photo" src="<?= base_url()?>asset/theme/assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Hallo,</small>
-									Andra
+									<?=  $this->session->userdata("username") ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
