@@ -1,5 +1,6 @@
 # SPD (Surat Perintah Dinas) 
 Sistem Informasri SPD
+
 ![Alt text](https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_1.jpge)
 
 # Ukuran Kertas F4 dalam satuan mm, cm, inci
@@ -19,9 +20,9 @@ Ukuran Kertas	F4
 -- Versi protokol: 10 UTF-8 Unicode (utf8)
 
 # PRINT OUT
-<img src="https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_2.jpg" width="800" height="500">
+<a href="https://1.bp.blogspot.com/-iJxHGV0B-eg/Xay3C70XAUI/AAAAAAAAL6U/jnR7i7FeJ3wNbIXvRx6B_VtLdMl_nUurwCLcBGAsYHQ/s1600/Screenshot_2.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="688" data-original-width="1365" height="161" src="https://1.bp.blogspot.com/-iJxHGV0B-eg/Xay3C70XAUI/AAAAAAAAL6U/jnR7i7FeJ3wNbIXvRx6B_VtLdMl_nUurwCLcBGAsYHQ/s320/Screenshot_2.jpg" width="320" /></a>
 
-<img src="https://1.bp.blogspot.com/-ihRY-Z9QMM8/Xay3C50S4RI/AAAAAAAAL6Q/G35QySNCudUvtEKD0U1d0OJPNc0gDReaQCLcBGAsYHQ/s320/Screenshot_3.jpg" width="800" height="500">
+<a href="https://1.bp.blogspot.com/-GysSkfc_8I0/Xay3C0zvxXI/AAAAAAAAL6M/V-WYKf3Zp4AFEZCKLhh2_1MtN4BJyKNFQCLcBGAsYHQ/s1600/Screenshot_3.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="687" data-original-width="1365" height="161" src="https://1.bp.blogspot.com/-GysSkfc_8I0/Xay3C0zvxXI/AAAAAAAAL6M/V-WYKf3Zp4AFEZCKLhh2_1MtN4BJyKNFQCLcBGAsYHQ/s320/Screenshot_3.jpg" width="320" /></a>
 
 # Contribution
 - Febri Yetti, SE as project idea
