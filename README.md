@@ -1,6 +1,6 @@
 # SPD (Surat Perintah Dinas) 
 Sistem Informasri SPD
-![image](../../asset/Screenshot_1.jpg?raw=true)
+![Alt text](../../asset/Screenshot_1.jpg?raw=true)
 
 # Ukuran Kertas F4 dalam satuan mm, cm, inci
 Ukuran Kertas	F4 
