@@ -19,9 +19,9 @@ Ukuran Kertas	F4
 -- Versi protokol: 10 UTF-8 Unicode (utf8)
 
 # PRINT OUT
-<img src="asset/Screenshot_2.jpg" width="800" height="500">
+<img src="./asset/Screenshot_2.jpg" width="800" height="500">
 
-<img src="asset/Screenshot_3.jpg" width="800" height="500">
+<img src="./asset/Screenshot_3.jpg" width="800" height="500">
 
 # Contribution
 - Febri Yetti, SE as project idea
