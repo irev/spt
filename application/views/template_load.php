@@ -14,7 +14,4 @@
 	$page = $this->uri->segment(1);
 	$this->load->view('theme/FOOTER');
 	//$this->template->load_plugin('theme/FOOTER',$page.'/js_'.$page);
-	
-	
-
 ?>

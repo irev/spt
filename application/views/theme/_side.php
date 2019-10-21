@@ -176,7 +176,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						</ul>
 					</li>
-					<li class="">
+					<?php 
+					if ($this->uri->segment(1)=='spt') {
+						echo '<li class="active open">';
+					}else{
+						echo '<li class="">';
+					}
+					?>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-sign-in"></i>
 							<span class="menu-text"> SPT DALAM DAERAH</span>
@@ -187,7 +193,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
+							<?php 
+							if ($this->uri->segment(2)=='dalam') {
+								echo '<li class="active">';
+							}else{
+								echo '<li class="">';
+							}
+							?>
 								<a href="<?= base_url('/spt/dalam/') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									SPT/SPPD
@@ -301,7 +313,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</li>
 						</ul>
 					</li-->
-					<li class="" id="menu-database">
+						<?php 
+								if ($this->uri->segment(1)=='about') {
+									echo '<li class="active open" id="menu-other">';
+								}else{
+									echo '<li class="" id="menu-other">';
+								}
+								?>
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-info-circle"></i>
+							<span class="menu-text"> OTHER </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+						
+						<ul class="submenu">
+								<?php 
+								if ($this->uri->segment(2)=='help') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<a href="<?= base_url('about/help') ?>">
+									<i class="menu-icon fa fa-book"></i>
+									MANUAL APLIKASI
+								</a>
+								<b class="arrow"></b>
+							</li>
+								<?php 
+								if ($this->uri->segment(1)=='about') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<a href="<?= base_url('about') ?>">
+									<i class="menu-icon fa fa-info-circle"></i>
+									TENTANG APLIKASI
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<?php 
+								if ($this->uri->segment(1)=='panel') {
+									echo '<li class="active open" id="menu-database">';
+								}else{
+									echo '<li class="" id="menu-other">';
+								}
+								?>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-database"></i>
 							<span class="menu-text"> DATABASE </span>
@@ -312,7 +375,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
+							<?php 
+								if ($this->uri->segment(1)=='panel') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
 								<a href="<?= base_url('panel') ?>">
 									<i class="menu-icon fa fa-database"></i>
 									BACKUP DATA &amp; RESTORE

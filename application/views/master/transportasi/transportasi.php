@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														<th>Nomor Polisi</th>
 														<th>Jenis</th>
 														<th>Roda</th>
-														<th>CC</th>
+														<!--th>CC</th-->
 														<th>Perjalanan</th>
 														<!--th>Wil I</th>
 														<th>Wil II</th>
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																<td><?= $trans['nomor'] ?></td>
 																<td><?= $trans['jenis'] ?></td>
 																<td><?= $trans['roda'] ?></td>
-																<td><?= $trans['cc'] ?></td>
+																<!--td><?= $trans['cc'] ?></td-->
 																<td><?= $trans['perjalanan'] ?></td>
 																<!--td><?= $trans['wil1'] ?></td>
 																<td><?= $trans['wil2'] ?></td>
@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 																			<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 																				<li>
-																					<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+																					<a href="<?= base_url('master/transportasi/transportasi') ?>/<?= $trans['id_tran'] ?>" class="tooltip-info" data-rel="tooltip" title="View">
 																						<span class="blue">
 																							<i class="ace-icon fa fa-search-plus bigger-120"></i>
 																						</span>
@@ -94,7 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																				</li>
 
 																				<li>
-																					<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+																					<a href="<?= base_url('master/transportasi/edit') ?>/<?= $trans['id_tran'] ?>" class="tooltip-success" data-rel="tooltip" title="Edit">
 																						<span class="green">
 																							<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																						</span>

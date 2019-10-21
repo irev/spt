@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 20 Okt 2019 pada 21.01
+-- Generation Time: 21 Okt 2019 pada 19.23
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -11,6 +11,12 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `spt`
@@ -32,6 +38,71 @@ CREATE TABLE `faq` (
   `cDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cUpdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mw_kab`
+--
+
+CREATE TABLE `mw_kab` (
+  `idkab` int(11) NOT NULL,
+  `kabupaten` varchar(200) NOT NULL,
+  `provid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `mw_kab`
+--
+
+INSERT INTO `mw_kab` (`idkab`, `kabupaten`, `provid`) VALUES
+(1, 'Pasaman Barat', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mw_kec`
+--
+
+CREATE TABLE `mw_kec` (
+  `idkec` int(11) NOT NULL,
+  `kecamatan` varchar(200) NOT NULL,
+  `kabid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `mw_kec`
+--
+
+INSERT INTO `mw_kec` (`idkec`, `kecamatan`, `kabid`) VALUES
+(1, 'Ranah Pasisia', 1),
+(2, 'Luhak Nan Duo', 1),
+(3, 'Talamau', 1),
+(4, 'Kinali', 1),
+(5, 'Gunung Tuleh', 1),
+(6, 'Sungai Aur', 1),
+(7, 'Sungai Beremas', 1),
+(8, 'Ranah Batahan', 1),
+(9, 'Lembah Melintang', 1),
+(10, 'Koto Balingka', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mw_prov`
+--
+
+CREATE TABLE `mw_prov` (
+  `idprov` int(11) NOT NULL,
+  `provinsi` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `mw_prov`
+--
+
+INSERT INTO `mw_prov` (`idprov`, `provinsi`) VALUES
+(1, 'Sumatera Barat');
 
 -- --------------------------------------------------------
 
@@ -195,15 +266,19 @@ CREATE TABLE `m_kegiatan` (
   `kegiatan` varchar(500) NOT NULL COMMENT 'kegiatan',
   `pptk` int(11) NOT NULL COMMENT 'pptk',
   `bendahara` int(11) NOT NULL COMMENT 'tahun',
-  `kpa` int(11) NOT NULL
+  `kpa` int(11) NOT NULL,
+  `pagu` decimal(10,0) NOT NULL,
+  `dinas` set('Dalam','Luar') NOT NULL,
+  `tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `m_kegiatan`
 --
 
-INSERT INTO `m_kegiatan` (`id_kegiatan`, `rekening`, `kegiatan`, `pptk`, `bendahara`, `kpa`) VALUES
-(1, '01.03.5.2.2.15', 'Rapat - Rapat Koordinasi dan Konsultasi', 10, 9, 8);
+INSERT INTO `m_kegiatan` (`id_kegiatan`, `rekening`, `kegiatan`, `pptk`, `bendahara`, `kpa`, `pagu`, `dinas`, `tahun`) VALUES
+(1, '01.03.5.2.2.15.01', 'Rapat - Rapat Koordinasi dan Konsultasi', 10, 9, 8, '0', 'Dalam', 2019),
+(2, '01.03.5.2.2.15.02', 'Rapat - Rapat Koordinasi dan Konsultasi', 10, 9, 8, '0', 'Luar', 0000);
 
 -- --------------------------------------------------------
 
@@ -261,7 +336,7 @@ CREATE TABLE `m_trasportsasi` (
   `liter2` int(11) NOT NULL,
   `liter3` int(11) NOT NULL,
   `bbm_luar` decimal(50,0) NOT NULL,
-  `perjalanan` set('','Darat','Udara','Laut') NOT NULL COMMENT 'Darat,Udara,Laut',
+  `perjalanan` set('Darat','Udara','Laut') NOT NULL COMMENT 'Darat,Udara,Laut',
   `tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -270,7 +345,9 @@ CREATE TABLE `m_trasportsasi` (
 --
 
 INSERT INTO `m_trasportsasi` (`id_tran`, `nama`, `nomor`, `jenis`, `roda`, `cc`, `bahan_bakar`, `wil1`, `wil2`, `wil3`, `liter1`, `liter2`, `liter3`, `bbm_luar`, `perjalanan`, `tahun`) VALUES
-(1, 'Rush', 'BA  8036 S', 'darat', 4, 1500, 'Bensin', '150000', '180000', '185000', 20, 30, 40, '0', 'Darat', 2019);
+(1, 'Rush', 'BA  8036 S', 'darat', 4, 0, 'Bensin', '150000', '180000', '185000', 20, 20, 20, '30', 'Laut', 2019),
+(2, 'dddd', 'ddd', 'Darat', 4, 0, 'Premium', '0', '0', '0', 33, 44, 55, '66', 'Laut', 2019),
+(3, 'exxxxx', 'ddd', 'Udara', 4, 0, 'Premium', '0', '0', '0', 11, 11, 11, '44', 'Udara', 2019);
 
 -- --------------------------------------------------------
 
@@ -284,6 +361,9 @@ CREATE TABLE `m_tujuan` (
   `kec` varchar(200) NOT NULL,
   `kab` varchar(200) NOT NULL,
   `prov` varchar(200) NOT NULL,
+  `kecid` int(11) NOT NULL,
+  `kabid` int(11) NOT NULL,
+  `provid` int(11) NOT NULL,
   `jarak` int(11) NOT NULL,
   `wilayah` varchar(200) NOT NULL,
   `bbm` int(11) NOT NULL,
@@ -294,10 +374,10 @@ CREATE TABLE `m_tujuan` (
 -- Dumping data untuk tabel `m_tujuan`
 --
 
-INSERT INTO `m_tujuan` (`id_tujuan`, `tujuan`, `kec`, `kab`, `prov`, `jarak`, `wilayah`, `bbm`, `perjalanan`) VALUES
-(1, 'Air Bangis', 'Kec. Sungai Beremas', 'Pasaman Barat', 'Sumatera Barat', 25, '3', 0, 'Dalam'),
-(2, 'Ujung Gading', 'kec. Lembah Melintang', 'Pasaman Barat', 'Sumatera Barat', 20, '3', 0, 'Dalam'),
-(3, 'Kinali', 'kec. Kinali', 'Pasaman Barat', 'Sumatera Barat', 20, '2', 0, 'Dalam');
+INSERT INTO `m_tujuan` (`id_tujuan`, `tujuan`, `kec`, `kab`, `prov`, `kecid`, `kabid`, `provid`, `jarak`, `wilayah`, `bbm`, `perjalanan`) VALUES
+(1, 'Air Bangis', 'Kec. Sungai Beremas', 'Pasaman Barat', 'Sumatera Barat', 0, 1, 1, 25, '3', 0, 'Dalam'),
+(2, 'Ujung Gading', 'kec. Lembah Melintang', 'Pasaman Barat', 'Sumatera Barat', 0, 1, 1, 20, '3', 0, 'Dalam'),
+(3, 'Kinali', 'kec. Kinali', 'Pasaman Barat', 'Sumatera Barat', 0, 1, 1, 20, '2', 0, 'Dalam');
 
 -- --------------------------------------------------------
 
@@ -349,7 +429,8 @@ CREATE TABLE `spt_data` (
 --
 
 INSERT INTO `spt_data` (`id_spt`, `no_spt`, `no_sppd`, `nama`, `nip`, `pangkat`, `golongan`, `jabatan`, `maksud`, `transportasi`, `tujuan_id`, `tujuan`, `wilayah`, `tgl_berangkat`, `tgl_kembali`, `sumber_dana`, `ttd_tempat`, `ttd_tgl`, `ttd_jabatan`, `ttd_nama`, `ttd_gol`, `ttd_nip`, `beban`, `kegiatan_id`, `anggaran`, `c_date`, `up_date`, `ttd_sppd_tempat`, `ttd_sppd_tgl`, `ttd_sppd_nama`, `ttd_sppd_nip`, `ttd_sppd_gol`, `ttd_sppd_jabatan`, `perjalanan`, `tahun`, `dasar_spt`) VALUES
-('5daaf7402abd7', '090/001/SPT/DPUPR/2019', '090/001/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'TEST SPD', 'BA  8036 S', 1, 'Air Bangis', 3, '2019-10-19', '2019-10-23', '2019', 'Simpang Empat', '2019-10-19', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPPA  Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-19 18:45:04', '2019-10-19 21:53:01', 'Simpang Empat', '2019-10-23', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019, '');
+('5daaf7402abd7', '090/001/SPT/DPUPR/2019', '090/001/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'TEST SPD', 'BA  8036 S', 1, 'Air Bangis', 3, '2019-10-19', '2019-10-23', '2019', 'Simpang Empat', '2019-10-19', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPPA  Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-19 18:45:04', '2019-10-19 21:53:01', 'Simpang Empat', '2019-10-23', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'dalam', 2019, ''),
+('5dadc250286ac', '111/1111/SPT/DPUPR/2019', '111/111/SPPD/DPUPR/2019', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'aaa', 'ddd', 1, 'Air Bangis', 3, '2019-10-14', '2019-10-08', '2019', 'Simpang Empat', '2019-10-21', 'Kasubag Program dan Aset', 'FEBRI YETTI, SE', 'Penata III/c', '19810208 200901 2 003', 'DPPA  Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019', 1, '2', '2019-10-21 21:36:00', '2019-10-21 21:36:00', 'Simpang Empat', '0000-00-00', 'WILDAN, SH. M.Si', '19690314 199003 1 002', 'Pembina IV/a', 'Sekretaris', 'dalam', 2019, '');
 
 -- --------------------------------------------------------
 
@@ -387,7 +468,8 @@ INSERT INTO `spt_pengikut` (`id_peng`, `spt_id`, `pegawai_id`, `bayar`, `perjala
 (45, '5daaf7402abd7', 1, 'yes', 'dalam', 2019),
 (46, '5daaf7402abd7', 6, 'yes', 'dalam', 2019),
 (50, '5daaf7402abd7', 8, 'yes', 'dalam', 2019),
-(51, '5daaf7402abd7', 9, 'yes', 'dalam', 2019);
+(51, '5daaf7402abd7', 9, 'yes', 'dalam', 2019),
+(52, '5dadc250286ac', 1, 'yes', 'dalam', 2019);
 
 -- --------------------------------------------------------
 
@@ -513,6 +595,12 @@ ALTER TABLE `m_jabatan`
   MODIFY `id_jab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `m_kegiatan`
+--
+ALTER TABLE `m_kegiatan`
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id_kegiatan', AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `m_pegawai`
 --
 ALTER TABLE `m_pegawai`
@@ -522,17 +610,21 @@ ALTER TABLE `m_pegawai`
 -- AUTO_INCREMENT for table `m_trasportsasi`
 --
 ALTER TABLE `m_trasportsasi`
-  MODIFY `id_tran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `m_tujuan`
 --
 ALTER TABLE `m_tujuan`
-  MODIFY `id_tujuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tujuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `spt_pengikut`
 --
 ALTER TABLE `spt_pengikut`
-  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

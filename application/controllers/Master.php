@@ -20,11 +20,11 @@ class Master extends CI_Controller {
 	 */
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['m_mjabatan','m_transport','m_eselon']);
+		$this->load->model(['m_mjabatan','m_transport','m_eselon','m_tujuan','m_kegiatan']);
 		//$this->load->library(['session','Mylib_form','Mylib_themes','l_paket']);
 		////$this->load->helper(['url','tanggal','tanggal_id','terbilang']);
 		$this->load->library(['session','form_validation']);
-		$this->load->helper(['url','meedun_hitungbap_helper']);
+		$this->load->helper(['url','meedun_hitungbap_helper','spd_helper']);
 		$this->load->database();
 		// unshift crumb
 		if($this->uri->segment(2)=='master'){
@@ -155,6 +155,7 @@ public function pegawai($TOKEN=null, $ID=null)
 		}
 		
 	}
+
 
 	/**
 	 * { function_description }
@@ -335,6 +336,132 @@ public function pegawai($TOKEN=null, $ID=null)
 				
 
 	}
+	/**
+	 *   [rule_tujuan description]
+	 *   @method      rule_tujuan
+	 *   @author Meedun
+	 *   @date        2019-10-21
+	 *   @file        file_name()
+	 *   @anotherdate 2019-10-21T15:33:42+0700
+	 *   @version     [version]
+	 *   @return      [type]                   [description]
+	 */
+	public function rule_tujuan()
+    {
+        return [
+            ['field' => 'tujuan',
+            'label' => 'Nama Tujuan',
+            'rules' => 'required'],
+
+            ['field' => 'prov',
+            'label' => 'Provinsi',
+            'rules' => 'required'],
+
+            ['field' => 'kab',
+            'label' => 'Kabupaten',
+            'rules' => 'required'],
+
+            ['field' => 'kec',
+            'label' => 'Kecamatan',
+            'rules' => 'required'],
+
+            ['field' => 'perjalanan',
+            'label' => 'Perjalanan',
+            'rules' => 'required'],
+        ];
+
+    }
+    	/**
+    	 *   [tujuan description]
+    	 *   @method      tujuan
+    	 *   @author Meedun
+    	 *   @date        2019-10-21
+    	 *   @file        file_name()
+    	 *   @anotherdate 2019-10-21T15:33:35+0700
+    	 *   @version     [version]
+    	 *   @param       [type]                   $TOKEN [description]
+    	 *   @param       [type]                   $ID    [description]
+    	 *   @return      [type]                          [description]
+    	 */
+    	function tujuan($TOKEN=null, $ID=null){
+		// add breadcrumbs
+		 $this->breadcrumbs->push('Tujuan', 'master/tujuan');
+		$data['TOKEN'] = $TOKEN;
+		$data['ID'] = $ID;
+		$data['provinsi'] = $this->m_master->prov();
+		if($TOKEN==='tujuan'){
+			$data['tujuan'] = $this->m_tujuan->tujuan($ID);
+			if (!$data['tujuan']) show_404();	
+			$this->template->load('template_load','master/tujuan/tujuan', $data);
+
+		}elseif($TOKEN==='add'){
+			$this->breadcrumbs->push('<i class="menu-icon fa fa-plus"></i> Add', '/add');
+			$validation = $this->form_validation;
+        	$validation->set_rules($this->rule_tujuan());
+        	if ($validation->run()) {
+            	if($this->m_tujuan->query_simpan() === true){
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_eselon').' berhasil disimpan'));
+					$red = base_url("master/tujuan/");
+					header("refresh:4; url=$red"); 
+				}else{
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+				}
+			}
+        	$data['tujuan'] = $this->m_mjabatan->jabatan($ID);
+        	if (!$data['tujuan']) show_404();	
+			$this->template->load('template_load','master/tujuan/add_tujuan',$data);
+
+		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
+			$this->breadcrumbs->push('<i class="menu-icon fa fa-pencil"></i> Edit', '/edit');
+			 //echo $TOKEN;
+			 //echo $ID;
+			$validation = $this->form_validation;
+        	$validation->set_rules($this->rule_eselon());
+        	if ($validation->run()) {
+        		$this->m_mjabatan->query_update();
+				if($this->m_mjabatan->query_update() === true){
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+					
+				}else{
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+				}
+				
+			}
+        	$data['tujuan'] = $this->m_tujuan->tujuan($ID);
+        	if (!$data['tujuan']) show_404();	
+        	$this->template->load('template_load','master/tujuan/add_tujuan', $data);
+		}else{
+			$data['tujuan'] = $this->m_tujuan->tujuan();
+			if (!$data['tujuan']) show_404();	
+			$this->template->load('template_load','master/tujuan/tujuan', $data);
+		}
+	}
+
+
+	public function listkab(){
+			$post  = $this->input->post();
+			$id    = $post["id"];
+			$field = $post["key"];
+			echo '<option value=""></option>';
+			foreach ($this->m_master->provKab($id) as $val) {
+				//echo $val;
+				echo '<option value="'.$val['idkab'].'">'.$val['idkab'].') '.$val['kabupaten'].'</option>';
+			}
+	}
+	public function listkec(){
+			$post  = $this->input->post();
+			$id    = $post["id"];
+			$field = $post["key"];
+			echo '<option value=""></option>';
+			foreach ($this->m_master->kabKec($id) as $val) {
+				//echo $val;
+				echo '<option value="'.$val['idkec'].'">'.$val['idkec'].') '.$val['kecamatan'].'</option>';
+			}
+	}
+	
+
+
+
 
 	/**
 	 * function rule eselon
@@ -419,6 +546,40 @@ public function pegawai($TOKEN=null, $ID=null)
 		}
 	}
 
+
+
+	public function rule_kegiatan()
+    {
+        return [
+            ['field' => 'nama',
+            'label' => 'Nama Kegiatan',
+            'rules' => 'required'],
+
+             ['field' => 'nomor',
+            'label' => 'Rekening Kegiatan',
+            'rules' => 'required'],
+
+             ['field' => 'pagu',
+            'label' => 'Pagu Kegiatan',
+            'rules' => 'required|is_natural'], // angka 
+
+             ['field' => 'kpa',
+            'label' => 'Nama KPA',
+            'rules' => 'required'],
+
+            ['field' => 'bendahara',
+            'label' => 'Nama Bendahara',
+            'rules' => 'required'],
+            
+            ['field' => 'pptk',
+            'label' => 'Nama PPTK',
+            'rules' => 'required'],
+            
+
+         
+        ];
+
+    }
 /**
  *   [kegiatan description]
  *   @method      kegiatan
@@ -433,57 +594,63 @@ public function pegawai($TOKEN=null, $ID=null)
  */
 function kegiatan($TOKEN=null, $ID=null){
 		// add breadcrumbs
-		 $this->breadcrumbs->push('Eselon', 'master/kegiatans');
+		 $this->breadcrumbs->push('Kegiatan', 'master/kegiatan');
 		$data['TOKEN'] = $TOKEN;
 		$data['ID'] = $ID;
-
-		if($TOKEN==='kegiatans'){
-			$data['kegiatans'] = $this->m_kegiatan->kegiatans($ID);
-			if (!$data['kegiatans']) show_404();	
-			$this->template->load('template_load','master/kegiatans/kegiatans', $data);
+		$data['pegawai'] = $this->m_master->pegawai();
+		if($TOKEN==='kegiatan'){
+			$data['kegiatan'] = $this->m_kegiatan->kegiatan($ID);
+			if (!$data['kegiatan']) show_404();	
+			$this->template->load('template_load','master/kegiatan/kegiatan', $data);
 
 		}elseif($TOKEN==='add'){
 			$this->breadcrumbs->push('<i class="menu-icon fa fa-plus"></i> Add', '/add');
 			$validation = $this->form_validation;
-        	$validation->set_rules($this->rule_kegiatans());
+        	$validation->set_rules($this->rule_kegiatan());
         	if ($validation->run()) {
             	if($this->m_kegiatan->query_simpan() === true){
-            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_kegiatans').' berhasil disimpan'));
-					$red = base_url("master/kegiatans/");
+            		//$this->db->last_query();
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama').' berhasil disimpan'));
+					$red = base_url("master/kegiatan/");
 					header("refresh:4; url=$red"); 
 				}else{
-            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama').' gagal disimpan'));
 				}
 			}
-        	$data['kegiatans'] = $this->m_kegiatan->jabatan($ID);
-        	if (!$data['kegiatans']) show_404();	
-			$this->template->load('template_load','master/kegiatans/add_kegiatans',$data);
+        	$data['kegiatan'] = $this->m_kegiatan->kegiatan($ID);
+        	if (!$data['kegiatan']) show_404();	
+			$this->template->load_js('template','master/kegiatan/add_kegiatan',$data);
 
 		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
 			$this->breadcrumbs->push('<i class="menu-icon fa fa-pencil"></i> Edit', '/edit');
 			 //echo $TOKEN;
 			 //echo $ID;
 			$validation = $this->form_validation;
-        	$validation->set_rules($this->rule_kegiatans());
+        	$validation->set_rules($this->rule_kegiatan());
         	if ($validation->run()) {
         		$this->m_kegiatan->query_update();
 				if($this->m_kegiatan->query_update() === true){
-            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
-					
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama').' berhasil ubah'));
+            		$red = base_url("master/kegiatan/");
+					header("refresh:4; url=$red"); 
 				}else{
-            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama').' gagal ubah'));
 				}
 				
 			}
-        	$data['kegiatans'] = $this->m_kegiatan->kegiatans($ID);
-        	if (!$data['kegiatans']) show_404();	
-        	$this->template->load('template_load','master/kegiatans/add_kegiatans', $data);
+        	$data['kegiatan'] = $this->m_kegiatan->kegiatan($ID);
+        	if (!$data['kegiatan']) show_404();	
+        	$this->template->load('template_load','master/kegiatan/add_kegiatan', $data);
 		}else{
-			$data['kegiatans'] = $this->m_kegiatan->kegiatans();
-			if (!$data['kegiatans']) show_404();	
-			$this->template->load('template_load','master/kegiatans/kegiatans', $data);
+			$data['kegiatan'] = $this->m_kegiatan->kegiatan();
+			if (!$data['kegiatan']) show_404();	
+			$this->template->load('template_load','master/kegiatan/kegiatan', $data);
 		}
 	}
+
+
+
+
 	/**
 	 * { function_description }
 	 *
@@ -566,12 +733,12 @@ function kegiatan($TOKEN=null, $ID=null){
             ['field' => 'roda',
             'label' => 'Roda Transportasi',
             'rules' => 'required|is_natural'],
-
+/**
              ['field' => 'cc',
             'label' => 'Volume Sentimeter Kubik (CC) Transportasi',
             'rules' => 'required|is_natural'],
 
-          /**  ['field' => 'wil1',
+            ['field' => 'wil1',
             'label' => 'wil1',
             'rules' => 'required|is_natural'],
 
@@ -613,6 +780,7 @@ function kegiatan($TOKEN=null, $ID=null){
  * @param      <type>  $ID     { parameter_description }
  */
 function transportasi($TOKEN=null, $ID=null){
+	$this->breadcrumbs->push('Transportasi', 'master/transportasi');
 		$data['TOKEN'] = $TOKEN;
 		$data['ID'] = $ID;
 
@@ -622,17 +790,18 @@ function transportasi($TOKEN=null, $ID=null){
 			$this->template->load_js('template','master/transportasi/transportasi', $data);
 
 		}elseif($TOKEN==='add'){
+			$this->breadcrumbs->push('Add', 'master/add');
 			//FORM ADD / TAMBAH 
 			$validation = $this->form_validation;
         	$validation->set_rules($this->rule_transportasi());
         	if ($validation->run()) {
             	if($this->m_transport->query_simpan() === true){
-            		echo $this->db->last_query();
-            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+            		//echo $this->db->last_query();
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data Transportasi <b>'.$this->input->post('nama').'/b> berhasil disimpan'));
 					$red = base_url("master/transportasi/");
-					//header("refresh:4; url=$red"); 
+					header("refresh:4; url=$red"); 
 				}else{
-            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data Transportasi <b>'.$this->input->post('nama').'</b> gagal disimpan'));
 				}
 			}
         	$data['transportasi'] = $this->m_mjabatan->jabatan($ID);
@@ -641,6 +810,7 @@ function transportasi($TOKEN=null, $ID=null){
 			$this->template->load_js('template','master/transportasi/add_transportasi',$data);
 
 		}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
+			$this->breadcrumbs->push('Edit', 'master/edit');
 			 //FORM EDIT
 			 //echo $TOKEN;
 			 //echo $ID;
@@ -649,11 +819,12 @@ function transportasi($TOKEN=null, $ID=null){
         	if ($validation->run()) {
         		$this->m_transport->query_update();
 				if($this->m_transport->query_update() === true){
-            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+					//echo $this->db->last_query();
+            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data Transportasi <b>'.$this->input->post('nama').'</b> berhasil ubah'));
 					$red = base_url("master/transportasi/");
 					header("refresh:4; url=$red");
 				}else{
-            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data Transportasi <b>'.$this->input->post('nama').'</b> gagal ubah'));
 				}
 				
 			}
@@ -688,6 +859,16 @@ function transportasi($TOKEN=null, $ID=null){
         
         if ($this->m_eselon->delete($id)) {
             redirect(site_url('master/eselon'));
+        }
+    }
+    public function delete_kegiatan($id=null)
+    {
+        if (!isset($id)) show_404();
+        
+        if ($this->m_kegiatan->delete($id)) {
+        	$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data berhasil dihapus!'));
+            redirect(site_url('master/kegiatan'));
+
         }
     }
 

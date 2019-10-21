@@ -12,10 +12,13 @@ class M_tujuan extends CI_Model {
 	private $_table = "m_tujuan";
 	public $id_tujuan;
 	public $tujuan; 
-	public $jarak; 
+	//public $jarak; 
 	public $wilayah; 
 	public $perjalanan; 
-
+	public $kec;
+	public $kab;
+	public $prov;
+	//public $bbm;
 
 		function tujuan($IDTUJUAN=null){
 			//$ID_CLIENT = $this->session->userdata('idclient');
@@ -30,24 +33,32 @@ class M_tujuan extends CI_Model {
 				return $query->result_array();
 			}
 		}	
-/*
+
 		function query_simpan(){
 			//SET DATA
 			$post = $this->input->post();
-			$this->nama  = $post["nama"];
-			$this->nomor = $post["nomor"];
-			$this->jenis = $post["jenis"];
-			$this->roda  = $post["roda"];
-			$this->cc    = $post["cc"];
-			$this->wil1  = $post["wil1"];
-			$this->wil2  = $post["wil2"];
-			$this->wil3  = $post["wil3"];
+			$this->id_tujuan  = "";
+			$this->tujuan     = $post["tujuan"];
+			//$this->jarak    = $post["jenis"];
+			$this->wilayah    = $post["wilayah"];
+			$this->perjalanan = $post["perjalanan"];
+			$this->kec        = 'Kec. '.$post["kec_txt"];
+			$this->kab        = 'Kab. '.$post["kab_txt"];
+			$this->prov       = 'Prov. '.$post["prov_txt"];
+			$this->kecid      = $post["kec"];
+			$this->kabid      = $post["kab"];
+			$this->provid     = $post["prov"];
+			//$this->tahun      = $post["tahun"];
+
 			//EXE
 		        $this->db->insert($this->_table, $this);
 				$result  = ($this->db->affected_rows() != 1) ? false : true;
 				return $result;
 		}
-		
+
+
+
+/*		
 		function query_update(){
 			//SET DATA
 			$post = $this->input->post();

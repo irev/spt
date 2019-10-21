@@ -11,10 +11,14 @@ class M_kegiatan extends CI_Model {
 	}
 	private $_table = "m_kegiatan";
 	public $id_kegiatan;
-	public $tujuan; 
-	public $jarak; 
-	public $wilayah; 
-	public $perjalanan; 
+	public $rekening;
+	public $kegiatan;
+	public $pptk;
+	public $bendahara;
+	public $kpa;
+	public $pagu;
+	public $dinas;
+	public $tahun;
 
 
 		function kegiatan($ID_kegiatan=null){
@@ -30,18 +34,19 @@ class M_kegiatan extends CI_Model {
 				return $query->result_array();
 			}
 		}	
-/*
+
 		function query_simpan(){
 			//SET DATA
 			$post = $this->input->post();
-			$this->nama  = $post["nama"];
-			$this->nomor = $post["nomor"];
-			$this->jenis = $post["jenis"];
-			$this->roda  = $post["roda"];
-			$this->cc    = $post["cc"];
-			$this->wil1  = $post["wil1"];
-			$this->wil2  = $post["wil2"];
-			$this->wil3  = $post["wil3"];
+			$this->id_kegiatan = "";
+			$this->kegiatan    = $post["nama"];
+			$this->rekening    = $post["nomor"];
+			$this->pagu        = $post["pagu"];
+			$this->pptk        = $post["pptk"];
+			$this->kpa         = $post["kpa"];
+			$this->bendahara   = $post["bendahara"];
+			$this->tahun       = $post["tahun"];
+			$this->dinas       = $post["dinas"];
 			//EXE
 		        $this->db->insert($this->_table, $this);
 				$result  = ($this->db->affected_rows() != 1) ? false : true;
@@ -51,25 +56,25 @@ class M_kegiatan extends CI_Model {
 		function query_update(){
 			//SET DATA
 			$post = $this->input->post();
-			$this->id_tran = $post["id"];
-			$this->nama    = $post["nama"];
-			$this->nomor   = $post["nomor"];
-			$this->jenis   = $post["jenis"];
-			$this->roda    = $post["roda"];
-			$this->cc      = $post["cc"];
-			$this->wil1    = $post["wil1"];
-			$this->wil2    = $post["wil2"];
-			$this->wil3    = $post["wil3"];
+			$this->id_kegiatan = $post["id"];
+			$this->kegiatan    = $post["nama"];
+			$this->rekening    = $post["nomor"];
+			$this->pagu        = $post["pagu"];
+			$this->pptk        = $post["pptk"];
+			$this->kpa         = $post["kpa"];
+			$this->bendahara   = $post["bendahara"];
+			$this->tahun       = $post["tahun"];
+			$this->dinas        = $post["dinas"];
 			//EXE
-		        $this->db->update($this->_table, $this, array('id_tran' => $post['id']));
+		        $this->db->update($this->_table, $this, array('id_kegiatan' => $post['id']));
 				//CEK KONDISI
 				$result  = ($this->db->affected_rows() >= 1) ? false : true;
 				return  $result;
 		}
-*/
+
 		public function delete($id)
     	{
-        return $this->db->delete($this->_table, array("id_tran" => $id));
+        return $this->db->delete($this->_table, array("id_kegiatan" => $id));
     	}
 
 

@@ -5,12 +5,21 @@
 				$('#deleteModal').modal();
 			}
 </script>
+<?php 
 
+
+ ?>
 <div class="col-md-12 col-xs-6">	
 	</div>
 <div class="row">
 <div class="col-xs-12">
 <h3 class="header smaller lighter blue">DATA PEGAWAI <a class="btn btn-xs btn-primary" href="<?= base_url('master/pegawai/add') ?>">+ Pegawai</a></h3>	
+<div class="alert alert-info">
+	<button class="close" data-dismiss="alert">
+		<i class="ace-icon fa fa-times"></i>
+	</button>
+	Master Pegawai berisi data pegawai yang aktif pada lingkungan instansi. <br>Setiap data pegawai harus diisi lengkap, terutama data <b>pangkat/golongan</b> dan <b>eselon</b> yang akan terkait dengan perhitungan <i>uang harian</i> perjalanan dinas.
+</div>
 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
@@ -39,8 +48,8 @@
 																<td class="center"><?= $peg['id_peg'] ?></td>
 																<td><?= $peg['nama'] ?></td>
 																<td><?= $peg['nip'] ?></td>
-																<td><?= $peg['golongan'] ?></td>
-																<td><?= $peg['eselon'] ?></td>
+																<td><?= ($peg['golongan']==null)? lengkapiData($peg['id_peg']) : $peg['golongan']?></td>
+																<td><?= ($peg['eselon']==null)? lengkapiData($peg['id_peg']) : $peg['eselon']?></td>
 																<td><?= $peg['jabatan'] ?></td>
 																<td class="center"><?= $peg['tahun'] ?></td>
 																<!--td><?= $peg['tahun'] ?></td-->

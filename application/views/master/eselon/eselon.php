@@ -12,7 +12,13 @@
 <div class="col-xs-12">
 <h3 class="header smaller lighter blue">Master Eselon <a class="btn btn-xs btn-primary" href="<?= base_url('master/eselon/add') ?>">+ Eselon</a></h3>	
 <?= $this->session->flashdata('msg') ?>
-
+<div class="alert alert-info">
+	<button class="close" data-dismiss="alert">
+		<i class="ace-icon fa fa-times"></i>
+	</button>
+	Untuk informasi nominal <b>uang saku</b> eselon mengacu pada <b>Standar Biaya</b>.<br>
+	Nominal ini dipakai sebagai perhitungan uang saku perjalanan <b>dinas luar daerah</b>
+</div>
 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>

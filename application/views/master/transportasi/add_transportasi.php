@@ -10,7 +10,6 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 	$addWil1    =  $this->input->post('wil1');
 	$addWil2    =  $this->input->post('wil2');
 	$addWil3    =  $this->input->post('wil3');
-	$addWilluar =  $this->input->post('wil4');
 	$addbbmwil1 = $this->input->post('addbbmwil1');
 	$addbbmwil2 = $this->input->post('addbbmwil2');
 	$addbbmwil3 = $this->input->post('addbbmwil3');
@@ -28,7 +27,6 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 	$addWil1    = $transportasi->wil1;
 	$addWil2    = $transportasi->wil2;
 	$addWil3    = $transportasi->wil3;
-	$addWilluar = $transportasi->wil4;
 	$addbbmwil1 = $transportasi->liter1;
 	$addbbmwil2 = $transportasi->liter1;
 	$addbbmwil3 = $transportasi->liter1;
@@ -113,14 +111,14 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 										</div>
 									</div>
 
-									<div class="form-group">
+									<!--div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="cc" > Volume (CC)*</label>
 
 										<div class="col-sm-9">
 											<input type="text" id="cc" placeholder="Volume (CC)*" class="col-xs-10 col-sm-5" name="cc" value="<?= $addCc ?>">
 										</div>
 									</div>
-									<!--div class="form-group">
+									<div class="form-group">
 										<label class="col-sm-2 control-label no-padding-right" for="wil2">Wilayah</label>
 										<div class="col-sm-9">
 											<input type="text" id="wil2" placeholder="Wilayah 1" class="col-xs-3 col-sm-3" name="wil1" value="<?= $addWil1 ?>">
@@ -136,12 +134,16 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 									<div class="form-group">
 										<label class="col-sm-2 control-label no-padding-right" for="wil3" >BBM Liter </label>
 										<div class="col-sm-9">
+											<span class="col-xs-3 col-sm-3">Wil I</span>
+											<span class="col-xs-3 col-sm-3">Wil II</span>
+											<span class="col-xs-3 col-sm-3">Wil III</span>
+											<span class="col-xs-3 col-sm-3">Luar</span>
 											<input type="text" id="addbbmwil1" placeholder="Wilayah 1 (satu)" class="col-xs-3 col-sm-3" name="addbbmwil1" value="<?= $addbbmwil1 ?>">
 											
 											<input type="text" id="addbbmwil2" placeholder="Wilayah 2 (dua)" class="col-xs-3 col-sm-3" name="addbbmwil2" value="<?= $addbbmwil2 ?>">
 											
 											<input type="text" id="addbbmwil3" placeholder="Wilayah 3 (tiga)" class="col-xs-3 col-sm-3" name="addbbmwil3" value="<?= $addbbmwil3 ?>">
-											
+									
 											<input type="text" id="addbbmwil4" placeholder="Luar Daerah" class="col-xs-3 col-sm-3" name="addbbmwil4" value="<?= $addbbmwil4 ?>">
 										</div>
 									</div>

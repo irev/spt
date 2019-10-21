@@ -24,9 +24,34 @@ Ukuran Kertas	F4
 
 <a href="https://1.bp.blogspot.com/-GysSkfc_8I0/Xay3C0zvxXI/AAAAAAAAL6M/V-WYKf3Zp4AFEZCKLhh2_1MtN4BJyKNFQCLcBGAsYHQ/s1600/Screenshot_3.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="687" data-original-width="1365" height="161" src="https://1.bp.blogspot.com/-GysSkfc_8I0/Xay3C0zvxXI/AAAAAAAAL6M/V-WYKf3Zp4AFEZCKLhh2_1MtN4BJyKNFQCLcBGAsYHQ/s320/Screenshot_3.jpg" width="320" /></a>
 
-# Contribution
-- Febri Yetti, SE as project idea
-- Mudirman, SE as system analyst 
+# Tim Pengembang
+- Febri Yetti, SE sebagai plant manager
+- Mudirman, SE sebagai system analyst
+- Refyandra, S.kom sebagai Programer 
+
+# DALAM DAERAH 
+Biaya Perjalanan dalam daerah dikelompokkan berdasarkan pangkat/golongan ASN dan wilayang yang dikunjungi, untunk pembagian wilayah Seperti rincian dibawah ini:
+# Uang Harian Dalam Daerah berdasarkan WILAYAH
+- IV		Wilayah I = 150000  Wilayah II = 175000	Wilayah III = 200000	
+- III		Wilayah I = 140000	Wilayah II = 165000	Wilayah III = 190000	
+- II,I		Wilayah I = 130000	Wilayah II = 155000	Wilayah III = 180000	
+- PTT,THL	Wilayah I = 120000	Wilayah II = 145000	Wilayah III = 170000
+* (Sumber: standar biaya Kab. Pasaman Barat 2018)	
+
+# Pembagian Willayah
+	# Wilayah I	
+	- RANAH PASISIA 
+	- LUHAK NAN DUO
+	# Wilayah 2	
+	- TALAMAU
+	- KINALI
+	- GUNUANG TULEH
+	- SEI AUA
+	# Wilayah 3	
+	- SEI BEREMAS
+	- RANAH BATAHAN
+	- LEMBAH MELITANG
+	- KOTO BALINGKA
 
 # LUAR DAERAH
 - ESELON	 Uang Harian			
@@ -36,30 +61,5 @@ Ukuran Kertas	F4
 - STAF GOL 3,2,1 225000		
 - THL/PTT	 200000
 - ---------------
-				
-				
-				
-# DALAM DAERAH 
-# WIL 1	
-- RANAH PASISIA 
-- LUHAK NAN DUO
-# WIL 2	
-- TALAMAU
-- KINALI
-- GUNUANG TULEH
-- SEI AUA
-# WIL 3	
-- SEI BEREMAS
-- RANAH BATAHAN
-- LEMBAH MELITANG
-- KOTO BALINGKA
-
-
-# Uanga Harian Dalam Daerah
-		wil 1	wil 2	wil 3
-- IV		150000	175000	200000	
-- III		140000	165000	190000	
-- II,I		130000	155000	180000	
-- PTT,THL	120000	145000	170000	
 				
 

@@ -46,9 +46,10 @@ class M_transport extends CI_Model {
 			$post = $this->input->post();
 			$this->nama        = $post["nama"];
 			$this->nomor       = $post["nomor"];
-			$this->jenis       = $post["jenis"];
+			$this->jenis       .= $post["jenis"];
+			$this->perjalanan  = $post["jenis"];
 			$this->roda        = $post["roda"];
-			$this->cc          = $post["cc"];
+			//$this->cc          = $post["cc"];
 			/**
 			$this->wil1        = $post["wil1"];
 			$this->wil2        = $post["wil2"];
@@ -75,8 +76,9 @@ class M_transport extends CI_Model {
 			$this->nama        = $post["nama"];
 			$this->nomor       = $post["nomor"];
 			$this->jenis       = $post["jenis"];
+			$this->perjalanan  = $post["jenis"];
 			$this->roda        = $post["roda"];
-			$this->cc          = $post["cc"];
+			//$this->cc          = $post["cc"];
 			/**
 			$this->wil1        = $post["wil1"];
 			$this->wil2        = $post["wil2"];
@@ -84,10 +86,10 @@ class M_transport extends CI_Model {
 			$this->wil4        = $post["wil4"];
 			*/
 			$this->bahan_bakar = $post["bahan_bakar"];
-			$this->liter1      = $post["liter1"];
-			$this->liter2      = $post["liter2"];
-			$this->liter3      = $post["liter3"];
-			$this->bbm_luar    = $post["bbm_luar"];
+			$this->liter1      = $post["addbbmwil1"];
+			$this->liter2      = $post["addbbmwil2"];
+			$this->liter3      = $post["addbbmwil3"];
+			$this->bbm_luar    = $post["addbbmwil4"];
 			$this->tahun       = date("Y");
 
 

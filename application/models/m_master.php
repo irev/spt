@@ -41,7 +41,7 @@ class M_master extends CI_Model
 
     public function getpegawaiById($id)
     {
-        return $this->db->get_where($this->_table_pegawai, ["id_peg" => $id])->row();
+        return $this->db->get_where("m_pegawai", ["id_peg" => $id])->row();
     }
 
 /**
@@ -240,7 +240,10 @@ class M_master extends CI_Model
         }
     }
 
-    public function tujuan($ID = null, $key = null)
+#--------------------------------------------------------------------------------------------
+# TUJUAN 
+#--------------------------------------------------------------------------------------------
+   public function tujuan($ID = null, $key = null)
     {
         //$ID_CLIENT = $this->session->userdata('idclient');
         $this->db->order_by("id_tujuan", "ASC");
@@ -257,6 +260,28 @@ class M_master extends CI_Model
         }
     }
 
+    public function prov(){
+        $query = $this->db->get("mw_prov");
+        return $query->result_array();
+    }
+    public function provKab($id=null){
+        if(!is_null($id)){
+            $this->db->where('provid',$id);            
+        }
+        $query = $this->db->get("mw_kab");
+        return $query->result_array();  
+    }
+    public function kabKec($id=null){
+        if(!is_null($id)){
+            $this->db->where('kabid',$id);            
+        }
+        $query = $this->db->get("mw_kec");
+        return $query->result_array();
+        
+    }
+#--------------------------------------------------------------------------------------------
+# CARI NOMOR KENDRAAN ? TRANSPORTASI 
+#--------------------------------------------------------------------------------------------
     public function trasportsasi_nomor($ID_TRAN = null)
     {
         //$ID_CLIENT = $this->session->userdata('idclient');

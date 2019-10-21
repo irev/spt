@@ -287,7 +287,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</ul>
 						</li-->
 
-						<li class="light-blue dropdown-modal">
+						<li class="light-blue dropdown-modal col-xs-12 col-sm-12">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="<?= base_url()?>asset/theme/assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">

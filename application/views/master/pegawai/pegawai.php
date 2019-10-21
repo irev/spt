@@ -1,7 +1,9 @@
+
 <h3 class="header smaller lighter blue">
 										Profile Pegawai
 										<small>Infomasi Detail Pegawai</small>
 									</h3>
+									
 <table class="table able-striped table-bordereds">
 	<tbody>
 		<tr>
