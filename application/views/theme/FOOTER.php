@@ -22,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?= _APLIKASI_ ?> &copy; 2018-<?= date('Y')?>
 						</span>
 							</small>
+							waktu render halaman  <strong>{elapsed_time}</strong> detik. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
 						&nbsp; &nbsp;
 						<span class="action-buttons">
 							<a href="#">

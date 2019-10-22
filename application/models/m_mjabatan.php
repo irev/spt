@@ -27,7 +27,11 @@ class M_mjabatan extends CI_Model {
 				return $query->result_array();
 			}
 		}		
-
+		function maxID(){
+            $this->db->select_max('id_jab');
+            $query = $this->db->get($this->_table);
+            return $query->row("id_jab")+1;
+        }
 		/**
 		 * Queries a simpan.
 		 *
@@ -38,7 +42,7 @@ class M_mjabatan extends CI_Model {
 		        	//$this->product_id = uniqid();
 					$this->id_jab       = $post["id_jabatan"];
 					$this->nama_jabatan = $post["nama_jabatan"];
-					$this->uang_harian  = $post["nominal"];
+					//$this->uang_harian  = $post["nominal"];
 					////scrip dibawah apa bila nilai angka  berkoma 1,000,000
 					///maka dikembalikan ke 1000000 sebelum disimpan ke database
 					//$ang = str_replace('.','', $post["nominal"]);
@@ -60,7 +64,7 @@ class M_mjabatan extends CI_Model {
 			$post = $this->input->post();
 			$this->id_jab       = $post["id_jabatan"];
 			$this->nama_jabatan = $post["nama_jabatan"];
-			$this->uang_harian  = $post["nominal"];
+			//$this->uang_harian  = $post["nominal"];
 			//if(is_numeric($this->id_jab) || $this->id_jab != 0 && $this->nama_jabatan !=""){
 				//$this->db->trans_start();
 		        $this->db->update($this->_table, $this, array('id_jab' => $post['id_jabatan']));

@@ -158,9 +158,14 @@ class M_master extends CI_Model
         $result = ($this->db->affected_rows() >= 1) ? true : false;
         return $result;
     }
-    public function delete_pegawai($id)
+    public function delete_pegawai($id=null)
     {
-        return $this->db->delete($this->_tablepegawai, array("id_peg" => $id));
+        //return $this->db->delete($this->_tablepegawai, array("id_peg" => $id));
+        if(!$this->db->delete($this->_tablepegawai, array("id_peg" => $id))){
+                 return $this->db->error();
+            }else{
+                 return true;
+            }
     }
 
 /**
@@ -169,22 +174,29 @@ class M_master extends CI_Model
  * @param      <string>  $key          The key as field
  * @return     <type>  ( data array )
  */
-    public function anggaran($ID_ANGGARAN = null, $key = null)
+    public function anggaran($ID=null, $key=null)
     {
         //$ID_CLIENT = $this->session->userdata('idclient');
         $this->db->order_by("id_anggaran", "ASC");
-        if ($ID_ANGGARAN != null) {
-            $this->db->where("id_anggaran", $ID_ANGGARAN);
+        if (!is_null($ID)) {
+            $this->db->where("id_anggaran", $ID);
         }
         $query = $this->db->get("m_anggaran");
-        if ($ID_ANGGARAN != null && $key != null) {
-            return $query->row($key);
-        } elseif ($ID_ANGGARAN != null) {
+
+        if(!is_null($ID)){
             return $query->row();
-        } else {
+        }
+
+        if(!is_null($ID) && !is_null($key)) {
+            return $query->row($key);
+        }
+
+        if(is_null($ID) && is_null($key)){
             return $query->result_array();
         }
+        //echo $this->db->last_query();
     }
+  
 
     public function belanja($ID = null, $key = null)
     {

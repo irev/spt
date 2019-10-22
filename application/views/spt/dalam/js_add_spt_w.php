@@ -31,15 +31,6 @@
 				
 			}
 		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		
 	});
 	//////TTD SPT
@@ -59,15 +50,6 @@
 				$('#ttd_golongan').val(data.golongan);
 			}
 		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		
 	});
 	//////TTD SPPD
@@ -87,15 +69,6 @@
 				$('#ttd_sppd_golongan').val(data.golongan);
 			}
 		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		
 	});
 	/////////////////////////////////////////////////////////
@@ -103,27 +76,26 @@
 		/* Setelah memilih pegawai */
 		$(this).toggle('slow');
 		var idtransportasi = $(this).val();
+		var text=0;
 		$.ajax({
 			url: '<?= base_url()?>spt/select_transportasi',
 			type: 'POST',
 			dataType: 'json',
 			data: {pilih_transportasi: idtransportasi},
-			success(data){
+			success(data ){
 				$('#transpor').val(data.nomor);
-				$('#tran_nama').val(data.nama);
+				$('#tran_nama').val(data.nama);	
+				//$('div.info-transpor').html(data, function(key, value){				});
+				
+				$.each(data, function( key, value ) {
+					 text += "<tr><td>"+key+"</td><td>"+value+ "</tr>";
+					});
+				$('div.info-transpor').html("DETAIL:<br><table class='table table-striped' width='100%'>"+text+"</table>");
 			}
 		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		
 	});
+	
 ////////////////////////////////////////////////// 	pilih_tujuan	
 $('#pilih_tujuan').change(function(event) {
 		/* Setelah memilih pegawai */
@@ -141,15 +113,6 @@ $('#pilih_tujuan').change(function(event) {
 				$('#perjalanan').val(data.perjalanan);
 			}
 		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
 		
 	});
 ////////////////////////////////////////////////// 	pilih_beban	
@@ -204,6 +167,26 @@ $('#pilih_beban').change(function(event) {
 				.on('actionclicked.fu.wizard' , function(e, info){
 					if(info.step == 1 && $validation) {
 						if(!$('#validation-form').valid()) e.preventDefault();
+					}
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 2 && $validation) {
+						if(!$('#validation-form').valid()) e.preventDefault();
+					}
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 3 && $validation) {
+						if(!$('#validation-form-step-3').valid()) e.preventDefault();
+					}
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 4 && $validation) {
+						if(!$('#validation-form-step-4').valid()) e.preventDefault();
+					}
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 5 && $validation) {
+						if(!$('#validation-form-step-5').valid()) e.preventDefault();
 					}
 				})
 				//.on('changed.fu.wizard', function() {
@@ -264,6 +247,7 @@ $('#pilih_beban').change(function(event) {
 					focusInvalid: false,
 					ignore: "",
 					rules: {
+						/// STEP 1
 						tanggal_spt: {
 							required: true,
 							date:true
@@ -274,7 +258,33 @@ $('#pilih_beban').change(function(event) {
 						ttd_nip: {
 							required: true,
 						},
+						tempat_spt:{
+							required: true,
+						},
+						nomor_spt:{
+							required: true,
+						},
+						pilih_pegawai_spt:{
+							required: true,
+						},
+						ttd_nama:{
+							required: true,
+						},
+						ttd_jabatan:{
+							required: true,
+						},
+						ttd_golongan:{
+							required: true,
+						},
+						maksud:{
+							required: true,
+						},
 						
+						dasarSPT:{
+							required: true,
+						},
+						
+					/*	
 						password: {
 							required: true,
 							minlength: 5
@@ -313,6 +323,7 @@ $('#pilih_beban').change(function(event) {
 						agree: {
 							required: true,
 						}
+						*/
 					},
 			
 					messages: {
@@ -361,7 +372,87 @@ $('#pilih_beban').change(function(event) {
 					},
 					invalidHandler: function (form) {
 					}
+				});
+
+				$('#validation-form-step-3').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						// STEP 3
+						pilih_pegawai:{
+							required: true,
+						},
+						nama:{
+							required: true,
+						},
+						nip:{
+							required: true,
+						},
+						jabatan:{
+							required: true,
+						},
+						golongan:{
+							required: true,
+						},
+					},
+					messages: {
+						pilih_pegawai:'Harus memilih pegawai',
+						nama:'Nama Pegawai harus diisi',
+						nip:'Pegawai harus memiliki NIP',
+						jabatan:'Pegawai harus memiliki jabatan atau satatus (PTT/THL)',
+						golongan: 'Tujuan harus dipilih',
+					}
 				});	
+				$('#validation-form-step-4').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						// STEP 4
+						pilih_tujuan:{
+							required: true,
+						},
+						tujuan:{
+							required: true,
+						},
+						wilayah:{
+							required: true,
+						},
+						perjalanan:{
+							required: true,
+						},
+
+						
+					},
+					messages: {
+						pilih_tujuan: 'Tujuan harus dipilih',
+						tujuan:'Harus memiliki tujuan',
+						wilayah:'Harus memiliki pengelompokan wilayah',
+						perjalanan:'Jenis perjalanan Dalam atau Luar',
+					}
+				});
+				$('#validation-form-step-5').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						// STEP 5
+						berangkat:{
+							required: true,
+						},
+						kembali:{
+							required: true,
+						},
+					},
+					messages: {
+						berangkat: 'Tanggal berangkat harus diisi',
+						kembali:'Tanggal kembali harus diisi',
+					}
+				});
 
 			$(document).one('ajaxloadstart.page', function(e) {
 					//in ajax mode, remove remaining elements before leaving page

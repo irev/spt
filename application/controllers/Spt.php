@@ -20,7 +20,7 @@ class Spt extends CI_Controller {
 	 */
 	function __construct(){
 		parent::__construct();
-		$this->load->model(['m_dalam','m_transport','m_tujuan','m_kegiatan']);
+		$this->load->model(['m_dalam','m_transport','m_tujuan','m_kegiatan','m_anggaran']);
 		//$this->load->library(['session','Mylib_form','Mylib_themes','l_paket']);
 		////$this->load->helper(['url','tanggal','tanggal_id','terbilang']);
 		$this->load->library(['session','form_validation']);
@@ -36,7 +36,13 @@ class Spt extends CI_Controller {
 	}
 
 
+function test_anggaran($anggaran=null, $field=null){
+	$echo = $this->m_anggaran->anggaran($anggaran, $field);
+	print_r($echo);
+	echo '<br><br>'.$this->db->last_query();
+	echo "<br><br>".$echo->$field;
 
+}
 
 
 	public function back_page($NUM=NULL){
@@ -240,7 +246,9 @@ class Spt extends CI_Controller {
 								header("refresh:4; url=$red"); 
 							}else{
 			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+			            		//echo $this->db->last_query();
 							}
+							
 						}else{
 							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
 						}

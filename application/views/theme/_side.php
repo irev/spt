@@ -64,6 +64,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<b class="arrow"></b>
 					</li>
 					<?php 
+					if ($this->uri->segment(1)=='anggaran') {
+						echo '<li class="active open">';
+					}else{
+						echo '<li class="">';
+					}
+					?>
+					
+					<!--li class=""-->
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-list"></i>
+							<span class="menu-text"> ANGGARAN </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<?php 
+								if ($this->uri->segment(1)=='anggaran' && $this->uri->segment(2)=='' or  $this->uri->segment(2)=='add' or $this->uri->segment(2)=='edit') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<!--li class=""-->
+								<a href="<?= base_url('/anggaran/') ?>" title="Master Anggaran DPA/DPPA">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Data Anggaran 
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<?php 
+								if ($this->uri->segment(2)=='kegiatan') {
+									echo '<li class="active">';
+								}else{
+									echo '<li class="">';
+								}
+								?>
+								<!--li class=""-->
+								<a href="<?= base_url('/anggaran/kegiatan/') ?>" title="Master Kegiatan Anggaran">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Data Kegiatan
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>		
+					<?php 
 					if ($this->uri->segment(1)=='master') {
 						echo '<li class="active open">';
 					}else{
@@ -113,21 +164,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<b class="arrow"></b>
 							</li>
-							<?php 
-								if ($this->uri->segment(2)=='kegiatan') {
-									echo '<li class="active">';
-								}else{
-									echo '<li class="">';
-								}
-								?>
-								<!--li class=""-->
-								<a href="<?= base_url('/master/kegiatan/') ?>">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Data Kegiatan
-								</a>
-
-								<b class="arrow"></b>
-							</li>
+							
 							<?php 
 								if ($this->uri->segment(2)=='pegawai') {
 									echo '<li class="active">';
@@ -143,6 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<b class="arrow"></b>
 							</li>
+							
 							<?php 
 								if ($this->uri->segment(2)=='transportasi') {
 									echo '<li class="active">';
@@ -276,7 +314,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<b class="arrow"></b>
 					</li>
 					<li class="" id="menu-kalender">
-								<a href="<?= base_url('spt/dev') ?>">
+								<a href="<?= base_url('kalender') ?>">
 									<i class="menu-icon fa fa-calendar"></i>
 									<span class="menu-text"> KALENDER</span>
 								</a>

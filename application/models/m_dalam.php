@@ -22,6 +22,7 @@ class M_dalam extends CI_Model
     public $jabatan;
     public $maksud;
     public $dasar_spt; 
+    public $transport_id;
     public $transportasi;
     public $tujuan;
     public $wilayah;
@@ -92,7 +93,6 @@ class M_dalam extends CI_Model
 				`m_pegawai`.`jabatan` as `jabatan_pengikut`,
 				`m_pegawai`.`golongan` as `gol_pengikut`,
 				`m_pegawai`.`eselon_id` as `eselon_pengikut`,
-
 				spt_data.*,
 				spt_data.nama as nm_diperintah,
 				spt_data.nip as nip_diperintah,
@@ -156,6 +156,7 @@ class M_dalam extends CI_Model
         $this->jabatan      = $post['jabatan'];
         $this->maksud       = $post['maksud'];
         $this->dasar_spt    = $post['dasarSPT'];
+        $this->transport_id = $post['pilih_transportasi'];
         $this->transportasi = $post['transpor'];
 
         $this->tujuan_id     = $post['pilih_tujuan'];
@@ -221,6 +222,7 @@ class M_dalam extends CI_Model
         $this->jabatan      = $post['jabatan'];
         $this->maksud       = $post['maksud'];
         $this->dasar_spt    = $post['dasarSPT'];
+        $this->transport_id = $post['pilih_transportasi'];
         $this->transportasi = $post['transpor'];
 
         $this->tujuan_id     = $post['pilih_tujuan'];

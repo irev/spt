@@ -332,7 +332,8 @@ if (count($spt_pengikut) > 0) {
         <tr>
             <td colspan="2" style="text-align: justify;">
             	<p>
-                Sudah terima dari <span class="blue"><?=$retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket").' '.$this->m_master->anggaran($anggaran, "tahun") : "<strike>ANGGARAN</strike>";?></span>
+
+                Sudah terima dari <span class="blue"><?= $retVal = (!is_null($anggaran)) ? $this->m_anggaran->anggaran($anggaran, "ket").' '.$this->m_anggaran->anggaran($anggaran, "tahun") : "<strike>ANGGARAN</strike>";?></span>
                 uang sejumlah Rp. <span class="blue"><?=angka($Total)?></span>,- (<span class="blue"><?=angka_terbilang($Total)?></span>)
                 sebab dari pembayaran lunas pada <span class="blue"><?=$nm_diperintah?><?=$cs?></span>
                 Biaya Perjalanan Dinas Dalam Rangka <span class="blue"><?=$maksud?></span>
@@ -377,13 +378,14 @@ if ($spt_pengikut > 0) {
         foreach ($spt_pengikut as $pengikut) {
             $vnama = $pengikut["nama_pengikut"] . " " . $pengikut["wilayah"];
             $vnip  = ($pengikut["nip_pengikut"] == "") ? $pengikut["pangkat"] : $pengikut["nip"];
-            $vgol  = ($pengikut["pangkat"] == $pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"] . ' ' . $pengikut["golongan"];
+            $vgol = ($pengikut["pangkat"]==$pengikut["eselon"]) ? $pengikut["pangkat"] : $pengikut["grup"];
+            $vesel = ($pengikut["struktural"]=="no") ? '- <b>/</b> ' : $pengikut["eselon"].' <b>/</b> ';
 
             ?>
             <tr>
                 <td style="text-align: right;"><?=$no?>.</td>
                 <td><?=$vnama?><br/><?=$vnip?></td>
-                <td style="text-align: center;"><?=$vgol?></td>
+                <td style="text-align: center;"><?=$vesel.$vgol?></td>
                 <td style="text-align: center;"><?php
 //echo $pengikut["wilayah"];
             $hari_perjalanan = JUMLAHHARI($pengikut["tgl_berangkat"], $pengikut["tgl_kembali"]);
@@ -507,9 +509,9 @@ $no++;
 	<div class="nomor-kwitansi"></div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?></div>
 	<span>Sudah terima dari : </span><div class="col-kanan">
-		<?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
+		<?php $retVal = ($anggaran != "") ? $this->m_anggaran->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
 		<b><?=strtoupper($retVal)?>
-	 	<?=$this->m_master->anggaran($anggaran, "tahun")?></b>
+	 	<?=$this->m_anggaran->anggaran($anggaran, "tahun")?></b>
 	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka" style="display: contents;">

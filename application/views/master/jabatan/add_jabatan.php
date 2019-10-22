@@ -1,6 +1,6 @@
 <?php 
 if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
-	$addId       = "";
+	$addId       = $this->m_mjabatan->maxID();
 	$addNama 	 = "";
 	$addNip      = "";
 	$addJabatan  = "";
@@ -41,7 +41,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 											<input type="text" id="nama_jabatan" placeholder="Nama Jabatan" class="col-xs-10 col-sm-5" name="nama_jabatan" value="<?= $addNama ?>">
 										</div>
 									</div>
-<h3 class="header smaller lighter blue"><i class='fa fa-money'></i> Uang Harian</h3>
+<!--h3 class="header smaller lighter blue"><i class='fa fa-money'></i> Uang Harian</h3>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="nm_jabatan" > Jabatan/Eselon</label>
 										<div class="col-sm-9">
@@ -58,7 +58,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 									</div>
 									<div class="text-center" style="color: red;">
 										<?php  echo  validation_errors ();  ?>
-									</div>
+									</div-->
 
 								<?php 
 								//	echo $ang = str_replace('.', '', '10.000.000.000');

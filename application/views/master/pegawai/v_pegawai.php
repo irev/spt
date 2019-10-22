@@ -14,6 +14,7 @@
 <div class="row">
 <div class="col-xs-12">
 <h3 class="header smaller lighter blue">DATA PEGAWAI <a class="btn btn-xs btn-primary" href="<?= base_url('master/pegawai/add') ?>">+ Pegawai</a></h3>	
+<?= $this->session->flashdata('msg') ?>
 <div class="alert alert-info">
 	<button class="close" data-dismiss="alert">
 		<i class="ace-icon fa fa-times"></i>

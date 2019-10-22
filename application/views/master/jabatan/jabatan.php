@@ -20,9 +20,7 @@
 															#
 														</th>
 														<th>Jabatan</th>
-														<th>Uang Saku / OH</th>
-														
-
+														<!--th>Uang Saku / OH</th-->
 														<th></th>
 													</tr>
 												</thead>
@@ -32,7 +30,7 @@
 															<tr>
 																<td class="center"><?= $jab['id_jab'] ?></td>
 																<td><?= $jab['nama_jabatan'] ?></td>
-																<td style="text-align: right;">Rp. <span style="font-weight: bolder;"><?=number_format($jab['dalam_oh'],0,',','.') ?></span></td>
+																<!--td style="text-align: right;">Rp. <span style="font-weight: bolder;"><?=number_format($jab['dalam_oh'],0,',','.') ?></span></td-->
 																<td>
 																	<div class="hidden-sm hidden-xs action-buttons">
 																		<a class="blue" href="<?= base_url('master/jabatan/jabatan') ?>/<?= $jab['id_jab'] ?>">

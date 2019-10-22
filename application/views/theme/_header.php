@@ -26,6 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" href="<?= base_url() ?>asset/theme/assets/css/meedun-ui-custom.css" />
 		<!-- page Meedun styles -->
 
+		<!-- page specific fullcalendar plugin styles -->
+		<link rel="stylesheet" href="<?= base_url() ?>asset/theme/assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="<?= base_url() ?>asset/theme/assets/css/fullcalendar.min.css" />
 		<!-- page specific plugin styles -->
 		<link rel="stylesheet" href="<?= base_url() ?>asset/theme/assets/css/select2.min.css" />
 		<link rel="stylesheet" href="<?= base_url() ?>asset/theme/assets/css/jquery-ui.min.css" />
@@ -101,4 +104,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	</head>
 
-	<body class="skin-2">
+	<body class="skin-2" style="min-width: 620px !important;  overflow:auto;">

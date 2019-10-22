@@ -62,7 +62,7 @@
                         $subtotal = (intval($uang_harian) * intval($hari_perjalanan)); //SUBTOTAL
                         $Total += $subtotal; //SUM TOTAL       
                 }
-                $cs = ($org > 1 ) ? ", Cs ".$org : " ".$org; /// penambahan kalimat CS di belakang nama jika memiliki pengikut 
+                $cs = ($org > 1 ) ? ", Cs ":" "; /// penambahan kalimat CS di belakang nama jika memiliki pengikut 
             ?>  
 
 
@@ -89,6 +89,9 @@
             box-shadow: initial;
             background: initial;
             
+        }
+        .blue{
+            color: #000 !important;
         }
         textarea, input, select{
 
@@ -123,6 +126,7 @@
             {
                 display: none !important;
             }
+             
     }
 
 /* PAGE */
@@ -209,8 +213,9 @@ function openWindow( url ){
         </tr>
         <tr>
             <td colspan="2" style="text-align: justify;">
+
                 <P>
-                 <span class="blue">Sudah terima dari</span> <?= $this->m_master->anggaran($anggaran,"ket") ?>  <span class="blue">uang Sejumlah Rp.</span> <?= angka($Total) ?>,- (<?= angka_terbilang($Total) ?>)  <span class="blue">sebab dari pembayaran lunas pada</span> <?= $nm_diperintah ?><?= $cs ?>  <span class="blue">Biaya Perjalanan Dinas Dalam Rangka</span> <?= $maksud ?> <span class="blue">spane</i> <?= $tujuan ?> Kec. <?= $kec ?> <span class="blue">Tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> <span class="blue">pada Kegiatan</span> <?= $KEGIATAN ?> <span class="blue">berdasarkan SPPD Nomor :</span> <?= $no_sppd ?>  <span class="blue">tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  <span class="blue">dengan perincian sebagai berikut :</span>
+                 <span class="blue">Sudah terima dari</span> <?= $this->m_anggaran->anggaran($anggaran,"kuasa") ?>  <?= $this->m_anggaran->anggaran($anggaran,"ket") ?>  <span class="blue">uang Sejumlah Rp.</span> <?= angka($Total) ?>,- (<?= angka_terbilang($Total) ?>)  <span class="blue">sebab dari pembayaran lunas pada</span> <?= $nm_diperintah ?><?= $cs ?>  <span class="blue">Biaya Perjalanan Dinas Dalam Rangka</span> <?= $maksud ?> <span class="blue"> <?= $tujuan ?> <?= $kec ?></span> <span class="blue">tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_berangkat) ?> <span class="blue">pada Kegiatan</span> <?= $KEGIATAN ?> <span class="blue">berdasarkan SPPD Nomor :</span> <?= $no_sppd ?>  <span class="blue">tanggal</span> <?= LONGE_DATE_INDONESIA($tgl_sppd) ?>  <span class="blue">dengan perincian sebagai berikut :</span>
                  </P>
             </td>
         </tr>
@@ -247,18 +252,20 @@ function openWindow( url ){
             <?php 
                 $no=1; 
                 $Total=0;
+                //print_r($spt_pengikut);
                 foreach ($spt_pengikut as $pengikut) { 
                     if($pengikut["bayar"]==="yes"){
                         $vnama = $pengikut["nama_pengikut"];
                         $vnip = ($pengikut["nip_pengikut"]=="") ? $pengikut["pangkat"] : $pengikut["nip_pengikut"] ;
-                        $vgol = ($pengikut["pangkat"]==$pengikut["golongan"]) ? $pengikut["pangkat"] : $pengikut["pangkat"].' '.$pengikut["golongan"]
+                        $vgol = ($pengikut["pangkat"]==$pengikut["eselon"]) ? $pengikut["pangkat"] : $pengikut["grup"];
+                        $vesel = ($pengikut["struktural"]=="no") ? '- <b>/</b>' : $pengikut["eselon"].' <b>/</b> ';
 
                 ?>
                 
             <tr>
                 <td style="text-align: center;"><?= $no ?>.</td>
                 <td><?= $vnama ?><br/><?= $vnip ?></td>
-                <td style="text-align: center;"><?= $vgol ?></td>
+                <td style="text-align: center;"><?=  $vesel.' '.$vgol ?></td>
                 <td style="text-align: center;"><?php
 
                         //echo $pengikut["wilayah"]; 

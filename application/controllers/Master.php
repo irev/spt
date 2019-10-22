@@ -168,10 +168,11 @@ public function pegawai($TOKEN=null, $ID=null)
             ['field' => 'nama_jabatan',
             'label' => 'Nama Jabatan',
             'rules' => 'required'],
-
+			/*
             ['field' => 'nominal',
             'label' => 'Uang Saku',
             'rules' => 'required'],
+            */
         ];
 
     }
@@ -701,7 +702,16 @@ function kegiatan($TOKEN=null, $ID=null){
         if (!isset($id)) show_404();
         
         if ($this->m_master->delete_pegawai($id)) {
-            redirect(site_url('master/pegawai'));
+        	if($this->db->error()['code']){
+        		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data gagal dihapus! <br><code> Pegawai ini sudah memiliki data SPT/SPPD</code>'));
+        		//echo $this->db->error()['message'];
+        		//echo print_r($this->db->error());
+        		 redirect(site_url('master/pegawai'));
+        	}else{
+				$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data berhasil dihapus!'));
+	        	 redirect(site_url('master/pegawai'));
+        	} 
+           
         }
     }
 

@@ -74,7 +74,12 @@ class M_kegiatan extends CI_Model {
 
 		public function delete($id)
     	{
-        return $this->db->delete($this->_table, array("id_kegiatan" => $id));
+ 
+        if(!$this->db->delete($this->_table, array("id_kegiatan" => $id))){
+         		 return $this->db->error();
+         	}else{
+         		 return true;
+         	}
     	}
 
 
