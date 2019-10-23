@@ -9,6 +9,6 @@
             "email": "irev@users.noreply.github.com"
         }
     ],
-    "minimum-stability": "1.0",
+    "minimum-stability": "alpha",
     "require": {}
 }
