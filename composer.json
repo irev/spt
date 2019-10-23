@@ -1,0 +1,14 @@
+{
+    "name": "irev/spt",
+    "description": "Aplikasi Surat Perintah Tugas",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andra Meedun",
+            "email": "irev@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "1.0",
+    "require": {}
+}
