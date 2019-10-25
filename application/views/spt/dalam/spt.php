@@ -43,38 +43,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</thead>
 
 												<tbody>
-													<?php $no=1; foreach ($spt_dalam as $trans) { ?>
+													<?php $no=1; foreach ($spt_dalam as $getspt) { ?>
+														<?php if($getspt["perjalanan"]==="dalam"): ?>
 															<tr>
 																<td class="center"><?= $no ?></td>
-																<td class="hidden-480"><?= $trans['no_spt'] ?></td>
-																<td><?= LONGE_DATE_INDONESIA($trans['ttd_tgl']) ?></td>
-																<td class="hidden-480"><?= '<b>'.$trans['ttd_nama'].'</b><br>'.$trans['ttd_jabatan'].'<br>'.$trans['ttd_nip'] ?></td>
-																<td><?= $trans['maksud'] ?></td>
-																<td><?= '<b>'.$trans['nama'].'</b><br>'.$trans['jabatan'].'<br>'.$trans['nip'] ?></td>
-																<td class="hidden-480"><?= $trans['tujuan'] ?></td>
-																<td><?= LONGE_DATE_INDONESIA($trans['tgl_berangkat']).'<br>'.LONGE_DATE_INDONESIA($trans['tgl_kembali']) ?></td>
-																<td><?= $trans['transportasi'] ?></td>
-																<td class="center"><?= $trans['id_spt'] ?></td>
+																<td class="hidden-480"><?= $getspt['no_spt'] ?></td>
+																<td><?= LONGE_DATE_INDONESIA($getspt['ttd_tgl']) ?></td>
+																<td class="hidden-480"><?= '<b>'.$getspt['ttd_nama'].'</b><br>'.$getspt['ttd_jabatan'].'<br>'.$getspt['ttd_nip'] ?></td>
+																<td><?= $getspt['maksud'] ?></td>
+																<td><?= '<b>'.$getspt['nama'].'</b><br>'.$getspt['jabatan'].'<br>'.$getspt['nip'] ?></td>
+																<td class="hidden-480"><?= $getspt['tujuan'] ?></td>
+																<td><?= LONGE_DATE_INDONESIA($getspt['tgl_berangkat']).'<br>'.LONGE_DATE_INDONESIA($getspt['tgl_kembali']) ?></td>
+																<td><?= $getspt['transportasi'] ?></td>
+																<td class="center"><?= $getspt['id_spt'] ?></td>
 																
 																<td>
 																	<div class="hidden-md hidden-lg hidden-xs action-buttons">
-																		<a class="blue" href="<?= base_url('spt/print_dalam') ?>/<?= $trans['id_spt'] ?>" title="Rincian">
+																		<a class="blue" href="<?= base_url('spt/print_dalam') ?>/<?= $getspt['id_spt'] ?>" title="Rincian">
 																			<i class="ace-icon fa fa-search-plus bigger-130"></i>
 																		</a>
 
-																		<a class="blue" href="<?= base_url('spt/print_dalam') ?>/<?= $trans['id_spt'] ?>" title="Cetak">
+																		<a class="blue" href="<?= base_url('spt/print_dalam') ?>/<?= $getspt['id_spt'] ?>" title="Cetak">
 																			<i class="ace-icon fa fa-print bigger-130"></i>
 																		</a>
 
-																		<a class="blue" href="<?= base_url('spt/laporan') ?>/<?= $trans['id_spt'] ?>" title="Laporan SPPD">
+																		<a class="blue" href="<?= base_url('spt/laporan') ?>/<?= $getspt['id_spt'] ?>" title="Laporan SPPD">
 																			<i class="ace-icon fa fa-file bigger-130"></i>
 																		</a>
 
-																		<a class="green" href="<?= base_url('spt/dalam/edit') ?>/<?= $trans['id_spt'] ?>?p=2" title="Ubah">
+																		<a class="green" href="<?= base_url('spt/dalam/edit') ?>/<?= $getspt['id_spt'] ?>?p=2" title="Ubah">
 																			<i class="ace-icon fa fa-pencil bigger-130"></i>
 																		</a>
 
-																		<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $trans['id_spt']) ?>')" href="#!">
+																		<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $getspt['id_spt']) ?>')" href="#!">
 																			<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																		</a>
 																		
@@ -88,31 +89,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 																			<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 																				<li>
-																					<a class="blue" href="<?= base_url('spt/dalam/detail-spt-sppd') ?>/<?= $trans['id_spt'] ?>" title="Rincian">
+																					<a class="blue" href="<?= base_url('spt/dalam/detail-spt-sppd') ?>/<?= $getspt['id_spt'] ?>" title="Rincian">
 																						<i class="ace-icon fa fa-search-plus bigger-130"></i>
 																					</a>
 																				</li>	
 
 																				<li>
-																					<a class="blue" href="<?= base_url('spt/prints') ?>/<?= $trans['id_spt'] ?>" title="Cetak">
+																					<a class="blue" href="<?= base_url('spt/prints') ?>/<?= $getspt['id_spt'] ?>" title="Cetak">
 																						<i class="ace-icon fa fa-print bigger-130"></i>
 																					</a>
 																				</li>	
 
 																				<li>
-																					<a class="blue" href="<?= base_url('spt/laporan') ?>/<?= $trans['id_spt'] ?>" title="Laporan SPPD">
+																					<a class="blue" href="<?= base_url('spt/laporan') ?>/<?= $getspt['id_spt'] ?>" title="Laporan SPPD">
 																						<i class="ace-icon fa fa-file bigger-130"></i>
 																					</a>
 																				</li>	
 
 																				<li>
-																					<a class="green" href="<?= base_url('spt/dalam/edit') ?>/<?= $trans['id_spt'] ?>?p=2" title="Ubah">
+																					<a class="green" href="<?= base_url('spt/dalam/edit') ?>/<?= $getspt['id_spt'] ?>?p=2" title="Ubah">
 																						<i class="ace-icon fa fa-pencil bigger-130"></i>
 																					</a>
 																				</li>	
 
 																				<li>
-																					<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $trans['id_spt']) ?>')" href="#!">
+																					<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $getspt['id_spt']) ?>')" href="#!">
 																						<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																					</a>
 																				</li>	
@@ -122,6 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																</td>
 																
 															</tr>
+														<?php endif ?>	
 													<?php $no++; } ?>	
 													
 												</tbody>

@@ -46,6 +46,7 @@ class Anggaran extends CI_Controller {
 			'username'   => 'user Anggaran',
 			'perusahaan' => '1',
 			'email'      => 'johndoe@some-site.com',
+			'tahun'      => date('Y');
 	        'logged_in' => TRUE
 		);
 		$this->session->set_userdata($newdata);

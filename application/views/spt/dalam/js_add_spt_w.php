@@ -1,4 +1,5 @@
 <script type="text/javascript">
+	/**  start code in dalam js_add_spt_w  */
 	/**
 	 *   999/9999/SPT/DPUPR/2099
 	 *   ___/____/SPT/DPUPR/20__
@@ -215,7 +216,13 @@ $('#pilih_beban').change(function(event) {
 			
 				//determine selected step
 				//wizard.selectedItem().step
-			
+			$("#kembali").change(function(event) {
+					var d1 = $('#berangkat').val();
+					var d2 = $('#kembali').val();
+					var same = d1.getTime() === d2.getTime();
+					var smallfrom = d1.getTime() < d2.getTime();
+					console.log(smallfrom);
+			});
 
 			//hide or show the other form which requires validation
 				//this is for demo only, you usullay want just one form in your application

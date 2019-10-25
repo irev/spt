@@ -312,6 +312,121 @@ function test_anggaran($anggaran=null, $field=null){
 		//echo $this->db->last_query();	
 	 }
 
+
+	 /**
+	  * { function_description }
+	  *
+	  * @param      string  $TOKEN  The token
+	  * @param      string  $ID     { parameter_description }
+	  */
+	 function luar($TOKEN=null, $ID=null){
+	 	// add breadcrumbs
+		 $this->breadcrumbs->push('SPT', '/spt');
+		 $this->breadcrumbs->push('Dinas Luar', '/spt/luar');
+		 $this->breadcrumbs->push('Detail SPT', '/spt/luar/deteil-spt-sppd');
+		 $data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
+		// unshift crumb
+		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
+		$data['TOKEN'] = $TOKEN;
+		$data['ID'] = $ID;
+			$data['spt_dalam']    = $this->m_dalam->spt_dalam();
+			$data['pegawai']      = $this->m_master->pegawai();
+			$data['anggaran']     = $this->m_master->anggaran();
+			$data['transportasi'] = $this->m_transport->trasnsportasi();
+			$data['tujuan']       = $this->m_tujuan->tujuan();
+			$data['kegiatan']     = $this->m_kegiatan->kegiatan();
+			//$data['spt_pengikut'] = array();
+	 	///// AKSES PAGE BY TOKEN	
+		if($TOKEN==='detail-spt-sppd'){
+				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
+				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
+				//echo $this->db->last_query();
+					$this->template->load_js('template','spt/luar/detail_spt_sppd', $data);
+		}
+		elseif($TOKEN==='add'){
+	 		$this->breadcrumbs->push('ADD', '/add');
+				//FORM ADD / TAMBAH 
+				$validation = $this->form_validation;
+	        	$validation->set_rules($this->rule_sptdalam());
+	        	if ($validation->run()) {
+	        		///DUPLIKAT KODE NOMOR SPT
+	        		if($this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
+			            	if($this->m_dalam->query_simpan() === true){
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+								$red = base_url("spt/luar");
+								//header("refresh:4; url=$red"); 
+							}else{
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+							}
+						}else{
+							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+						}
+					}else{
+						$this->template->load_js('template','spt/luar/add_spt_w', $data);	
+					}
+		}elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
+				if (!$data['spt_dalam']) show_404();
+				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
+				if (!$data['spt_pengikut']) show_404();
+				$data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
+				$validation = $this->form_validation;
+	        	$validation->set_rules($this->rule_sptdalam());
+	        	if ($validation->run()) {
+	        		///DUPLIKAT KODE NOMOR SPT
+	        		if(!$this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
+			            	if($this->m_dalam->query_update() === false){
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil diubah'));
+								$red = base_url("spt/luar/detail-spt-sppd/".$ID);
+								header("refresh:4; url=$red"); 
+							}else{
+								//echo $this->db->last_query();
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+							}
+						}else{
+							$this->session->set_flashdata('msg', $this->MSG('danger', 'Error', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+						}
+					}
+				$this->template->load_js('template','spt/luar/add_spt', $data);
+		}elseif($TOKEN==='pengikut'){
+			$this->breadcrumbs->push('Pengikut', 'spt/luar/edit/'.$ID.'?p=2');
+			$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+			//echo $this->db->last_query();
+			$this->template->load_js('template','spt/luar/add_pengikut', $data);
+		}else{
+			$this->template->load_js('template','spt/luar/spt', $data);
+		}
+		//echo $this->db->last_query();	
+	 }
+
+
+
+	 function simpanSPT(){
+	 			$validation = $this->form_validation;
+	        	$validation->set_rules($this->rule_sptdalam());
+	        	//if ($validation->run()) {
+	        		///DUPLIKAT KODE NOMOR SPT
+	        		if (!$this->input->post('nomor_spt')) show_404();
+	        		
+	        		if($this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
+			            	if($this->m_dalam->query_simpan() === true){
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+								$red = base_url("spt/luar");
+								//header("refresh:4; url=$red"); 
+								echo json_encode(['success'=>'Record added successfully.']);
+							}else{
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+			            		$errors = validation_errors();
+			            		echo json_encode(['error'=>$errors]);
+							}
+					}else{
+						$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+					}
+						
+			        
+	}
+
+
 /**
  * @return [type]
  */
@@ -331,64 +446,6 @@ function cek_db($ID=null){
 	echo $this->db->last_query();
 }
 
-
-/*
-	function transportasi($TOKEN=null, $ID=null){
-			$data['TOKEN'] = $TOKEN;
-			$data['ID'] = $ID;
-
-			if($TOKEN==='transportasi'){
-				$data['transportasi'] = $this->m_mjabatan->jabatan($ID);
-				if (!$data['transportasi']) show_404();	
-				$this->template->load_js('template','master/transportasi/transportasi', $data);
-
-			}elseif($TOKEN==='add'){
-				//FORM ADD / TAMBAH 
-				$validation = $this->form_validation;
-	        	$validation->set_rules($this->rule_transportasi());
-	        	if ($validation->run()) {
-	            	if($this->m_transport->query_simpan() === true){
-	            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
-						$red = base_url("master/transportasi/");
-						header("refresh:4; url=$red"); 
-					}else{
-	            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
-					}
-				}
-	        	$data['transportasi'] = $this->m_mjabatan->jabatan($ID);
-	        	if (!$data['transportasi']) show_404();	
-				$this->template->load_js('template','master/transportasi/add_transportasi',$data);
-
-			}elseif ($TOKEN ==='edit' && is_numeric($ID)) {
-				 //FORM EDIT
-				 //echo $TOKEN;
-				 //echo $ID;
-				$validation = $this->form_validation;
-	        	$validation->set_rules($this->rule_transportasi());
-	        	if ($validation->run()) {
-	        		$this->m_transport->query_update();
-					if($this->m_transport->query_update() === true){
-	            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
-						$red = base_url("master/transportasi/");
-						header("refresh:4; url=$red");
-					}else{
-	            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
-					}
-					
-				}
-	        	$data['transportasi'] = $this->m_transport->trasnsportasi($ID);
-	        	if (!$data['transportasi']) show_404();	
-	        	$this->template->load_js('template','master/transportasi/add_transportasi', $data);
-
-			}else{
-				$data['transportasi'] = $this->m_transport->trasnsportasi();
-				if (!$data['transportasi']) show_404();	
-				$this->template->load_js('template','master/transportasi/transportasi', $data);
-			}
-					
-
-	}
-*/
 
 	/**
 	 * { function_description }
@@ -595,22 +652,7 @@ function cek_db($ID=null){
         }
 	}	
 
-	/**
-	 * { function_description }
-	 *
-	 * @param      <type>  $TOKEN  The token
-	 * @param      <type>  $ID     { parameter_description }
-	 */
-	function luar($TOKEN=null, $ID=null){
-		 $this->breadcrumbs->push('SPT', '/spt');
-		 $this->breadcrumbs->push('Dinas Luar', '/spt/luar');
-		// unshift crumb
-		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
-		$data['TOKEN'] = $TOKEN;
-		$data['ID'] = $ID;
-		//$this->template->load_js('template','spt/luar/spt', $data);
-		$this->template->load('template','dev', $data);
-	}
+
 
 	 /**
 	  * { function_description }

@@ -164,7 +164,7 @@ class M_dalam extends CI_Model
         $this->wilayah       = $post['wilayah'];
         $this->tgl_berangkat = $post['berangkat'];
         $this->tgl_kembali   = $post['kembali'];
-        $this->sumber_dana   = $post['tahun'];
+        $this->sumber_dana   = (!$this->session->userdata('tahun'))? date('Y'):$this->session->userdata('tahun');
         /////////////////// SPT
         $this->ttd_tempat  = $tempat;
         $this->ttd_tgl     = $post['tanggal_spt'];
@@ -179,13 +179,18 @@ class M_dalam extends CI_Model
         $this->ttd_sppd_nip     = $post['ttd_sppd_nip'];
         $this->ttd_sppd_gol     = $post['ttd_sppd_golongan'];
         $this->ttd_sppd_jabatan = $post['ttd_sppd_jabatan'];
-        $this->perjalanan       = "dalam";
+
         $this->tahun            = date("Y");
         ///// INPUT TAMBAHAN UNTUK SPPD
         $this->beban       = $post['pilih_beban_text'];
         //$this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
         $this->anggaran    = $post['pilih_beban'];
         $this->kegiatan_id = $post['kegiatan'];
+        if($this->uri->segment(2)==='dalam'){
+            $this->perjalanan       = "dalam";
+        }else{
+            $this->perjalanan       = "luar";
+        }
         //EXE
         $this->db->insert($this->_table, $this);
         $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
@@ -230,7 +235,7 @@ class M_dalam extends CI_Model
         $this->wilayah       = $post['wilayah'];
         $this->tgl_berangkat = $post['berangkat'];
         $this->tgl_kembali   = $post['kembali'];
-        $this->sumber_dana   = $post['tahun'];
+        $this->sumber_dana   = $this->session->userdata('tahun');
         /////////////////// SPT
         $this->ttd_tempat  = $tempat;
         $this->ttd_tgl     = $post['tanggal_spt'];
@@ -245,7 +250,6 @@ class M_dalam extends CI_Model
         $this->ttd_sppd_nip     = $post['ttd_sppd_nip'];
         $this->ttd_sppd_gol     = $post['ttd_sppd_golongan'];
         $this->ttd_sppd_jabatan = $post['ttd_sppd_jabatan'];
-        $this->perjalanan       = "dalam";
         $this->tahun            = date("Y");
 
         ///// INPUT TAMBAHAN UNTUK SPPD
@@ -253,7 +257,11 @@ class M_dalam extends CI_Model
         //$this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
         $this->anggaran    = $post['pilih_beban'];
         $this->kegiatan_id = $post['kegiatan'];
-
+        if($this->uri->segment(2)==='dalam'){
+            $this->perjalanan       = "dalam";
+        }else{
+            $this->perjalanan       = "luar";
+        }
         //EXE
         $this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
         $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
