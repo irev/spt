@@ -328,9 +328,9 @@ $halaman = 2; //jumlah cetak halaman
 	<div class="nomor-kwitansi" style="text-align: right;">No. : KWT/ /GU- /DPUPR/2018</div>
 	<div class="nomor-kwitansi"></div>
 	<div class="nomor-kwitansi" style="text-align: right;">No. REK. 1.03.1.03.01. <?=$this->m_master->kegiatan($spt_dalam->kegiatan_id, "rekening")?></div>
-	<span>Sudah terima dari : </span><div class="col-kanan"><?php $retVal = ($anggaran != "") ? $this->m_master->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
+	<span>Sudah terima dari : </span><div class="col-kanan"><?php $retVal = ($anggaran != "") ? $this->m_anggaran->anggaran($anggaran, "ket") : "<strike style='color:red;'>ANGGARAN</strike>";?>
 		<b><?=strtoupper($retVal)?>
-	 	<?=$this->m_master->anggaran($anggaran, "tahun")?></b>
+	 	<?=$this->m_anggaran->anggaran($anggaran, "tahun")?></b>
 	 </div>
 	<span>Uang Sejumlah Rp.</span>
 	<div id="nominal-angka"> 
