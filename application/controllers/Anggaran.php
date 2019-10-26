@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Anggaran extends CI_Controller {
+class Anggaran extends Auth_Controller{ //CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -39,20 +39,7 @@ class Anggaran extends CI_Controller {
 	 * { function_description }
 	 */
 	public function index(){
-
-		//----------------------------------------------------------- start session code 
-		$newdata = array(
-			'idclient'   => '1',
-			'username'   => 'user Anggaran',
-			'perusahaan' => '1',
-			'email'      => 'johndoe@some-site.com',
-			'tahun'      => date('Y');
-	        'logged_in' => TRUE
-		);
-		$this->session->set_userdata($newdata);
-		$idclient = $this->session->userdata('idclient');
-		//----------------------------------------------------------- end session code
-		
+	
 		$this->breadcrumbs->push('Anggaran', 'Anggaran');
 		$data["anggaran"] = $this->m_master->anggaran();
 		$this->template->load_js('template','master/anggaran/anggaran', $data);

@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cari extends CI_Controller {
+class Cari extends Auth_Controller {
+//CI_Controller {
 
 	/**
 	 * Index Page for this controller.

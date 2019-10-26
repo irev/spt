@@ -316,7 +316,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<li class="divider"></li>
 
 								<li>
-									<a href="<?= base_url() ?>user/logout">
+									<a href="<?= base_url() ?>login/logout">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>

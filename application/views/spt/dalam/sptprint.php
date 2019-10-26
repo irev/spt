@@ -221,8 +221,10 @@ function textAreaAdjust(o) {
                     </tr>
                      <tr>
                         <td colspan="5" style="text-align: center;     padding-top: 4px !important;">
-                          <!--  Nomor:090/<input type="text" name="nomo_sppd" style=" width:35px;">/SPT/DPUPR/<?= date('Y') ?> -->
-                          <b> 090 /&nbsp;<?= $spt_dalam->no_spt  ?>&nbsp;/SPT/DPUPR/2019</b>
+                          <!--  Nomor:090/<input type="text" name="nomo_sppd" style=" width:35px;">/SPT/DPUPR/<?= date('Y') ?> >
+                          <b> 090 /&nbsp;<?= $spt_dalam->no_spt  ?>&nbsp;/SPT/DPUPR/2019</b-->
+                          <b>Nomor: <?= $spt_dalam->no_spt  ?></b>
+
                         </td>
                     </tr>
                 </tbody>
@@ -407,7 +409,8 @@ function textAreaAdjust(o) {
                             <td width="50%" ></td>
                             <td >Nomor</td>
                             <td width="1%" >:</td>
-                            <td class="border-r">900/&nbsp;<?= $spt_dalam->no_sppd ?>&nbsp;/SPPD/DPUPR/<?= date('Y') ?></td>
+                            <!--td class="border-r">900/&nbsp;<?= $spt_dalam->no_sppd ?>&nbsp;/SPPD/DPUPR/<?= date('Y') ?></td-->
+                            <td class="border-r"><?= $spt_dalam->no_sppd ?></td>
                     </tr>
                     <tr class="noline-lr noline-b">
                         <td></td>
@@ -471,9 +474,9 @@ function textAreaAdjust(o) {
                     <tr>
                         <td class="noborder-r nomor-center">4.</td>
                         <td>Perjalanan Dinas direncanakan</td>
-                        <td class="noline-lr" colspan="3">Selama <?= JUMLAHHARI($spt_dalam->tgl_berangkat, $spt_dalam->tgl_kembali)?>(<?= JUMLAHHARI_text($spt_dalam->tgl_berangkat, $spt_dalam->tgl_kembali) ?>) Hari</td>
+                        <td class="noline-l" colspan="3">Selama <?= JUMLAHHARI($spt_dalam->tgl_berangkat, $spt_dalam->tgl_kembali)?>(<?= JUMLAHHARI_text($spt_dalam->tgl_berangkat, $spt_dalam->tgl_kembali) ?>) Hari</td>
                         <!--td class="noline-lr"></td-->
-                        <td></td>
+                        
                     </tr>
                     <tr>
                         <td class="noborder-r nomor-center">5.</td>
@@ -487,7 +490,7 @@ function textAreaAdjust(o) {
                         <td colspan="5">Pengikut :</td>
                     </tr>   
             </table>
-            <br>
+  
             <!--PENGIKUT-->
             <table class="table-konten" border="1" style="text-align: center; font-size: 14px">
                     <tr style="font-weight: bolder;">
@@ -513,7 +516,7 @@ function textAreaAdjust(o) {
                     
             </table>
             <!--PENGIKUT END-->
-           <br>
+
             <table class="table-konten" border="1">       
                     <tr>
                         <td width="2%" class="noborder-r nomor-center">7.</td>

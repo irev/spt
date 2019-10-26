@@ -63,7 +63,7 @@
 
 											<div class="space-6"></div>
 
-											<form >
+											<form method="post">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -78,14 +78,25 @@
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
-
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<select id="ta" name="tahun_anggaran" class="form-control" placeholder="TA" autocomplete="new-password">
+																<option value="<?= date('Y') ?>"><?= date('Y') ?></option>
+																<?php $new=(date('Y')+2); for ($i=2018; $i <= $new ; $i++) { ?>
+																	<option value="<?= $i ?>"><?= $i ?></option>
+																<?php } ?>
+															</select>
+															<i class="ace-icon fa fa-calendar"></i>
+														</span>
+													</label>
+													<p>usernama= operator<br>password= operator</p>
 													<div class="space"></div>
-													<div id="msg" class="red">msg <?php echo $this->session->userdata("username"); ?></div>
+													<div id="msg" class="red"></div>
 													<div class="space"></div>
 
 													<div class="clearfix">
 														<label class="inline">
-															<input type="checkbox" class="ace" />
+															<input type="checkbox" class="ace" nama="ingat"/>
 															<span class="lbl"> Ingat Saya</span>
 														</label>
 
@@ -334,41 +345,29 @@
 				$('.masuk').on('click', function(){
 					var user_name = $("#name").val();  
         			var password = $("#pwd").val(); 
+        			var TA = $("#ta").val(); 
 					$.ajax({
 						url: '<?= base_url('login/login_action') ?>',
 						type: 'post',
-						data: {'name': user_name, 'pwd': password},
+						dataType:'json',
+						data: {'name': user_name, 'pwd': password, 'TA':TA},
 						cache: false,  
-				        success: function(result){  
-				            if(result!='0'){  
+				        success: function(res){ 
+				        console.log(res.data); 
+				            if(res.data!=null){  
 				                // On success redirect.  
-				            window.location.replace(result);  
+				            	jQuery("div#err_msg").show(); 
+				            	jQuery("div#msg").html("Login Success, "+res.msg);
+				            	window.location.replace(res.url);  
 				            }else{
 				                jQuery("div#err_msg").show();  
-				                jQuery("div#msg").html("Login Failed");  
+				                jQuery("div#msg").html("Login Failed, "+res.msg);  
 				        	} 
 				        } 
-					})
-					.done(function() {
-						console.log("success");
-					})
-					.fail(function() {
-						console.log("error");
-					})
-					.always(function(result) {
-						console.log("complete "+ result);
-						if(result!='0'){  
-				                // On success redirect.  
-				            //window.location.replace(result);  
-				            }  
-				            else{  
-				                jQuery("div#err_msg").show();  
-				                jQuery("div#msg").html("Login Failed");  
-				        	}  
 					});
-					
 				});
 			});
+			
 		</script>
 	</body>
 </html>

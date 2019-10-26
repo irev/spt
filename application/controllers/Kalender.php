@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kalender extends CI_Controller {
+class Kalender extends Auth_Controller{ //CI_Controller {
 
 	/**
 	 * Index Page for this controller.

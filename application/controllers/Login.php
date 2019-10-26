@@ -27,7 +27,7 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-	if($this->session->userdata("username") ===TRUE){
+	if($this->session->userdata("logged_in") ===TRUE){
 		// with 301 redirect
 		redirect('dashboard', 'location');
 	}
@@ -44,29 +44,46 @@ class Login extends CI_Controller {
 	 *   @return      [type]     [description]
 	 */
 	function login_action(){
-			 $name = $this->input->post('name');
-			 $pwd  = $this->input->post('pwd');
+		if(!$this->input->post('pwd') && !$this->input->post('name') && !$this->input->post('TA')) show_404();
+				$name = $this->input->post('name');
+				$pwd  = $this->input->post('pwd');
+				$ta   = $this->input->post('TA');
 		   	$data['username']=htmlspecialchars($name);  
     		$data['password']=htmlspecialchars($pwd);  
     		$res=$this->m_login->islogin($data);  
 		    if($res){    
 		        //$this->session->set_userdata('id',$data['username']);
-				$newdata = array(
-					'level'   => '1',
-					'username'   => $name,
-					'perusahaan' => '1',
-					'Addresses' => $_SERVER['REMOTE_ADDR'], 
-					'TA'		=> "2019",
-					'email'      => 'meedun@simeedun.com',
-			        'logged_in' => TRUE
-				);
-				
-				$this->session->set_userdata($newdata);
-				echo base_url()."dashboard/"; 
-				$this->session->userdata("username");
+		        $use=$this->m_login->userLoginData($data); //ambil data user
+					$newdata = array(
+						'level'     => $use->intusertype,//'1',
+						'username'  => $name,
+						'Bidang'    => '1',
+						'Addresses' => $_SERVER['REMOTE_ADDR'], 
+						'TA'        => $ta,
+						'email'     => $use->struseremail,// 'meedun@simeedun.com',
+						'loginTime' => unix_to_human(time()),
+						'logoutTime'=> unix_to_human(time()+3600),
+						'masinTime' => unix_to_human(time()+3600),
+						'umantime'  => unix_to_human(time()+3600),
+						'logged_in' => TRUE
+					); 
+					$this->session->set_userdata($newdata);
+					$sess =[
+						'url'  => base_url()."dashboard/",
+						'data' =>$this->session->userdata(),
+						'msg'  =>'Akses Diterima'
+					];
+					//print_r($this->session->userdata());
+					//$this->session->userdata("username");
+					echo json_encode($sess);
 		    }  
-		    else{  
-		       echo 0;  
+		    else{ 
+		    	$sess =[
+						'url'  => "#",
+						'data' =>null,
+						'msg'  =>'Akses Ditolak'
+					];	
+		       echo json_encode($sess);
 		    } 
 		     $this->db->last_query();
 		     $this->input->post('name');  

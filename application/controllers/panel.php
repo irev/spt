@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Panel extends CI_Controller {
+class Panel extends Auth_Controller{ // CI_Controller {
 
 	/**
 	 * Index Page for this controller.

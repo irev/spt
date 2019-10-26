@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Spt extends CI_Controller {
+class Spt extends Auth_Controller{ //CI_Controller {
 
 	/**
 	 * Index Page for this controller.
