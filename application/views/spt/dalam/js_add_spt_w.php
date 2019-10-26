@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	/**  start code in dalam js_add_spt_w  */
+	/**  start code in luar js_add_spt_w  */
 	/**
 	 *   999/9999/SPT/DPUPR/2099
 	 *   ___/____/SPT/DPUPR/20__
@@ -22,6 +22,7 @@
 			url: '<?= base_url()?>spt/select_pegawai',
 			type: 'POST',
 			dataType: 'json',
+			async: true,
 			data: {pilih_pegawai: idpegawai},
 			success(data){
 
@@ -43,6 +44,7 @@
 			url: '<?= base_url()?>spt/select_pegawai',
 			type: 'POST',
 			dataType: 'json',
+			async: true,
 			data: {pilih_pegawai: idpegawai},
 			success(data){
 				$('#ttd_nama').val(data.nama);
@@ -62,6 +64,7 @@
 			url: '<?= base_url()?>spt/select_pegawai',
 			type: 'POST',
 			dataType: 'json',
+			async: true,
 			data: {pilih_pegawai: idpegawai},
 			success(data){
 				$('#ttd_sppd_nama').val(data.nama);
@@ -82,6 +85,7 @@
 			url: '<?= base_url()?>spt/select_transportasi',
 			type: 'POST',
 			dataType: 'json',
+			async: true,
 			data: {pilih_transportasi: idtransportasi},
 			success(data ){
 				$('#transpor').val(data.nomor);
@@ -106,6 +110,7 @@ $('#pilih_tujuan').change(function(event) {
 			url: '<?= base_url()?>spt/select_tujuan',
 			type: 'POST',
 			dataType: 'json',
+			async: true,
 			data: {pilih_tujuan: idtujuan},
 			success(data){
 				$('#tujuan').val(data.tujuan);
@@ -159,20 +164,22 @@ $('#pilih_beban').change(function(event) {
  *   wizard-container
  */
 	jQuery(function($) {
-		var $validation = true;
+		
+				var $validation = true;
+				var $pesan="";
 				$('#fuelux-wizard-container')
 				.ace_wizard({
-					//step: 2 //optional argument. wizard will jump to step "2" at first
-					//buttons: '.wizard-actions:eq(0)'
+					//step: 2, //optional argument. wizard will jump to step "2" at first
+					//buttons: '.wizard-actions:eq(0)',
 				})
 				.on('actionclicked.fu.wizard' , function(e, info){
 					if(info.step == 1 && $validation) {
-						if(!$('#validation-form').valid()) e.preventDefault();
+						if(!$('#validation-form-step-1').valid()) e.preventDefault();
 					}
 				})
 				.on('actionclicked.fu.wizard' , function(e, info){
 					if(info.step == 2 && $validation) {
-						if(!$('#validation-form').valid()) e.preventDefault();
+						if(!$('#validation-form-step-2').valid()) e.preventDefault();
 					}
 				})
 				.on('actionclicked.fu.wizard' , function(e, info){
@@ -190,39 +197,146 @@ $('#pilih_beban').change(function(event) {
 						if(!$('#validation-form-step-5').valid()) e.preventDefault();
 					}
 				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 6 && $validation) {
+						if(!$('#validation-form-step-6').valid()) e.preventDefault();
+					}
+				})
+				.on('actionclicked.fu.wizard' , function(e, info){
+					if(info.step == 7 && $validation) {
+						if(!$('#validation-form-step-7').valid()) e.preventDefault();
+					}
+
+				})
+				
 				//.on('changed.fu.wizard', function() {
 				//})
 				.on('finished.fu.wizard', function(e) {
-					bootbox.dialog({
-						message: "Terimakasih! Informasi yang anda masukkan akan disimpan tekan tombol Simpan!", 
-						buttons: {
-							"success" : {
-								"label" : "OK",
-								"className" : "btn-sm btn-primary"
-							}
-						}
-					});
+					//console.log(e);
+					var numStep;
+					var $pesan="";
+					var wizard = $('#fuelux-wizard-container').data('fu.wizard');
+					
+					if(!$('#validation-form-step-7').valid()){ numStep=7; wizard.currentStep=numStep; wizard.setState(); $pesan+='SPPD belum, lengkap!<br>'; e.preventDefault()}else{$pesan+="Terimakasih! Informasi yang anda masukkan akan disimpan tekan tombol Simpan!"};
+					if(!$('#validation-form-step-6').valid()){ numStep=6; wizard.currentStep=numStep; wizard.setState(); $pesan+='Transportasi, belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-5').valid()){ numStep=5; wizard.currentStep=numStep; wizard.setState(); $pesan+='Jadwal, belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-4').valid()){ numStep=4; wizard.currentStep=numStep; wizard.setState(); $pesan+='Tujuan, belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-3').valid()){ numStep=3; wizard.currentStep=numStep; wizard.setState(); $pesan+='Pegawai yang diperintah, belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-2').valid()){ numStep=2; wizard.currentStep=numStep; wizard.setState(); $pesan+='Pembari Pemerintah, belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-1').valid()){ numStep=1; wizard.currentStep=numStep; wizard.setState(); $pesan+='Anggaran belum lengkap!<br>'; e.preventDefault()}else{$pesan+=""};
+					if(!$('#validation-form-step-7').valid()){ 
+						var dialog = bootbox.dialog({
+								message: '<p class="red"><b>Ups! Data Belum Lengkap.</b><br>'+$pesan+'</p>', //"Terimakasih! Informasi yang anda masukkan akan disimpan tekan tombol Simpan!", 
+								closeButton: false,	
+							});
+							dialog.init(function(){
+							    setTimeout(function(){
+							       dialog.modal('hide');
+							    }, 3000);
+							});
+					}else{
+							bootbox.dialog({
+								message: $pesan, //"Terimakasih! Informasi yang anda masukkan akan disimpan tekan tombol Simpan!", 
+								buttons: {
+									"success" : {
+										"label" : "OK",
+										"className" : "btn-sm btn-primary simpan",
+										callback: function(result){
+											console.log('simpan' + result);
+											console.log($('form').serialize());
+											var formData = $('form').serialize();
+											<?php  $link = ($this->uri->segment(3)==='edit')? $uri='updateSPT' :$uri ='simpanSPT';  ?>
+											var uri= '<?= base_url() ?>spt/<?= $link ?>/<?= $this->uri->segment(4) ?>/dalam';
+											$.ajax({
+												url: uri,
+												type: 'POST',
+												dataType: 'json',
+												//contentType:'text/html',
+												cache: false,
+												data: formData,
+												success:function(result){
+													$keys = Object.keys(result);
+													if($keys[0] === 'success'){
+														var dialogSuccess = bootbox.dialog({
+														    message: '<p class="text-center mb-0 green"><i class="fa fa-spin fa-cog"></i> '+ result.success +'</p>',
+														    closeButton: false
+														});
+														$link = '<?= base_url("spt/dalam/detail-spt-sppd/") ?>/<?= $this->uri->segment(4) ?>';
+														dialogSuccess.init(function(){
+														    setTimeout(function(){
+														       dialogSuccess.modal('hide');
+														       window.location.href = $link;
+														    }, 3000);
+														});
+													}else{
+														var dialogError = bootbox.dialog({
+														    message: '<p class="text-center mb-0 red"><i class="fa fa-spin fa-cog"></i> '+ result.error +'</p>',
+														    closeButton: false
+														});
+														// do something in the background
+														dialogError.init(function(){
+														    setTimeout(function(){
+														        dialogError.modal('hide');
+														    }, 3000);
+														});
+													}       
+												}
+											});	
+										},
+									}
+								}
+
+							});
+					}
+					
+
 				}).on('stepclick.fu.wizard', function(e){
-					//e.preventDefault();//this will prevent clicking and selecting steps
+					e.preventDefault();//this will prevent clicking and selecting steps
+					console.log(e);
 				});
 			
-			
-				//jump to a step
-				
-				var wizard = $('#fuelux-wizard-container').data('fu.wizard')
-				wizard.currentStep = 1;
-				wizard.setState();
+					//jump to a step
+					var wizard = $('#fuelux-wizard-container').data('fu.wizard')
+					wizard.currentStep = 1;
+					wizard.setState();
 				
 			
 				//determine selected step
 				//wizard.selectedItem().step
-			$("#kembali").change(function(event) {
-					var d1 = $('#berangkat').val();
-					var d2 = $('#kembali').val();
-					var same = d1.getTime() === d2.getTime();
-					var smallfrom = d1.getTime() < d2.getTime();
-					console.log(smallfrom);
-			});
+				$("#berangkat").change(function(event) {
+					$('#hari_perjalanan').text('Kapan Kembali ?');
+					const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+					var d1 = new Date($('#berangkat').val()).valueOf();
+					var d2 = new Date($('#kembali').val()).valueOf();
+					if(!isNaN(d2)){
+						$('#kembali').val('0000-00-00');
+						$('#hari_perjalanan').text('Kapan Kembali ?');
+					}
+				});
+				$("#kembali").change(function(event) {
+					const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+					var d1 = new Date($('#berangkat').val()).valueOf();
+					var d2 = new Date($('#kembali').val()).valueOf();
+					console.log(d1);
+					console.log(d2);
+					if(d1>d2){
+						alert("Ups, Hari kembali tidak bolek sebelum hari berangkat!");
+						$('#kembali').val('0000-00-00');
+						$('#hari_perjalanan').text('Hari kembali tidak bolek sebelum hari berangkat! Kapan Kembali ?');
+					}
+					if(isNaN(d1)){
+						alert("Ups, Hari berangkat harus diisi!");
+						$('#kembali').val('0000-00-00');
+						$('#hari_perjalanan').text('Kapan Berangkat ?');
+					}
+					const diffDays = Math.round(Math.abs((d1 - d2) / oneDay)+1);
+					if(d1<=d2){
+						$('#hari_perjalanan').text('Selama '+diffDays+' Hari');
+					}else{
+						$('#hari_perjalanan').text('Kapan kembali ?');
+					}	
+				});
+
 
 			//hide or show the other form which requires validation
 				//this is for demo only, you usullay want just one form in your application
@@ -247,8 +361,37 @@ $('#pilih_beban').change(function(event) {
 				jQuery.validator.addMethod("phone", function (value, element) {
 					return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
 				}, "Enter a valid phone number.");
-			
-				$('#validation-form').validate({
+
+				$('#validation-form-step-1').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right red',
+					focusInvalid: true,
+					ignore: "",
+					rules: {
+						// STEP 1
+						pilih_beban:{
+							required: true,
+						},
+						kegiatan:{
+							required: true,
+						},
+						nip:{
+							required: true,
+						},
+						jabatan:{
+							required: true,
+						},
+						golongan:{
+							required: true,
+						},
+					},
+					messages: {
+						kegiatan:'Harus memilih kegitan',
+						pilih_beban:'Pilih Atas Beban',
+					}
+				});	
+
+				$('#validation-form-step-2').validate({
 					errorElement: 'div',
 					errorClass: 'help-block text-right',
 					focusInvalid: false,
@@ -290,47 +433,7 @@ $('#pilih_beban').change(function(event) {
 						dasarSPT:{
 							required: true,
 						},
-						
-					/*	
-						password: {
-							required: true,
-							minlength: 5
-						},
-						password2: {
-							required: true,
-							minlength: 5,
-							equalTo: "#password"
-						},
-						name: {
-							required: true
-						},
-						phone: {
-							required: true,
-							phone: 'required'
-						},
-						url: {
-							required: true,
-							url: true
-						},
-						comment: {
-							required: true
-						},
-						state: {
-							required: true
-						},
-						platform: {
-							required: true
-						},
-						subscription: {
-							required: true
-						},
-						gender: {
-							required: true,
-						},
-						agree: {
-							required: true,
-						}
-						*/
+					
 					},
 			
 					messages: {
@@ -380,10 +483,10 @@ $('#pilih_beban').change(function(event) {
 					invalidHandler: function (form) {
 					}
 				});
-
+			
 				$('#validation-form-step-3').validate({
 					errorElement: 'div',
-					errorClass: 'help-block text-right',
+					errorClass: 'help-block text-right red',
 					focusInvalid: false,
 					ignore: "",
 					rules: {
@@ -460,6 +563,85 @@ $('#pilih_beban').change(function(event) {
 						kembali:'Tanggal kembali harus diisi',
 					}
 				});
+				$('#validation-form-step-6').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right red',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						// STEP 6
+						pilih_transportasi:{
+							required: true,
+						},
+						transpor:{
+							required: true,
+						},
+						tran_nama:{
+							required: true,
+						},
+					},
+					messages: {
+						pilih_transportasi: 'Transportasi wajib dipilih',
+						transpor:'Nama Kendaraan',
+					}
+				});
+
+				$('#validation-form-step-7').validate({
+					errorElement: 'div',
+					errorClass: 'help-block text-right red',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						// STEP 7
+						nomor_sppd:{
+							required: true,
+						},
+						tempat_sppd:{
+							required: true,
+						},
+						tanggal_sppd:{
+							required: true,
+						},
+						pilih_pegawai:{
+							required: true,
+						},
+						ttd_sppd_nama:{
+							required: true,
+						},
+						ttd_sppd_nip:{
+							required: true,
+						},
+						ttd_sppd_jabatan:{
+							required: true,
+						},
+						ttd_sppd_golongan:{
+							required: true,
+						},
+					},
+					messages: {
+						nomor_sppd:'Nomor SPPD, Wajib diisi',
+						tempat_sppd:'Tempat Penandatanganan SPPD, Wajib diisi',
+						tanggal_sppd:'Tanggal SPPD, Wajib diisi',
+						pilih_pegawai:'Pegawai yang penandatangan SPPD, Wajib diisi',
+						ttd_sppd_nama:'Pegawai, Wajib diisi',
+						ttd_sppd_nip:'Nip, Wajib diisi',
+						ttd_sppd_jabatan:'Jabatan, Wajib diisi',
+						ttd_sppd_golongan:'Golongan, Wajib diisi',
+					}
+				});
+
+				$(document).ajaxError(function(){
+    				var dialogError = bootbox.dialog({
+													    message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> LOADING DATA ERROR </p>',
+													    closeButton: false
+													});
+													// do something in the background
+													dialogError.init(function(){
+													    setTimeout(function(){
+													        dialogError.modal('hide');
+													    }, 3000);
+													})
+  				});
 
 			$(document).one('ajaxloadstart.page', function(e) {
 					//in ajax mode, remove remaining elements before leaving page

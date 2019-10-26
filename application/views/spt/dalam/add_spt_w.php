@@ -6,12 +6,12 @@ $display = 'style="display: none;"'; //Default Hide
 $cek     = $this->input->get('p');
 $tempat  = "Simpang Empat";
 $msg     = "";
-if ($TOKEN === 'addw' && $cek != '1' && !is_numeric($ID) && $ID === null) {
+if ($TOKEN === 'addw' && $cek != '1' && !is_null($ID)) {
     $modul            = 1;
     $LINK             = 'spt/dalam/addw?p=' . $modul;
     $addid_spt        = "";
-    $addno_spt        = "";
-    $addno_sppd       = "";
+    $addno_spt        = "090/000/SPT/DPUPR/".date('Y');
+    $addno_sppd       = "900/000/SPPD/DPUPR/".date('Y');
     $adddiprintah     = "";
     $addnm_diperintah = "";
     $addnama          = "";
@@ -241,7 +241,7 @@ if ($TOKEN === 'addw' && $cek != '1' && !is_numeric($ID) && $ID === null) {
 
 <div class="widget-box">
 <div class="widget-header widget-header-blue widget-header-flat">
-	<h4 class="widget-title lighter">FORM SPD DALAM DAERAH  <?=$JUDUL_FORM?></h4>
+	<h4 class="widget-title lighter">FORM SPD LUAR DAERAH  <?=$JUDUL_FORM?></h4>
 	<div class="widget-toolbar">
 		<label>
 			<small class="green">
@@ -285,16 +285,11 @@ if ($TOKEN === 'addw' && $cek != '1' && !is_numeric($ID) && $ID === null) {
 															<span class="step"><i class="fa fa-car"></i></span>
 															<span class="title">Transportasi</span>
 														</li>
-
 														<li data-step="7">
-															<span class="step"><i class="fa fa-money"></i></span>
-															<span class="title">Anggaran</span>
-														</li>
-														<li data-step="8">
 															<span class="step"><i class="fa fa-envelope"></i></span>
 															<span class="title">SPPD</span>
 														</li>
-														<li data-step="9">
+														<li data-step="8">
 															<span class="step"><i class="fa fa-save"></i></span>
 															<span class="title">Selesai</span>
 														</li>
@@ -330,7 +325,7 @@ if ($TOKEN === 'addw' && $cek != '1' && !is_numeric($ID) && $ID === null) {
 									</div>
 </div-->
 <div class="col-md-12">
-<h3 class="header smaller lighter blue"><i class="fa fa-money"></i> Perhitungan Mengadakan Pekerjaan</h3>
+<h3 class="header smaller lighter blue"><i class="fa fa-money"></i> Perjalan ini dibebankan pada anggaran</h3>
 <p class="red">SPPD No.7</p>
 									<div class="form-group">
 
@@ -397,17 +392,14 @@ echo $addkegiatan . "  " . $btnKeg = ($addkegiatan == "" or $addkegiatan == 0) ?
 									</div>
 </div>
 
-		<div class="center">
-		<h3 class="green">Congrats!</h3>
-		Your product is ready to ship! Click finish to continue!
-		</div>
+
 </form>
 </div>
 <div class="step-pane active" data-step="2">
 	<div id="#sample-form">
 		<center>TAMPILAN SPT</center>
 	</div>
-	<form class="form-horizontal" role="form" id="validation-form" actionss="<?=base_url($LINK)?>" method="post" enctype="multipart/form-data">
+	<form class="form-horizontal" role="form" id="validation-form-step-2" actionss="<?=base_url($LINK)?>" method="post" enctype="multipart/form-data">
 
 <div>
 												<h3 class="header smaller lighter blue"><i class="fa fa-money"></i> PEJABAT PEMBERI PERINTAH</h3>
@@ -665,7 +657,9 @@ echo $_tujuan = ($addtujuan == "") ? "Pilih Tujuan" : $addtujuan;
 											<label class="col-sm-6 control-label no-padding-right" for="berangkat"> 9. kembali*</label>
 											<div class="col-xs-12 col-sm-2 col-md-5">
 											<input  type="date" id="kembali" placeholder="Kembali" class="col-xs-10 col-sm-12 col-md-12 meedun-input" name="kembali" value="<?=$addtgl_kembali?>">
+                                            <span id="hari_perjalanan">Selama Berapa Hari ?</span>
 											</div>
+
 										</div>
 </div>										
 </div>
@@ -725,10 +719,7 @@ $btns = ($addtransportasi == "" or $addtransportasi == 0) ? "btn-danger" : "btn-
 </div>
 <!-- end-step-6 -->
 <div class="step-pane" data-step="7">
-
-</div>
-<div class="step-pane" data-step="8">
-<form id="validation-form-step-8" role="form" method="post" enctype="multipart/form-data">	
+<form id="validation-form-step-7" role="form" method="post" enctype="multipart/form-data">	
 	<div class="col-md-12">
 <h3 class="header smaller lighter blue"><i class="fa fa-money"></i> TANDA TANGAN SPPD</h3>
 									<div class="form-group">
@@ -820,8 +811,8 @@ $btns = ($addttd_sppd_nama == "") ? "btn-danger" : "btn-primary";
 </form>				
 </div>	
 
-<div class="step-pane" data-step="9">
-<form id="validation-form-step-9" role="form" method="post" enctype="multipart/form-data">
+<div class="step-pane" data-step="8">
+<!--form id="validation-form-step-8" role="form" method="post" enctype="multipart/form-data"-->
 <div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 											<a class="btn btn-default" type="button" href="<?=base_url('spt/dalam')?>">
@@ -829,7 +820,7 @@ $btns = ($addttd_sppd_nama == "") ? "btn-danger" : "btn-primary";
 												Kembali
 											</a>
 											&nbsp; &nbsp; &nbsp;
-											<button class="btn btn-info" type="submit">
+											<button class="btn btn-info" type="submit" id="simpan">
 												<i class="ace-icon fa fa-check bigger-110"></i>
 												Simpan
 											</button>
@@ -847,7 +838,7 @@ $btns = ($addttd_sppd_nama == "") ? "btn-danger" : "btn-primary";
 										</div>
 									</div>
 </div>
-</form>
+<!--/form-->
 
 </div><!--WIZARD END-->
 </div><!--Plugin WIZARD END body-->
@@ -871,51 +862,7 @@ $btns = ($addttd_sppd_nama == "") ? "btn-danger" : "btn-primary";
 
 
 
-<?php if ($addid_spt != "") { ?>
-<h3 class="header smaller lighter blue"><i class="fa fa-users"></i> 11. PENGIKUT</h3>
-									<div class="row">
-										<div class="col-xs-12 col-md-12 ">
-											<a href="<?=base_url('spt/dalam/pengikut/') . '/' . $addid_spt?>" class="btn btn-xs btn-warning"><i class="fa fa-users"></i> + PENGIKUT</a>
-										<table class="table table-">
-											<thead>
-												<tr>
-													<th>No</th>
-													<th>Nama</th>
-													<th>Nip</th>
-													<th>Pangkat/Gol</th>
-													<th>Jabatan</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php
-if (count($spt_pengikut) > 0) {
-        $no = 1;
-        foreach ($spt_pengikut as $peng) {
-            echo '<tr>';
-            echo '<td>' . $no . '</td>';
-            echo '<td>' . $peng['nama_pengikut'] . '</td>';
-            echo '<td>' . $peng['nip_pengikut'] . '</td>';
-            echo '<td>' . $peng['pangkat'] . ' ' . $peng['golongan'] . '</td>';
-            echo '<td>' . $peng['jabatan_pengikut'] . '</td>';
-            echo '</tr>';
-            $no++;
-        }
-    } else {
-        echo '<tr>
-														<td>1</td>
-														<td style="text-align: left;">-</td>
-														<td >-</td>
-														<td>-</td>
-														<td>-</td>
-														</tr>';
-    }
-    ?>
-											</tbody>
-										</table>
-										</div>
-									</div>
 
-<?php }?>
 
 <button class="btn btn-primary hide" id="gritter-center">Center</button>
 
@@ -935,8 +882,3 @@ if (count($spt_pengikut) > 0) {
 
 
 </script>
-
-<?=$TOKEN?><br>
-<?=$ID?><br>
-<?=$this->input->get('p')?><br>
-<!--?= $this->db->last_query() ?><br-->

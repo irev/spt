@@ -240,7 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							?>
 								<a href="<?= base_url('/spt/dalam/') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
-									SPT/SPPD
+									SPT/SPPD DALAM
 								</a>
 
 								<b class="arrow"></b>
@@ -273,17 +273,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<b class="arrow"></b>
 
 						<ul class="submenu">
+							
 							<li class="">
-								<a href="<?= base_url('spt/dev') ?>">
+								<a href="<?= base_url('spt/luar') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
-									
-								</a>
-								<b class="arrow"></b>
-							</li>
-							<li class="">
-								<a href="<?= base_url('spt/dev') ?>">
-									<i class="menu-icon fa fa-caret-right"></i>
-									SPPD
+									SPT/SPPD LUAR
 								</a>
 
 								<b class="arrow"></b>

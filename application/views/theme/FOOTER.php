@@ -9,8 +9,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
-
-
+<div class="noprint ENVIRONMENT">
+							
+								<?php if(ENVIRONMENT === 'development'){ ?>
+								ENVIRONMENT= <?= ENVIRONMENT ?>	<br>
+								TOKEN = <?= $TOKEN ?><br>ID = <?= $ID ?><br>P = <?= $this->input->get('p') ?><br>
+								last_query = <?= $this->db->last_query() ?><br>
+								<?php } ?>
+							
+</div>
 			<div class="footer noprint">
 				<div class="footer-inner">
 					<div class="footer-content">
@@ -22,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?= _APLIKASI_ ?> &copy; 2018-<?= date('Y')?>
 						</span>
 							</small>
-							waktu render halaman  <strong>{elapsed_time}</strong> detik. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
+							waktu render halaman  <strong>{elapsed_time}</strong> detik. <?php echo  (ENVIRONMENT === 'development') ?  ENVIRONMENT.' CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
 						&nbsp; &nbsp;
 						<span class="action-buttons">
 							<a href="#">

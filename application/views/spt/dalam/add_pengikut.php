@@ -21,7 +21,7 @@ $this->session->flashdata('msg')
 												<i class="ace-icon fa fa-angle-double-left"></i>
 												Kembali
 											</a>
-											<a id="add_prngikut" class="btn btn-xs btn-warning" style="float: right;"> <i class="fa fa-users" > </i> + PENGIKUT </a>
+											
 											<?php 
 												echo count($spt_pengikut)." Orang Pengikut";		
 											 ?>

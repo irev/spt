@@ -318,6 +318,7 @@ function goToPage( url ){
 </div>
 
 <div class="row">
+
 	<?php
 if (count($spt_pengikut) > 0) {
     ?>
@@ -438,6 +439,7 @@ $no++;
             </tfoot>
         </tbody>
     </table>
+    <a href="<?=base_url()?>spt/dalam/pengikut/<?= $this->uri->segment(4) ?>" id="add_prngikut" class="btn btn-xs btn-warning" style="float: right;"> <i class="fa fa-users"> </i> + PENGIKUT </a>
 <!--?= $this->db->last_query() ?-->
     <table border="0">
         <tr>

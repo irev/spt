@@ -6,7 +6,7 @@ $display				 = 'style="display: none;"'; //Default Hide
 $cek 					 = $this->input->get('p');
 $tempat 				 = "Simpang Empat";
 $msg					 ="";
-if($TOKEN==='add' && $cek != '1' && !is_numeric($ID) &&  $ID=== null ){
+if($TOKEN==='add' && $cek != '1' && !is_null($ID) ){
 	$modul 					 = 1;
 	$LINK 					 = 'spt/dalam/add?p='.$modul;
 	$addid_spt           ="";

@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 <div class="row">
 <div class="col-xs-12">
-<h3 class="header smaller lighter blue">SPT Dalam Daerah <a class="btn btn-xs btn-primary" href="<?= base_url('spt/dalam/add') ?>">+ SPT DALAM</a></h3>	
+<h3 class="header smaller lighter blue">SPT Dalam Daerah <a class="btn btn-xs btn-primary" href="<?= base_url('spt/dalam/add')."/".uniqid() ?>">+ SPT DALAM</a></h3>	
 <!--?= $this->session->flashdata('msg') ?-->
 
 <div class="table-responsive">
@@ -132,8 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 </div>
 </div>
-<!--?=  $this->input->get('p')  ?><br -->
-<!-- ?= $uniqueId = uniqid(rand(), TRUE); ? -->
+
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

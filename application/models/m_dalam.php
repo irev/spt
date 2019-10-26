@@ -145,7 +145,7 @@ class M_dalam extends CI_Model
         //SET DATA
         $post           = $this->input->post();
         $tempat         = $post['tempat_spt']; //"Simpang Empat";
-        $this->id_spt   = uniqid();
+        $this->id_spt   = $this->uri->segment(3); //uniqid();
         $this->no_spt   = $post['nomor_spt'];
         $this->no_sppd  = $post['nomor_sppd']; ///
         $this->nama     = $post['nama'];
@@ -196,6 +196,8 @@ class M_dalam extends CI_Model
         $this->query_simpan_pengikut(true, $this->id_spt, $post["perintah_untuk"], $this->perjalanan, $this->tahun);
         $result = ($this->db->affected_rows() != 1) ? false : true;
         return $result;
+        
+       
     }
     /**
      * @param  [type] gettabel
@@ -235,7 +237,7 @@ class M_dalam extends CI_Model
         $this->wilayah       = $post['wilayah'];
         $this->tgl_berangkat = $post['berangkat'];
         $this->tgl_kembali   = $post['kembali'];
-        $this->sumber_dana   = $this->session->userdata('tahun');
+        $this->sumber_dana   = (!$this->session->userdata('tahun'))? date('Y'):$this->session->userdata('tahun');
         /////////////////// SPT
         $this->ttd_tempat  = $tempat;
         $this->ttd_tgl     = $post['tanggal_spt'];
@@ -257,10 +259,10 @@ class M_dalam extends CI_Model
         //$this->beban       = 'DPA Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat Tahun Anggaran 2019';
         $this->anggaran    = $post['pilih_beban'];
         $this->kegiatan_id = $post['kegiatan'];
-        if($this->uri->segment(2)==='dalam'){
+        if($this->uri->segment(4)==='luar'){
+             $this->perjalanan       = "luar";
+        }else{    
             $this->perjalanan       = "dalam";
-        }else{
-            $this->perjalanan       = "luar";
         }
         //EXE
         $this->db->update($this->_table, $this, array('id_spt' => $this->id_spt));
@@ -272,6 +274,7 @@ class M_dalam extends CI_Model
 
     public function delete($id)
     {
+        $this->db->delete('spt_pengikut', array("spt_id" => $id));
         return $this->db->delete($this->_table, array("id_spt" => $id));
     }
 

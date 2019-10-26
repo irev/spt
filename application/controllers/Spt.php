@@ -213,7 +213,7 @@ function test_anggaran($anggaran=null, $field=null){
 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
 		 $this->breadcrumbs->push('Dinas Dalam', '/spt/dalam');
-		 $this->breadcrumbs->push('Detail SPT', '/spt/dalam/deteil-spt-sppd');
+		
 		// unshift crumb
 		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
 		$data['TOKEN'] = $TOKEN;
@@ -224,15 +224,25 @@ function test_anggaran($anggaran=null, $field=null){
 			$data['transportasi'] = $this->m_transport->trasnsportasi();
 			$data['tujuan']       = $this->m_tujuan->tujuan();
 			$data['kegiatan']     = $this->m_kegiatan->kegiatan();
+			//if (!$data['spt_dalam']) show_404();
+			if (!$data['pegawai']) show_404();
+			if (!$data['anggaran']) show_404();
+			if (!$data['transportasi']) show_404();
+			if (!$data['tujuan']) show_404();
+			if (!$data['kegiatan']) show_404();
 			//$data['spt_pengikut'] = array();
-	 	///// AKSES PAGE BY TOKEN	
+	 		///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
+			 $this->breadcrumbs->push('Detail SPT/SPPD', '/spt/dalam/deteil-spt-sppd');
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
+				if (!$data['spt_dalam']) show_404();
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
+				if (!$data['spt_pengikut']) show_404();
 				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
+				if (!$data['transpor']) show_404();
 				//echo $this->db->last_query();
 					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
-		}elseif($TOKEN==='add'){
+		}elseif($TOKEN==='add'  && !is_null($ID)){
 	 		$this->breadcrumbs->push('ADD', '/add');
 				//FORM ADD / TAMBAH 
 				$validation = $this->form_validation;
@@ -257,7 +267,7 @@ function test_anggaran($anggaran=null, $field=null){
 	        	//if (!$data['spt_dalam']) show_404();	
 				$this->template->load_js('template','spt/dalam/add_spt', $data);
 
-		}elseif($TOKEN==='addw'){
+		}elseif($TOKEN==='addw' && !is_null($ID)){
 	 		$this->breadcrumbs->push('ADD', '/add');
 				//FORM ADD / TAMBAH 
 				$validation = $this->form_validation;
@@ -281,6 +291,7 @@ function test_anggaran($anggaran=null, $field=null){
 				$this->template->load_js('template','spt/dalam/add_spt_w', $data);
 
 		}elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
+			$this->breadcrumbs->push('Edit', '/edit');
 				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
 				$validation = $this->form_validation;
@@ -300,7 +311,8 @@ function test_anggaran($anggaran=null, $field=null){
 							$this->session->set_flashdata('msg', $this->MSG('danger', 'Error', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
 						}
 					}
-				$this->template->load_js('template','spt/dalam/add_spt', $data);
+				//$this->template->load_js('template','spt/dalam/add_spt', $data);
+				$this->template->load_js('template','spt/dalam/add_spt_w', $data);
 		}elseif($TOKEN==='pengikut'){
 			$this->breadcrumbs->push('Pengikut', 'spt/dalam/edit/'.$ID.'?p=2');
 			$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
@@ -323,7 +335,7 @@ function test_anggaran($anggaran=null, $field=null){
 	 	// add breadcrumbs
 		 $this->breadcrumbs->push('SPT', '/spt');
 		 $this->breadcrumbs->push('Dinas Luar', '/spt/luar');
-		 $this->breadcrumbs->push('Detail SPT', '/spt/luar/deteil-spt-sppd');
+		 
 		 $data['spt_pengikut'] = $this->m_dalam->spt_pengikut($ID);
 		// unshift crumb
 		// $this->breadcrumbs->unshift('<i class="ace-icon fa fa-home home-icon"></i> Home', '/');
@@ -338,13 +350,14 @@ function test_anggaran($anggaran=null, $field=null){
 			//$data['spt_pengikut'] = array();
 	 	///// AKSES PAGE BY TOKEN	
 		if($TOKEN==='detail-spt-sppd'){
+			$this->breadcrumbs->push('Detail SPT/SPPD', '/spt/luar/deteil-spt-sppd');
 				$data['spt_dalam']    	 = $this->m_dalam->spt_dalam($ID);
 				$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
 				$data['transpor']        = $this->m_master->trasportsasi_nomor($data['spt_dalam']->transportasi);
 				//echo $this->db->last_query();
-					$this->template->load_js('template','spt/luar/detail_spt_sppd', $data);
+					$this->template->load_js('template','spt/dalam/detail_spt_sppd', $data);
 		}
-		elseif($TOKEN==='add'){
+		elseif($TOKEN==='add' && !is_null($ID)){
 	 		$this->breadcrumbs->push('ADD', '/add');
 				//FORM ADD / TAMBAH 
 				$validation = $this->form_validation;
@@ -353,11 +366,11 @@ function test_anggaran($anggaran=null, $field=null){
 	        		///DUPLIKAT KODE NOMOR SPT
 	        		if($this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
 			            	if($this->m_dalam->query_simpan() === true){
-			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nomor_spt').' berhasil disimpan'));
 								$red = base_url("spt/luar");
 								//header("refresh:4; url=$red"); 
 							}else{
-			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nomor_spt').' gagal disimpan'));
 							}
 						}else{
 							$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
@@ -366,6 +379,7 @@ function test_anggaran($anggaran=null, $field=null){
 						$this->template->load_js('template','spt/luar/add_spt_w', $data);	
 					}
 		}elseif($TOKEN ==='edit' && $this->input->get('p')==2) {
+			$this->breadcrumbs->push('Edit', '/edit');
 				if (!$data['spt_dalam']) show_404();
 				$data['spt_dalam']    = $this->m_dalam->spt_dalam($ID);
 				if (!$data['spt_pengikut']) show_404();
@@ -387,12 +401,13 @@ function test_anggaran($anggaran=null, $field=null){
 							$this->session->set_flashdata('msg', $this->MSG('danger', 'Error', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
 						}
 					}
-				$this->template->load_js('template','spt/luar/add_spt', $data);
+				//$this->template->load_js('template','spt/luar/add_spt', $data);
+				$this->template->load_js('template','spt/luar/add_spt_w', $data);	
 		}elseif($TOKEN==='pengikut'){
 			$this->breadcrumbs->push('Pengikut', 'spt/luar/edit/'.$ID.'?p=2');
 			$data['spt_pengikut']    = $this->m_dalam->spt_pengikut($ID);
 			//echo $this->db->last_query();
-			$this->template->load_js('template','spt/luar/add_pengikut', $data);
+			$this->template->load_js('template','spt/dalam/add_pengikut', $data);
 		}else{
 			$this->template->load_js('template','spt/luar/spt', $data);
 		}
@@ -410,19 +425,45 @@ function test_anggaran($anggaran=null, $field=null){
 	        		
 	        		if($this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
 			            	if($this->m_dalam->query_simpan() === true){
-			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nama_jabatan').' berhasil disimpan'));
-								$red = base_url("spt/luar");
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nomor_spt').' berhasil disimpan'));
+								//$red = base_url("spt/luar");
 								//header("refresh:4; url=$red"); 
-								echo json_encode(['success'=>'Record added successfully.']);
+								echo json_encode(['success'=>'Data Berhasil Disimpan.','id'=>$this->input->post('nomor_spt')]);
 							}else{
-			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nama_jabatan').' gagal disimpan'));
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nomor_spt').' gagal disimpan'));
 			            		$errors = validation_errors();
 			            		echo json_encode(['error'=>$errors]);
 							}
 					}else{
-						$this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
-					}
-						
+						 $this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+							$errors = $this->input->post('nomor_spt').'<br> NOMOR SPT Sudah ADA';
+						    echo json_encode(['error'=>$errors]);
+					}		
+			        
+	}
+		 function updateSPT(){
+	 			$validation = $this->form_validation;
+	        	$validation->set_rules($this->rule_sptdalam());
+	        	//if ($validation->run()) {
+	        		///DUPLIKAT KODE NOMOR SPT
+	        		if (!$this->input->post('nomor_spt')) show_404();
+	        		
+	        		if(!$this->m_dalam->cekDuplikatEntry('no_spt', $this->input->post('nomor_spt'))){
+			            	if($this->m_dalam->query_update() === false){
+			            		$this->session->set_flashdata('msg', $this->MSG('success', 'Info', 'Data '.$this->input->post('nomor_spt').' berhasil disimpan'));
+								//$red = base_url("spt/luar");
+								//header("refresh:4; url=$red"); 
+								echo json_encode(['success'=>'Data Berhasil Disimpan.','id'=>$this->input->post('nomor_spt')]);
+							}else{
+			            		$this->session->set_flashdata('msg', $this->MSG('danger', 'Info', 'Data '.$this->input->post('nomor_spt').' gagal disimpan'));
+			            		$errors = validation_errors();
+			            		echo json_encode(['error'=>$errors]);
+							}
+					}else{
+						 $this->session->set_flashdata('msg', $this->MSG('danger', 'Ups, ', 'Data '.$this->input->post('nomor_spt').' NOMOR SPT Sudah ADA'));
+							$errors = $this->input->post('nomor_spt').'<br> NOMOR SPT Sudah ADA';
+						    echo json_encode(['error'=>$errors]);
+					}		
 			        
 	}
 
@@ -596,6 +637,14 @@ function cek_db($ID=null){
         
         if ($this->m_dalam->delete($id)) {
             redirect(site_url('spt/dalam'));
+        }
+    }
+    public function delete_spt_luar($id=null)
+    {
+        if (!isset($id)) show_404();
+        
+        if ($this->m_dalam->delete($id)) {
+            redirect(site_url('spt/luar'));
         }
     }
 

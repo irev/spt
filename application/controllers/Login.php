@@ -85,4 +85,21 @@ class Login extends CI_Controller {
     	$this->session->sess_destroy();  
     	header('location:'.base_url()."login/".$this->index());  
       }
+
+      function login_test(){
+      	$name = 'user';
+      		$newdata = array(
+					'level'   => '1',
+					'username'   => $name,
+					'perusahaan' => '1',
+					'Addresses' => $_SERVER['REMOTE_ADDR'], 
+					'TA'		=> "2019",
+					'email'      => 'meedun@simeedun.com',
+			        'logged_in' => TRUE
+				);
+				
+				$this->session->set_userdata($newdata);
+      }
+
+
 }

@@ -93,6 +93,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		</style>
 		<style type="text/css">
+			.ENVIRONMENT{
+				left: 12px;
+			    right: 12px;
+			    bottom: 4px;
+			    padding: 8px;
+			    line-height: 36px;
+			    border-top: 3px double #E5E5E5;
+			    background: #2f2f2f;
+			    width: 85%;
+			    margin-left: 190px;
+			    color: white;
+			    line-height: normal;
+			    margin-bottom: 33px;
+			    border-radius: 4px;
+			    border: 3px double #E5E5E5;
+			}
 			@media print
 			{    
 			    .noprint, .noprint *

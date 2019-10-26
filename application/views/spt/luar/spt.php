@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 <div class="row">
 <div class="col-xs-12">
-<h3 class="header smaller lighter blue">SPT Luar Daerah <a class="btn btn-xs btn-primary" href="<?= base_url('spt/luar/add') ?>">+ SPT DALAM</a></h3>	
+<h3 class="header smaller lighter blue">SPT Luar Daerah <a class="btn btn-xs btn-primary" href="<?= base_url('spt/luar/add')."/".uniqid() ?>">+ SPT LUAR</a></h3>	
 <!--?= $this->session->flashdata('msg') ?-->
 
 <div class="table-responsive">
@@ -27,16 +27,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														<th class="center">No</th>
 														
 														<th>Nomor</th>
-														<th>Tanggal</th>
-														<th class="hidden-480">Perintah Dari</th>
-														<th width="20%">Maksud Melaksanakan Tugas</th>
-														<th>Kepada (MEMERINTAHKAN)</th>
+
+														<th class="hidden-480">Perintah</th>
+														<th width="15%">Maksud<br>Melaksanakan<br>Tugas</th>
+														<th>Kepada</th>
 														<th class="hidden-480">Tujuan</th>
 														<th>Berangkat & Kembali</th>
 														<th>Transportasi</th>
-														<th class="center">
+														<!--th class="center">
 															#ID
-														</th>
+														</th-->
 														
 														<th>#</th>
 													</tr>
@@ -47,15 +47,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														<?php if($getspt["perjalanan"]==="luar"): ?>
 															<tr>
 																<td class="center"><?= $no ?></td>
-																<td class="hidden-480"><?= $getspt['no_spt'] ?></td>
-																<td><?= LONGE_DATE_INDONESIA($getspt['ttd_tgl']) ?></td>
+																<td class="hidden-480"><?= $getspt['no_spt'] ?><br><?= LONGE_DATE_INDONESIA($getspt['ttd_tgl']) ?></td>
+																
 																<td class="hidden-480"><?= '<b>'.$getspt['ttd_nama'].'</b><br>'.$getspt['ttd_jabatan'].'<br>'.$getspt['ttd_nip'] ?></td>
-																<td><?= $getspt['maksud'] ?></td>
+																<td><?= $out = strlen($getspt['maksud']) > 50 ? substr($getspt['maksud'],0,50)."..." : $getspt['maksud']; ?></td>
 																<td><?= '<b>'.$getspt['nama'].'</b><br>'.$getspt['jabatan'].'<br>'.$getspt['nip'] ?></td>
 																<td class="hidden-480"><?= $getspt['tujuan'] ?></td>
 																<td><?= LONGE_DATE_INDONESIA($getspt['tgl_berangkat']).'<br>'.LONGE_DATE_INDONESIA($getspt['tgl_kembali']) ?></td>
 																<td><?= $getspt['transportasi'] ?></td>
-																<td class="center"><?= $getspt['id_spt'] ?></td>
+																<!--td class="center"><?= $getspt['id_spt'] ?></td-->
 																
 																<td>
 																	<div class="hidden-md hidden-lg hidden-xs action-buttons">
@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																			<i class="ace-icon fa fa-pencil bigger-130"></i>
 																		</a>
 
-																		<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $getspt['id_spt']) ?>')" href="#!">
+																		<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_luar/'.  $getspt['id_spt']) ?>')" href="#!">
 																			<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																		</a>
 																		
@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																				</li>	
 
 																				<li>
-																					<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_dalam/'.  $getspt['id_spt']) ?>')" href="#!">
+																					<a class="red" onclick="deleteConfirm('<?php echo site_url('spt/delete_spt_luar/'.  $getspt['id_spt']) ?>')" href="#!">
 																						<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																					</a>
 																				</li>	
@@ -132,8 +132,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 </div>
 </div>
-<!--?=  $this->input->get('p')  ?><br -->
-<!-- ?= $uniqueId = uniqid(rand(), TRUE); ? -->
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
