@@ -178,9 +178,12 @@ if ($TOKEN === 'add' && $cek != '1' && !is_null($ID)) {
     $addperjalanan = $post['perjalanan'];
 
 } elseif ($TOKEN === 'edit' && $this->input->get('p') == '2') {
+    if($spt_dalam->perjalanan === 'dalam'){
+        show_404();
+    }
     $cek        = $this->input->get('p');
     $modul      = 2;
-    $LINK       = 'spt/dalam/edit/' . $spt_dalam->id_spt . '?p=' . $modul;
+    $LINK       = 'spt/luar/edit/' . $spt_dalam->id_spt . '?p=' . $modul;
     $addid_spt  = $spt_dalam->id_spt;
     $addno_spt  = $spt_dalam->no_spt;
     $addno_sppd = $spt_dalam->no_sppd;
@@ -859,54 +862,6 @@ $btns = ($addttd_sppd_nama == "") ? "btn-danger" : "btn-primary";
 									</div><!-- /.widget-body -->
 								</div>
 
-
-
-
-<?php if ($addid_spt != "") { ?>
-<h3 class="header smaller lighter blue"><i class="fa fa-users"></i> 11. PENGIKUT</h3>
-									<div class="row">
-										<div class="col-xs-12 col-md-12 ">
-											<a href="<?=base_url('spt/dalam/pengikut/') . '/' . $addid_spt?>" class="btn btn-xs btn-warning"><i class="fa fa-users"></i> + PENGIKUT</a>
-										<table class="table table-">
-											<thead>
-												<tr>
-													<th>No</th>
-													<th>Nama</th>
-													<th>Nip</th>
-													<th>Pangkat/Gol</th>
-													<th>Jabatan</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php
-if (count($spt_pengikut) > 0) {
-        $no = 1;
-        foreach ($spt_pengikut as $peng) {
-            echo '<tr>';
-            echo '<td>' . $no . '</td>';
-            echo '<td>' . $peng['nama_pengikut'] . '</td>';
-            echo '<td>' . $peng['nip_pengikut'] . '</td>';
-            echo '<td>' . $peng['pangkat'] . ' ' . $peng['golongan'] . '</td>';
-            echo '<td>' . $peng['jabatan_pengikut'] . '</td>';
-            echo '</tr>';
-            $no++;
-        }
-    } else {
-        echo '<tr>
-														<td>1</td>
-														<td style="text-align: left;">-</td>
-														<td >-</td>
-														<td>-</td>
-														<td>-</td>
-														</tr>';
-    }
-    ?>
-											</tbody>
-										</table>
-										</div>
-									</div>
-
-<?php }?>
 
 <button class="btn btn-primary hide" id="gritter-center">Center</button>
 

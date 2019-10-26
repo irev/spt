@@ -15,7 +15,7 @@ if($TOKEN==='add' && !is_numeric($ID) ||  $ID=== null){
 	$addNama      = $kegiatan->kegiatan;
 	$addNomor     = $kegiatan->rekening;
 	$addpagu      = $kegiatan->pagu;
-	$adddinas      = $kegiatan->dinas;
+	$adddinas     = $kegiatan->dinas;
 	$addpptk      = $kegiatan->pptk;
 	$addkpa       = $kegiatan->kpa;
 	$addbendahara = $kegiatan->bendahara;

@@ -87,18 +87,31 @@ class Login extends CI_Controller {
       }
 
       function login_test(){
+      	echo local_to_gmt(time());
+      	$now = time();
+		echo $human = unix_to_human($now);
+		echo $unix = human_to_unix($human);
+
+
+$timestamp = time();
+$timezone  = 'UTC +7:00';
+$daylight_saving = TRUE;
+echo '<br>'.unix_to_human(gmt_to_local($timestamp, $timezone, $daylight_saving)).'</br>';
+
+
       	$name = 'user';
       		$newdata = array(
-					'level'   => '1',
-					'username'   => $name,
-					'perusahaan' => '1',
+					'level'     => '1',//1. admin 2. operator 
+					'username'  => $name,
 					'Addresses' => $_SERVER['REMOTE_ADDR'], 
-					'TA'		=> "2019",
-					'email'      => 'meedun@simeedun.com',
-			        'logged_in' => TRUE
+					'TA'        => "2019",
+					'email'     => 'meedun@simeedun.com',
+					'date_login'=> date('Y-d-m H:m:s'),
+					'logged_in' => TRUE
 				);
 				
 				$this->session->set_userdata($newdata);
+				print_r($this->session->userdata());
       }
 
 

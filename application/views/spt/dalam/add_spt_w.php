@@ -178,6 +178,9 @@ if ($TOKEN === 'addw' && $cek != '1' && !is_null($ID)) {
     $addperjalanan = $post['perjalanan'];
 
 } elseif ($TOKEN === 'edit' && $this->input->get('p') == '2') {
+	if($spt_dalam->perjalanan === 'luar'){
+        show_404();
+    }
     $cek        = $this->input->get('p');
     $modul      = 2;
     $LINK       = 'spt/dalam/edit/' . $spt_dalam->id_spt . '?p=' . $modul;
@@ -241,7 +244,7 @@ if ($TOKEN === 'addw' && $cek != '1' && !is_null($ID)) {
 
 <div class="widget-box">
 <div class="widget-header widget-header-blue widget-header-flat">
-	<h4 class="widget-title lighter">FORM SPD LUAR DAERAH  <?=$JUDUL_FORM?></h4>
+	<h4 class="widget-title lighter">FORM SPD LUAR DAERAH  <?= $JUDUL_FORM ?></h4>
 	<div class="widget-toolbar">
 		<label>
 			<small class="green">

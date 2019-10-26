@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 require "anti-ddos-lite/anti-ddos-lite.php";
 /**
  * CodeIgniter

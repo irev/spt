@@ -215,7 +215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</ul>
 					</li>
 					<?php 
-					if ($this->uri->segment(1)=='spt') {
+					if ($this->uri->segment(2)=='dalam') {
 						echo '<li class="active open">';
 					}else{
 						echo '<li class="">';
@@ -262,7 +262,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</li>
 						</ul>
 					</li>
-					<li class="">
+					<?php 
+					if ($this->uri->segment(2)=='luar') {
+						echo '<li class="active open">';
+					}else{
+						echo '<li class="">';
+					}
+					?>
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-sign-out"></i>
 							<span class="menu-text"> SPT LUAR DAERAH</span>
@@ -274,7 +280,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<ul class="submenu">
 							
-							<li class="">
+							<?php 
+							if ($this->uri->segment(2)=='luar') {
+								echo '<li class="active">';
+							}else{
+								echo '<li class="">';
+							}
+							?>
 								<a href="<?= base_url('spt/luar') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									SPT/SPPD LUAR
@@ -282,7 +294,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<b class="arrow"></b>
 							</li>
-							<li class="">
+							<?php 
+							if ($this->uri->segment(2)=='luar') {
+								echo '<li class="active">';
+							}else{
+								echo '<li class="">';
+							}
+							?>
 								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Laporan
@@ -290,7 +308,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<b class="arrow"></b>
 							</li>
-							<li class="">
+							<?php 
+							if ($this->uri->segment(2)=='luar') {
+								echo '<li class="active">';
+							}else{
+								echo '<li class="">';
+							}
+							?>
 								<a href="<?= base_url('spt/dev') ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Dokumentasi
@@ -299,15 +323,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</li>
 						</ul>
 					</li>
-					<li class="">
+					<!--li class="">
 						<a href="<?= base_url('spt/print_kwitansi') ?>">
 							<i class="menu-icon fa fa-caret-right"></i>
 							<span class="menu-text"> Daftar Nominatif </span>
 						</a>
 
 						<b class="arrow"></b>
-					</li>
-					<li class="" id="menu-kalender">
+					</li-->
+					<?php 
+							if ($this->uri->segment(1)=='kalender') {
+								echo '<li class="active">';
+							}else{
+								echo '<li class="">';
+							}
+							?>
 								<a href="<?= base_url('kalender') ?>">
 									<i class="menu-icon fa fa-calendar"></i>
 									<span class="menu-text"> KALENDER</span>
