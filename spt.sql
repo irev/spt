@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23 Okt 2019 pada 01.55
+-- Generation Time: 26 Okt 2019 pada 13.31
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -429,8 +429,7 @@ CREATE TABLE `spt_data` (
 --
 
 INSERT INTO `spt_data` (`id_spt`, `no_spt`, `no_sppd`, `anggaran`, `kegiatan_id`, `transport_id`, `wilayah`, `tujuan_id`, `tujuan`, `nama`, `nip`, `pangkat`, `golongan`, `jabatan`, `maksud`, `transportasi`, `tgl_berangkat`, `tgl_kembali`, `sumber_dana`, `ttd_tempat`, `ttd_tgl`, `ttd_jabatan`, `ttd_nama`, `ttd_gol`, `ttd_nip`, `beban`, `c_date`, `up_date`, `ttd_sppd_tempat`, `ttd_sppd_tgl`, `ttd_sppd_nama`, `ttd_sppd_nip`, `ttd_sppd_gol`, `ttd_sppd_jabatan`, `perjalanan`, `tahun`, `dasar_spt`) VALUES
-('5daf1597c9ad8', '123/1231/SPT1231/DPUPR/2019', '123/2312/SPPD/DPUPR/2019', 1, 1, 1, 3, 2, 'Ujung Gading', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'Dengan Masud jalan dinas', 'BA  8036 S', '2019-10-01', '2019-10-16', '2019', 'Simpang Empat', '2019-10-22', 'Sekretaris', 'WILDAN, SH. M.Si', 'Pembina IV/a', '19690314 199003 1 002', 'DPA  Pengguna Anggaran Dinas Pekerjaan Umum & Penataan Ruang Kab. Pasaman Barat 2019', '2019-10-22 21:43:35', '2019-10-23 05:53:45', 'Simpang Empat', '2019-10-22', 'WILDAN, SH. M.Si', '19690314 199003 1 002', 'Pembina IV/a', 'Sekretaris', 'dalam', 2019, '12/bupati/pasbar/2019'),
-('5daf5bc75a65a', '111/3232/SPT/DPUPR/2019', '123/232/SPPD/DPUPR/2019', 1, 1, 1, 3, 1, 'Air Bangis', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', 'uyiyu', 'Rush', '2019-10-23', '2019-10-24', '2019', 'Simpang Empat', '2019-10-23', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPPA  Dinas Pekerjaan Umum Dan Penataan Ruang Kabupaten Pasaman Barat 2019', '2019-10-23 02:43:03', '2019-10-23 06:05:04', 'Simpang Empat', '2019-10-23', 'WILDAN, SH. M.Si', '19690314 199003 1 002', 'Pembina IV/a', 'Sekretaris', 'luar', 2019, 'yui');
+('5db36ecad1963', '090/000/SPT/DPUPR/2019', '900/000/SPPD/DPUPR/2019', 1, 1, 1, 3, 1, 'Air Bangis', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Pembina IV/a', 'Kepala Dinas', '78777678', 'BA  8036 S', '2019-10-02', '2019-10-05', '2019', 'Simpang Empat', '2019-10-03', 'Kepala Dinas', 'HENNY FERNIZA, ST. MT', 'Pembina IV/a', '19811022 200604 2 007', 'DPPA Dinas Pekerjaan Umum Dan Penataan Ruang Kabupaten Pasaman Barat 2019', '2019-10-26 05:00:59', '2019-10-26 09:05:16', 'Simpang Empat', '2019-10-03', 'HENNY FERNIZA, ST. MT', '19811022 200604 2 007', 'Pembina IV/a', 'Kepala Dinas', 'luar', 2019, '67578');
 
 -- --------------------------------------------------------
 
@@ -452,11 +451,7 @@ CREATE TABLE `spt_pengikut` (
 --
 
 INSERT INTO `spt_pengikut` (`id_peng`, `spt_id`, `pegawai_id`, `bayar`, `perjalanan`, `tahun`) VALUES
-(55, '5daf1597c9ad8', 1, 'yes', 'dalam', 2019),
-(63, '5daf5bc75a65a', 1, 'yes', 'dalam', 2019),
-(64, '5daf1597c9ad8', 8, 'yes', 'dalam', 2019),
-(65, '5daf1597c9ad8', 9, 'yes', 'dalam', 2019),
-(66, '5daf1597c9ad8', 5, 'yes', 'dalam', 2019);
+(82, '5db36ecad1963', 1, 'yes', 'luar', 2019);
 
 -- --------------------------------------------------------
 
@@ -470,16 +465,17 @@ CREATE TABLE `tbluser` (
   `upwd` varchar(100) NOT NULL,
   `urole` varchar(100) NOT NULL,
   `intusertype` int(11) NOT NULL,
-  `struseremail` varchar(50) DEFAULT NULL
+  `struseremail` varchar(50) DEFAULT NULL,
+  `lastlog` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tbluser`
 --
 
-INSERT INTO `tbluser` (`id`, `uname`, `upwd`, `urole`, `intusertype`, `struseremail`) VALUES
-(0, 'admin', 'admin', 'admin', 1, NULL),
-(1, 'casheir', 'casheir', 'admin', 1, NULL);
+INSERT INTO `tbluser` (`id`, `uname`, `upwd`, `urole`, `intusertype`, `struseremail`, `lastlog`) VALUES
+(0, 'admin', 'admin', 'admin', 1, NULL, '2019-10-26 05:41:00'),
+(1, 'operator', 'operator', 'admin', 2, NULL, '2019-10-26 06:18:00');
 
 --
 -- Indexes for dumped tables
@@ -568,7 +564,8 @@ ALTER TABLE `spt_pengikut`
 -- Indexes for table `tbluser`
 --
 ALTER TABLE `tbluser`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uname` (`uname`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -614,7 +611,7 @@ ALTER TABLE `m_tujuan`
 -- AUTO_INCREMENT for table `spt_pengikut`
 --
 ALTER TABLE `spt_pengikut`
-  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_peng` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
